@@ -92,7 +92,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
     def update_config(self, config):
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_public_directory(config, 'public')
-        #toolkit.add_resource('fanstatic', 'xxxxxxx')
+        toolkit.add_resource('fanstatic', "faoclh")
 
     def _modify_package_schema(self, schema):
         # Our custom field
