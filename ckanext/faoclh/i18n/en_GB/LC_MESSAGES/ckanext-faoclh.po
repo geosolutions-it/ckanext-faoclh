@@ -1,0 +1,88 @@
+## Customizations to CKAN translations
+
+
+msgid "Group (Axis 1)"
+msgstr "Topic (Axis 1)"
+
+msgid "Group"
+msgstr "Topic"
+
+msgid "Group not found"
+msgstr "Topic not found"
+
+msgid "Groups"
+msgstr "Topics"
+
+msgid "Group has been deleted."
+msgstr "Topic has been deleted."
+
+msgid "Group member has been deleted."
+msgstr "Topic member has been deleted."
+
+msgid "group"
+msgstr "topic"
+
+msgid "Group name already exists in database"
+msgstr "Topic name already exists in database"
+
+msgid "Group was not found."
+msgstr "Topic was not found."
+
+msgid "Group Form"
+msgstr "Topic Form"
+
+msgid "Search groups..."
+msgstr "Search topics..."
+
+msgid "What are Groups?"
+msgstr "What are Topics?"
+
+msgid ""
+" You can use CKAN Groups to create and manage collections of datasets. "
+"This could be to catalogue datasets for a particular project or team, or "
+"on a particular theme, or as a very simple way to help people find and "
+"search your own published datasets. "
+msgstr ""
+"This section gives you an entry point to the various topics in the "
+"context of which climate action in the agricultural sectors takes place. "
+"It allows you to narrow down your query or to roam the knowledge "
+"resources more generally according to your interest."
+
+msgid "groups"
+msgstr "topics"
+
+msgid ""
+" CKAN Organizations are used to create, manage and publish collections of"
+" datasets. Users can have different roles within an Organization, "
+"depending on their level of authorisation to create, edit and publish. "
+msgstr ""
+" Research organisations, development agencies and think tanks recognize "
+"the outstanding role of the agricultural sectors more and more and "
+"develop tools, case studies and best practices to help the agricultural "
+"community – from the smallholder armer to the policy maker – in their "
+"response to climate change.</br>Here you can findthe list of "
+"organizations whose knowledge resources are integrated in the CL-Hub."
+
+msgid "{number} group found for \"{query}\""
+msgid_plural "{number} topics found for \"{query}\""
+msgstr[0] "{number} group found for \"{query}\""
+msgstr[1] "{number} topics found for \"{query}\""
+
+msgid "No groups found for \"{query}\""
+msgstr "No topics found for \"{query}\""
+
+msgid "{number} group found"
+msgid_plural "{number} topics found"
+msgstr[0] "{number} group found"
+msgstr[1] "{number} topics found"
+
+msgid "No groups found"
+msgstr "No topics found"
+
+msgid "{number} organization found for \"{query}\""
+msgid_plural "{number} organizations topic for \"{query}\""
+msgstr[0] "{number} organization found for \"{query}\""
+msgstr[1] "{number} organisations found for \"{query}\""
+
+
+

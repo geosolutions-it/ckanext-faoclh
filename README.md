@@ -1,2 +1,16 @@
-# ckanext-faoclh
-CKAN extension for FAO CLH
+ckanext-faoclh
+==============
+
+Available plugins:
+
+- `faoclh`: 
+
+
+Configuration
+-------------
+
+Install the extension:
+```
+pip install -e .
+```
+

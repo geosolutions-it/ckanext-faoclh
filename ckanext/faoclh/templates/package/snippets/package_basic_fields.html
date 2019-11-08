@@ -1,0 +1,79 @@
+{% ckan_extends %}
+
+{% block package_basic_fields_custom %}
+  {{ super() }}
+  <div class="form-group control-medium">
+     {% set error = errors.Q1 %}
+     {% set Q1_list = ['Country experience',
+                     'Tool',
+                     'Learning material',
+		     'Database',
+                     'Methodologies and Guidelines',
+                     'Policy Brief',
+                     'Official documents',
+                     'Study',
+                     'Platform'
+		    ] 
+    %}
+    <label class="control-label" for="field-Q1">{{ _("Type of Resource") }}</label>
+    <div class="controls">
+          <select id="field-Q1" name="Q1" class="form-control">
+	    {% for topic in Q1_list %}
+            <option value="{{ topic }}" {% if topic == data.get('Q1') %}selected="selected"{% endif %}>{{ topic }}</option>
+            {% endfor %}
+          </select>
+          {% if error %}<span class="error-block">{{ error }}</span>{% endif %}
+    </div>
+  </div> 
+  <div class="form-group control-medium">
+    {% set error = errors.Q2 %}
+    {% set Q2_list = ['Analysing/Modelling CC',
+                     'Policy making',
+		     'Leveraging finance',
+                     'Monitoring CC activities',
+                     'Reporting CC activities',
+                     'Implementing practices',
+                     'Gathering data',
+                     'Increasing knowledge',
+                     'Capacity development'
+		    ] 
+    %}
+    <label class="control-label" for="field-Q2">{{ _("Kind of Activity") }}</label>
+    <div class="controls">
+          <select id="field-Q2" name="Q2" class="form-control">
+	    {% for topic in Q2_list %}
+            <option value="{{ topic }}" {% if topic == data.get('Q2') %}selected="selected"{% endif %}>{{ topic }}</option>
+            {% endfor %}
+          </select>
+          {% if error %}<span class="error-block">{{ error }}</span>{% endif %}
+    </div>
+  </div>
+  <div class="form-group control-medium">
+    {% set error = errors.Q3 %}
+    {% set Q3_list = ['Global',
+                     'Africa',
+		     'Asia',
+                     'America',
+                     'Europe',
+                     'Oceania'
+		    ] 
+    %}
+    <label class="control-label" for="field-Q3">{{ _("Geographic Focus") }}</label>
+    <div class="controls">
+          <select id="field-Q3" name="Q3" class="form-control">
+	    {% for topic in Q3_list %}
+            <option value="{{ topic }}" {% if topic == data.get('Q3') %}selected="selected"{% endif %}>{{ topic }}</option>
+            {% endfor %}
+          </select>
+          {% if error %}<span class="error-block">{{ error }}</span>{% endif %}
+    </div>
+  </div>
+
+  <div class="form-group control-medium">
+    <div class="controls">
+
+ {{ form.input('custom_text', label=_('Year of Release'),id='field-custom_text', placeholder=_('Year of Release'),value=data.custom_text, error=errors.custom_text,classes=['control-medium']) }}
+    </div>
+  </div>
+
+{% endblock %}

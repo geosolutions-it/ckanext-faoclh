@@ -1,0 +1,15 @@
+{% ckan_extends %}
+
+{% block basic_fields_url %}
+  {{ super() }}
+
+  <div class="form-group control-medium">
+      <div class="controls">
+          {{ form.input('custom_resource_text', label=_('Year of Release'), id='field-custom_resource_text',
+          placeholder=_('Year of Release'), value=data.custom_resource_text, error=errors.custom_resource_text,
+          classes=['control-medium']) }}
+      </div>
+  </div>
+
+{% endblock %}
+
