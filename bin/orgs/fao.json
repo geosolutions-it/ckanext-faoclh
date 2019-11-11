@@ -1,0 +1,8 @@
+{
+  "name" : "fao",
+
+  "title" : "FAO",
+  "description" : "Food and Agriculture Organization of the United Nations",
+
+  "image_url" : "__SERVER__/fao/images/org/fao.png"
+}
