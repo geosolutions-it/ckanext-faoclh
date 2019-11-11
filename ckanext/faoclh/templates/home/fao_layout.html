@@ -38,56 +38,14 @@
 
                 <h3>Topics</h3>
 
-                <ul class="media-grid" data-module="media-grid">
+                {% set topics = h.featured_group_org(['climate-change-adaptation', 'climate-change-mitigation', 'disaster-risk-reduction-and-disaster-risk-managment', 'food-security-and-nutrition']
+                        , get_action='group_show', list_action='group_list', count = 4) %}
 
-                    <li class="media-item">
-                        <img src="/uploads/group/2018-06-19-091123.372567groupcca.png" alt="climate-change-adaptation"
-                             class="media-image img-responsive">
-                        <h3 class="media-heading">Climate change adaptation and resilience</h3>
-                        <p></p>
-                        <strong class="count"></strong>
-                        <a href="/group/climate-change-adaptation" title="View Climate change adaptation and resilience"
-                           class="media-view">
-                            <span>View Climate change adaptation and resilience</span>
-                        </a>
-                    </li>
+                 <ul class="media-grid" data-module="media-grid">
 
-                    <li class="media-item">
-                        <img src="/uploads/group/2018-06-19-091217.791254groupccm.png" alt="climate-change-mitigation"
-                             class="media-image img-responsive">
-                        <h3 class="media-heading">Climate Change Mitigation</h3>
-                        <p></p>
-                        <strong class="count"></strong>
-                        <a href="/group/climate-change-mitigation" title="View Climate Change Mitigation"
-                           class="media-view">
-                            <span>View Climate Change Mitigation</span>
-                        </a>
-                    </li>
-
-                    <li class="media-item">
-                        <img src="/uploads/group/2018-06-19-091311.997731groupddrdrm.png"
-                             alt="disaster-risk-reduction-and-disaster-risk-managment"
-                             class="media-image img-responsive">
-                        <h3 class="media-heading">Disaster Risk Reduction and Management</h3>
-                        <p></p>
-                        <strong class="count"></strong>
-                        <a href="/group/disaster-risk-reduction-and-disaster-risk-managment"
-                           title="View Disaster Risk Reduction and Management" class="media-view">
-                            <span>View Disaster Risk Reduction and Management</span>
-                        </a>
-                    </li>
-
-                    <li class="media-item">
-                        <img src="/uploads/group/2018-06-19-091432.861802groupfsn.png" alt="food-security-and-nutrition"
-                             class="media-image img-responsive">
-                        <h3 class="media-heading">Food Security and Nutrition</h3>
-                        <p></p>
-                        <span class="count"></span>
-                        <a href="/group/food-security-and-nutrition" title="View Food Security and Nutrition"
-                           class="media-view">
-                            <span>View Food Security and Nutrition</span>
-                        </a>
-                    </li>
+                    {% for group in topics %}
+                          {% snippet 'home/snippets/fao_group_item.html', group=group, truncate=50, truncate_title=35 %}
+                    {% endfor %}
 
                 </ul>
 
