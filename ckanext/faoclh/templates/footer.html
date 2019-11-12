@@ -1,4 +1,10 @@
-{% ckan_extends %}
+{# {% ckan_extends %}
 
-{% block footer_links_ckan %}{% endblock %}
-{% block footer_attribution %}{% endblock %}
+{% block footer_attribution %}
+  {{ super() }}
+  <p><a class="hide-text geosolutions-footer-logo" href="http://www.geo-solutions.it/">GeoSolutions</a></p>
+{% endblock %}
+
+{% block footer_lang %}
+
+{% endblock %} #}
