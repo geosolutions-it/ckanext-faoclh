@@ -1,0 +1,118 @@
+{
+   "license_id" : "cc-by",
+   "notes" : "These dataset contains resources aimed at guiding the uses through the implementation process of projects for the creation of VCMs. These markets are likely to have extremely positive impacts due to the financial incentives that they involve. ",
+   "url" : "",
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "maintainer_email" : "",
+   "relationships_as_object" : [],
+   "private" : false,
+   "Q1" : "Methodologies and Guidelines",
+   "title" : "Guidelines: accessing forestry voluntary carbon markets (VCM)",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "relationships_as_subject" : [],
+   "metadata_modified" : "2019-02-01T10:33:24.024807",
+   "type" : "dataset",
+   "author_email" : "",
+   "id" : "f423c748-85a2-446f-8017-441b03127236",
+   "metadata_created" : "2019-01-17T10:56:44.521054",
+   "groups" : [
+      {
+         "title" : "Climate Change Mitigation",
+         "id" : "6a97ef1b-ee43-4dd2-bc4c-d2a8edd184e2",
+         "name" : "climate-change-mitigation",
+         "description" : "If the global food supply is to keep pace with population growth and dietary changes, agricultural productivity must increase. Changes in agricultural practices can help the world not only to meet its targets for reducing greenhouse gas emissions but also to contribute to food security.",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091217.791254groupccm.png",
+         "display_name" : "Climate Change Mitigation"
+      },
+      {
+         "id" : "cf347799-c68d-41d5-9eea-00ab8d24e779",
+         "title" : "Climate change adaptation and resilience",
+         "name" : "climate-change-adaptation",
+         "display_name" : "Climate change adaptation and resilience",
+         "description" : "Climate change threatens our ability to ensure global food security, eradicate poverty and achieve sustainable development. Greenhouse gas (GHG) emissions from human activity and livestock are a significant driver of climate change, trapping heat in the earth's atmosphere and triggering global warming.",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091123.372567groupcca.png"
+      }
+   ],
+   "author" : "",
+   "maintainer" : "",
+   "state" : "active",
+   "isopen" : true,
+   "organization" : {
+      "type" : "organization",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "state" : "active",
+      "is_organization" : true,
+      "approval_status" : "approved",
+      "title" : "FAO",
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "created" : "2018-06-18T21:48:24.043342",
+      "name" : "fao"
+   },
+   "version" : "",
+   "name" : "guidelines-accessing-forestry-voluntary-carbon-markets",
+   "num_tags" : 4,
+   "license_title" : "Creative Commons Attribution",
+   "Q2" : "Implementing practices",
+   "resources" : [
+      {
+         "cache_url" : null,
+         "url_type" : null,
+         "hash" : "",
+         "size" : null,
+         "format" : "PDF",
+         "package_id" : "f423c748-85a2-446f-8017-441b03127236",
+         "custom_resource_text" : "",
+         "name" : "Community guidelines for accessing forestry voluntary carbon markets",
+         "mimetype_inner" : null,
+         "url" : "http://www.fao.org/3/a-i3033e.pdf",
+         "last_modified" : null,
+         "mimetype" : "application/pdf",
+         "id" : "a6224a90-4963-4623-8f28-cc1db60e0aa2",
+         "revision_id" : "cea8d3e0-02bc-4d75-8671-30dd4f89bfa4",
+         "position" : 0,
+         "state" : "active",
+         "datastore_active" : false,
+         "cache_last_updated" : null,
+         "resource_type" : null,
+         "created" : "2019-01-17T10:57:32.116072",
+         "description" : "These guidelines address the forestry VCM with a view to maximizing these social co-benefits by highlighting the importance of community forestry approaches, and the lessons of decades of experience in the Asia-Pacific region in community-based forest management. "
+      }
+   ],
+   "num_resources" : 1,
+   "tags" : [
+      {
+         "display_name" : "Forest Management",
+         "name" : "Forest Management",
+         "state" : "active",
+         "id" : "4fee09ee-a0c3-4f11-8f11-ecddc43ef704",
+         "vocabulary_id" : null
+      },
+      {
+         "state" : "active",
+         "name" : "Forestry",
+         "display_name" : "Forestry",
+         "id" : "16377ffa-96cb-4e68-9caa-d4c4bb92575f",
+         "vocabulary_id" : null
+      },
+      {
+         "id" : "4868fb3a-5217-498b-953a-50ce88ab6a21",
+         "vocabulary_id" : null,
+         "state" : "active",
+         "name" : "Greenhouse gases",
+         "display_name" : "Greenhouse gases"
+      },
+      {
+         "display_name" : "Mitigation",
+         "state" : "active",
+         "name" : "Mitigation",
+         "id" : "e9f6a35d-90f1-4094-9c26-2f9b47880145",
+         "vocabulary_id" : null
+      }
+   ],
+   "revision_id" : "09831589-991e-4b84-b2a8-0cb424f231c6",
+   "Q3" : "Global",
+   "custom_text" : "",
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36"
+}

@@ -1,0 +1,96 @@
+{
+   "private" : false,
+   "tags" : [
+      {
+         "name" : "Adaptation",
+         "state" : "active",
+         "vocabulary_id" : null,
+         "display_name" : "Adaptation",
+         "id" : "dc65daf3-719f-44e2-b121-8d4ca0c707d8"
+      },
+      {
+         "id" : "d7f98d53-1b75-4787-b370-e35a1ad5fc39",
+         "display_name" : "Food security",
+         "name" : "Food security",
+         "vocabulary_id" : null,
+         "state" : "active"
+      }
+   ],
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "license_title" : "Creative Commons Attribution",
+   "organization" : {
+      "type" : "organization",
+      "name" : "fao",
+      "state" : "active",
+      "created" : "2018-06-18T21:48:24.043342",
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "title" : "FAO",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "is_organization" : true,
+      "approval_status" : "approved",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36"
+   },
+   "relationships_as_subject" : [],
+   "num_tags" : 2,
+   "notes" : "This dataset contains valuable tools to help farmers and pastoralists self-assess their resilience capacity in the face of climate change. ",
+   "Q1" : "Tool",
+   "metadata_modified" : "2019-02-01T12:09:01.199121",
+   "license_id" : "cc-by",
+   "resources" : [
+      {
+         "cache_url" : null,
+         "created" : "2019-01-17T11:47:04.851939",
+         "mimetype" : null,
+         "format" : "HTML",
+         "state" : "active",
+         "datastore_active" : false,
+         "url_type" : null,
+         "revision_id" : "4602b290-dc94-4047-820d-0c7f5cde7964",
+         "last_modified" : null,
+         "id" : "830a287e-838c-4e4a-b141-251df2192f44",
+         "description" : "The SHARP tool helps farmers and pastoralists self-assess and prioritize resilience aspects of their livelihoods in a participatory manner. The survey is both paper and tablet based and assesses the resilience of farmers and pastoralists to climate change organized into governance, environmental, social, economic and agricultural practices using a combination of self-assessment and academic review of livelihood components. There are 54 questions in total of which 26 are mandatory to fully assess resilience. SHARP can be used both as a monitoring and evaluation tool, as well as a learning method integrated into agropastoral/ farmer field schools training curricula.",
+         "resource_type" : null,
+         "name" : "Self-Evaluation and Holistic Assessment of Climate Resilience of Farmers and Pastoralists",
+         "cache_last_updated" : null,
+         "hash" : "",
+         "package_id" : "a8c94b30-4624-4188-a468-c40c7d95ff51",
+         "url" : "http://www.fao.org/in-action/sharp/sharp-application/en/",
+         "mimetype_inner" : null,
+         "position" : 0,
+         "size" : null,
+         "custom_resource_text" : ""
+      }
+   ],
+   "maintainer" : "",
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "metadata_created" : "2019-01-17T11:43:51.410090",
+   "title" : "Tools for assessing climate resilience of vulnerable communities",
+   "author_email" : "",
+   "name" : "tools-for-assessing-climate-resilience-of-vulnerable-communities",
+   "Q3" : "Global",
+   "maintainer_email" : "",
+   "id" : "a8c94b30-4624-4188-a468-c40c7d95ff51",
+   "author" : "",
+   "revision_id" : "517e48b9-602f-47a2-9d18-c3daba9996ae",
+   "Q2" : "Monitoring CC activities",
+   "num_resources" : 1,
+   "state" : "active",
+   "type" : "dataset",
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "custom_text" : "",
+   "url" : "",
+   "groups" : [
+      {
+         "name" : "climate-change-adaptation",
+         "display_name" : "Climate change adaptation and resilience",
+         "id" : "cf347799-c68d-41d5-9eea-00ab8d24e779",
+         "title" : "Climate change adaptation and resilience",
+         "description" : "Climate change threatens our ability to ensure global food security, eradicate poverty and achieve sustainable development. Greenhouse gas (GHG) emissions from human activity and livestock are a significant driver of climate change, trapping heat in the earth's atmosphere and triggering global warming.",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091123.372567groupcca.png"
+      }
+   ],
+   "isopen" : true,
+   "version" : "",
+   "relationships_as_object" : []
+}

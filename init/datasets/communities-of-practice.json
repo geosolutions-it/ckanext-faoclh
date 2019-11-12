@@ -1,0 +1,111 @@
+{
+   "Q1" : "Methodologies and Guidelines",
+   "name" : "communities-of-practice",
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "private" : false,
+   "type" : "dataset",
+   "relationships_as_object" : [],
+   "notes" : "Communities of practice are active networks whose members are interested in learning about the same topics and, as such, can draw on this collective global membership to advance knowledgesharing, innovation and the uptake of best practices to solve critical problems. FAO has an active programme’s work with online communities of practice for Mitigation of Climate Change in Agriculture. ",
+   "state" : "active",
+   "maintainer_email" : "",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "license_id" : "cc-by",
+   "metadata_modified" : "2018-10-12T13:10:28.113515",
+   "groups" : [
+      {
+         "title" : "Climate Change Mitigation",
+         "description" : "If the global food supply is to keep pace with population growth and dietary changes, agricultural productivity must increase. Changes in agricultural practices can help the world not only to meet its targets for reducing greenhouse gas emissions but also to contribute to food security.",
+         "display_name" : "Climate Change Mitigation",
+         "name" : "climate-change-mitigation",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091217.791254groupccm.png",
+         "id" : "6a97ef1b-ee43-4dd2-bc4c-d2a8edd184e2"
+      },
+      {
+         "description" : "Climate change threatens our ability to ensure global food security, eradicate poverty and achieve sustainable development. Greenhouse gas (GHG) emissions from human activity and livestock are a significant driver of climate change, trapping heat in the earth's atmosphere and triggering global warming.",
+         "display_name" : "Climate change adaptation and resilience",
+         "title" : "Climate change adaptation and resilience",
+         "id" : "cf347799-c68d-41d5-9eea-00ab8d24e779",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091123.372567groupcca.png",
+         "name" : "climate-change-adaptation"
+      }
+   ],
+   "metadata_created" : "2018-07-30T08:54:33.184772",
+   "custom_text" : "2016",
+   "num_resources" : 1,
+   "version" : "",
+   "title" : "Guidelines: communities of practice",
+   "url" : "http://www.fao.org/in-action/micca/international-fora/join-online-discussions/faqs/en/",
+   "author_email" : "",
+   "organization" : {
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "state" : "active",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "created" : "2018-06-18T21:48:24.043342",
+      "name" : "fao",
+      "approval_status" : "approved",
+      "type" : "organization",
+      "title" : "FAO",
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "is_organization" : true
+   },
+   "tags" : [
+      {
+         "state" : "active",
+         "display_name" : "Adaptation",
+         "vocabulary_id" : null,
+         "id" : "dc65daf3-719f-44e2-b121-8d4ca0c707d8",
+         "name" : "Adaptation"
+      },
+      {
+         "name" : "Communities of practice",
+         "id" : "3bfb0c8f-edc8-42ec-bfeb-210a00b9b0f1",
+         "vocabulary_id" : null,
+         "display_name" : "Communities of practice",
+         "state" : "active"
+      },
+      {
+         "vocabulary_id" : null,
+         "state" : "active",
+         "display_name" : "Mitigation",
+         "name" : "Mitigation",
+         "id" : "e9f6a35d-90f1-4094-9c26-2f9b47880145"
+      }
+   ],
+   "resources" : [
+      {
+         "last_modified" : null,
+         "custom_resource_text" : "2016",
+         "state" : "active",
+         "description" : "This guidebook synthesizes lessons learned from the FAO Mitigation of Climate Change in Agriculture programme’s work with online communities of practice. It aims to help others searching for effective ways to organize and facilitate online communities. The guidebook is a one-stop resource bank and background for establishing an online community of practice. It is hoped that it will encourage practitioners to organize online learning events. The book is targeted at people working on knowledge management, participatory approaches, stakeholder consultations and networks to enhance online capacity development efforts.",
+         "mimetype_inner" : null,
+         "created" : "2018-07-30T08:55:09.646153",
+         "name" : "Guidebook for online facilitators: sharing experiences from climate change and agriculture communities of practice",
+         "hash" : "",
+         "url" : "http://www.fao.org/3/a-i5742e.pdf",
+         "url_type" : null,
+         "format" : "PDF",
+         "mimetype" : "application/pdf",
+         "size" : null,
+         "position" : 0,
+         "revision_id" : "7dad28cd-5024-4d46-842a-6b71946e2448",
+         "id" : "6c78e2c0-2515-48bc-b295-3f5397300283",
+         "cache_url" : null,
+         "package_id" : "9447236c-2ec9-4340-8d2b-984639d28dcd",
+         "datastore_active" : false,
+         "cache_last_updated" : null,
+         "resource_type" : null
+      }
+   ],
+   "Q2" : "Increasing knowledge",
+   "maintainer" : "",
+   "creator_user_id" : "4d49e192-0af5-4eb2-9971-0541b4ef6610",
+   "num_tags" : 3,
+   "Q3" : "Global",
+   "author" : "",
+   "relationships_as_subject" : [],
+   "license_title" : "Creative Commons Attribution",
+   "revision_id" : "ffd3f0fa-8c38-4d6d-8e08-6cecd0999e81",
+   "id" : "9447236c-2ec9-4340-8d2b-984639d28dcd",
+   "isopen" : true
+}

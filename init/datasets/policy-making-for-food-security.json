@@ -1,0 +1,104 @@
+{
+   "version" : "",
+   "notes" : "This dataset contains valuable resource to support policy making in the food security sector in relation to climate change. ",
+   "title" : "Policy making for food security and climate change",
+   "relationships_as_object" : [],
+   "metadata_modified" : "2019-02-01T12:11:04.720255",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "custom_text" : "",
+   "maintainer_email" : "",
+   "license_title" : "Creative Commons Attribution",
+   "revision_id" : "e7a2c27e-cb1a-43d3-b32d-de3f0307f808",
+   "relationships_as_subject" : [],
+   "type" : "dataset",
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "private" : false,
+   "maintainer" : "",
+   "author" : "",
+   "url" : "",
+   "groups" : [
+      {
+         "description" : "Climate change threatens our ability to ensure global food security, eradicate poverty and achieve sustainable development. Greenhouse gas (GHG) emissions from human activity and livestock are a significant driver of climate change, trapping heat in the earth's atmosphere and triggering global warming.",
+         "id" : "cf347799-c68d-41d5-9eea-00ab8d24e779",
+         "display_name" : "Climate change adaptation and resilience",
+         "name" : "climate-change-adaptation",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091123.372567groupcca.png",
+         "title" : "Climate change adaptation and resilience"
+      },
+      {
+         "description" : "The 2030 Agenda for Sustainable Development and the UN Decade of Action on Nutrition 2016–2025 call on all countries and stakeholders to act together to end hunger and prevent all forms of malnutrition by 2030.",
+         "id" : "41ae50aa-2a21-4bb0-b906-05853f61ae43",
+         "display_name" : "Food Security and Nutrition",
+         "title" : "Food Security and Nutrition",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091432.861802groupfsn.png",
+         "name" : "food-security-and-nutrition"
+      }
+   ],
+   "state" : "active",
+   "resources" : [
+      {
+         "mimetype_inner" : null,
+         "id" : "69963807-ad86-4514-8151-58e8a66c0162",
+         "cache_last_updated" : null,
+         "url_type" : null,
+         "created" : "2019-01-17T11:37:02.833908",
+         "hash" : "",
+         "resource_type" : null,
+         "datastore_active" : false,
+         "description" : "This policy guidance note is part of a series that the Food and Agriculture Organization of the United Nations (FAO), the Directorate for International Cooperation and Development (DEVCO) of the European Commission and partners are producing to support policy makers address the food security and nutrition situation in their country. Each note provides guidance on how to sharpen the focus of sector policies in order to achieve sustainable food security and nutrition outcomes.",
+         "custom_resource_text" : "2017",
+         "mimetype" : "application/pdf",
+         "state" : "active",
+         "size" : null,
+         "package_id" : "6e7a7850-cbae-43bc-b8f0-5e70a68371d5",
+         "url" : "http://www.fao.org/3/a-i7217e.pdf",
+         "last_modified" : null,
+         "position" : 0,
+         "name" : "Strengthening sector policies for better food security and nutrition results: climte change",
+         "cache_url" : null,
+         "format" : "PDF",
+         "revision_id" : "a753498a-5a11-4395-b957-48aa7055844e"
+      }
+   ],
+   "Q3" : "Global",
+   "metadata_created" : "2019-01-17T11:34:50.319313",
+   "num_tags" : 2,
+   "isopen" : true,
+   "name" : "policy-making-for-food-security",
+   "Q2" : "Policy making",
+   "organization" : {
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "state" : "active",
+      "is_organization" : true,
+      "title" : "FAO",
+      "type" : "organization",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "approval_status" : "approved",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "name" : "fao",
+      "created" : "2018-06-18T21:48:24.043342",
+      "image_url" : "2018-06-19-070454.319366fao.png"
+   },
+   "num_resources" : 1,
+   "Q1" : "Policy Brief",
+   "id" : "6e7a7850-cbae-43bc-b8f0-5e70a68371d5",
+   "tags" : [
+      {
+         "id" : "dc65daf3-719f-44e2-b121-8d4ca0c707d8",
+         "vocabulary_id" : null,
+         "state" : "active",
+         "name" : "Adaptation",
+         "display_name" : "Adaptation"
+      },
+      {
+         "state" : "active",
+         "name" : "Food security",
+         "display_name" : "Food security",
+         "vocabulary_id" : null,
+         "id" : "d7f98d53-1b75-4787-b370-e35a1ad5fc39"
+      }
+   ],
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "license_id" : "cc-by",
+   "author_email" : ""
+}

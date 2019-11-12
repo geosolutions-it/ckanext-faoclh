@@ -1,0 +1,118 @@
+{
+   "isopen" : true,
+   "private" : false,
+   "groups" : [
+      {
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091123.372567groupcca.png",
+         "id" : "cf347799-c68d-41d5-9eea-00ab8d24e779",
+         "title" : "Climate change adaptation and resilience",
+         "display_name" : "Climate change adaptation and resilience",
+         "description" : "Climate change threatens our ability to ensure global food security, eradicate poverty and achieve sustainable development. Greenhouse gas (GHG) emissions from human activity and livestock are a significant driver of climate change, trapping heat in the earth's atmosphere and triggering global warming.",
+         "name" : "climate-change-adaptation"
+      },
+      {
+         "id" : "41ae50aa-2a21-4bb0-b906-05853f61ae43",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091432.861802groupfsn.png",
+         "title" : "Food Security and Nutrition",
+         "display_name" : "Food Security and Nutrition",
+         "name" : "food-security-and-nutrition",
+         "description" : "The 2030 Agenda for Sustainable Development and the UN Decade of Action on Nutrition 2016–2025 call on all countries and stakeholders to act together to end hunger and prevent all forms of malnutrition by 2030."
+      }
+   ],
+   "creator_user_id" : "4d49e192-0af5-4eb2-9971-0541b4ef6610",
+   "resources" : [
+      {
+         "cache_last_updated" : null,
+         "description" : "This brochure gives an overview of the MOSAICC platform and the ongoing work to develop it. It includes case studies of countries that have used the platform including Morocco, the Philippines and Peru.",
+         "custom_resource_text" : "",
+         "state" : "active",
+         "package_id" : "66898467-96f1-4bec-a640-206f7f628554",
+         "mimetype_inner" : null,
+         "url" : "http://www.fao.org/3/a-i5294e.pdf",
+         "format" : "PDF",
+         "cache_url" : null,
+         "position" : 0,
+         "size" : null,
+         "hash" : "",
+         "last_modified" : null,
+         "mimetype" : "application/pdf",
+         "url_type" : null,
+         "name" : "Brochure: Modelling System for Agricultural Impacts of Climate Change (MOSAICC)",
+         "id" : "d0da8f4b-4788-46f6-8490-098fe475e347",
+         "revision_id" : "5353064d-d864-4c4e-aeb9-7967504c5ddf",
+         "datastore_active" : false,
+         "created" : "2018-07-11T10:05:33.877221",
+         "resource_type" : null
+      }
+   ],
+   "custom_text" : "",
+   "num_tags" : 4,
+   "maintainer" : "",
+   "num_resources" : 1,
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "Q1" : "Tool",
+   "notes" : "The aim of MOSAICC is to build capacities of experts in countries to understand potential climate change impacts better, and to help policymakers with climate change adaptation strategies, programmes, projects and investments.  \r\n\r\nInformation on the impacts of climate change is a primary resource for policy makers trying to cope with climate change. In recent years, scientists have developed a range of different models to monitor, evaluate and predict the effects of climate change; however, this information is often incomplete or focused exclusively on one scientific domain. \r\nFor that reason, the Food and Agriculture Organization of the United Nations (FAO) in partnership with European research institutes, developed MOSAICC - an innovative, interdisciplinary approach as an ideal tool to carry out climate change impact assessment studies at the national level. ",
+   "Q2" : "Analysing/Modelling CC",
+   "Q3" : "Global",
+   "organization" : {
+      "name" : "fao",
+      "approval_status" : "approved",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "created" : "2018-06-18T21:48:24.043342",
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "is_organization" : true,
+      "title" : "FAO",
+      "type" : "organization",
+      "state" : "active"
+   },
+   "metadata_created" : "2018-07-11T10:03:45.285067",
+   "license_title" : "Creative Commons Attribution",
+   "name" : "modelling-system-for-agricultural-impacts-of-climate-change-mosaicc",
+   "state" : "active",
+   "title" : "Modelling System for Agricultural Impacts of Climate Change (MOSAICC)",
+   "author" : "",
+   "url" : "http://www.fao.org/in-action/mosaicc/en ",
+   "license_id" : "cc-by",
+   "relationships_as_subject" : [],
+   "type" : "dataset",
+   "tags" : [
+      {
+         "name" : "Adaptation",
+         "display_name" : "Adaptation",
+         "state" : "active",
+         "vocabulary_id" : null,
+         "id" : "dc65daf3-719f-44e2-b121-8d4ca0c707d8"
+      },
+      {
+         "state" : "active",
+         "vocabulary_id" : null,
+         "id" : "52707c5e-813c-41d0-b47a-c1775b771c24",
+         "name" : "Crops",
+         "display_name" : "Crops"
+      },
+      {
+         "display_name" : "Forestry",
+         "name" : "Forestry",
+         "id" : "16377ffa-96cb-4e68-9caa-d4c4bb92575f",
+         "state" : "active",
+         "vocabulary_id" : null
+      },
+      {
+         "id" : "5d1d3121-3c8b-406b-9db9-9701e187f872",
+         "vocabulary_id" : null,
+         "state" : "active",
+         "display_name" : "Water Management",
+         "name" : "Water Management"
+      }
+   ],
+   "maintainer_email" : "",
+   "metadata_modified" : "2018-07-30T09:58:39.006865",
+   "version" : "",
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "relationships_as_object" : [],
+   "author_email" : "",
+   "id" : "66898467-96f1-4bec-a640-206f7f628554",
+   "revision_id" : "5353064d-d864-4c4e-aeb9-7967504c5ddf"
+}

@@ -1,0 +1,96 @@
+{
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "num_tags" : 2,
+   "title" : "Guidelines: sustainable grassland management",
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "resources" : [
+      {
+         "package_id" : "9cdffcf1-19ce-4222-882e-8736b2d78bbf",
+         "description" : "The methodology aims to estimate the reduction of greenhouse gas emissions from grassland and increase grassland soil organic carbon stock by applying sustainable grassland management practices (SGM).",
+         "custom_resource_text" : "",
+         "position" : 0,
+         "resource_type" : null,
+         "format" : "PDF",
+         "created" : "2019-01-17T14:30:05.060625",
+         "url_type" : null,
+         "last_modified" : null,
+         "mimetype" : "application/pdf",
+         "size" : null,
+         "cache_url" : null,
+         "state" : "active",
+         "url" : "http://www.fao.org/fileadmin/user_upload/newsroom/docs/FAO-SGM-Methodology.pdf",
+         "hash" : "",
+         "datastore_active" : false,
+         "cache_last_updated" : null,
+         "revision_id" : "274ff8c1-f0a1-47de-85e5-5c9e0184f766",
+         "name" : "Methodology for Sustainable Grassland Management",
+         "id" : "97de6e22-0558-4252-9506-0ad845aa24df",
+         "mimetype_inner" : null
+      }
+   ],
+   "Q1" : "Methodologies and Guidelines",
+   "maintainer_email" : "",
+   "notes" : "This dataset contains methodologies and guidelines that aim at estimating the reduction of greenhouse gas emissions from grassland and at increasing grassland soil organic carbon stock by applying sustainable grassland management practices (SGM). ",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "custom_text" : "",
+   "relationships_as_subject" : [],
+   "isopen" : true,
+   "revision_id" : "95013ab8-4a19-442d-b4ea-8d6627f34b22",
+   "id" : "9cdffcf1-19ce-4222-882e-8736b2d78bbf",
+   "name" : "guidelines-sustainable-grassland-management",
+   "num_resources" : 1,
+   "author_email" : "",
+   "Q2" : "Implementing practices",
+   "version" : "",
+   "organization" : {
+      "approval_status" : "approved",
+      "type" : "organization",
+      "created" : "2018-06-18T21:48:24.043342",
+      "is_organization" : true,
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "name" : "fao",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "title" : "FAO",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "state" : "active"
+   },
+   "author" : "",
+   "type" : "dataset",
+   "Q3" : "Global",
+   "state" : "active",
+   "maintainer" : "",
+   "url" : "",
+   "private" : false,
+   "relationships_as_object" : [],
+   "metadata_created" : "2019-01-17T14:29:08.213847",
+   "metadata_modified" : "2019-02-01T12:04:20.216079",
+   "tags" : [
+      {
+         "state" : "active",
+         "display_name" : "Greenhouse gases",
+         "name" : "Greenhouse gases",
+         "id" : "4868fb3a-5217-498b-953a-50ce88ab6a21",
+         "vocabulary_id" : null
+      },
+      {
+         "id" : "e9f6a35d-90f1-4094-9c26-2f9b47880145",
+         "name" : "Mitigation",
+         "state" : "active",
+         "display_name" : "Mitigation",
+         "vocabulary_id" : null
+      }
+   ],
+   "license_id" : "cc-by",
+   "license_title" : "Creative Commons Attribution",
+   "groups" : [
+      {
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091217.791254groupccm.png",
+         "name" : "climate-change-mitigation",
+         "id" : "6a97ef1b-ee43-4dd2-bc4c-d2a8edd184e2",
+         "display_name" : "Climate Change Mitigation",
+         "title" : "Climate Change Mitigation",
+         "description" : "If the global food supply is to keep pace with population growth and dietary changes, agricultural productivity must increase. Changes in agricultural practices can help the world not only to meet its targets for reducing greenhouse gas emissions but also to contribute to food security."
+      }
+   ]
+}

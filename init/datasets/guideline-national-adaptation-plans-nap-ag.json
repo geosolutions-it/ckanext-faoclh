@@ -1,0 +1,108 @@
+{
+   "organization" : {
+      "title" : "FAO",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "created" : "2018-06-18T21:48:24.043342",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "approval_status" : "approved",
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "name" : "fao",
+      "type" : "organization",
+      "state" : "active",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "is_organization" : true
+   },
+   "author_email" : "",
+   "num_tags" : 5,
+   "metadata_modified" : "2018-10-15T09:39:21.206135",
+   "private" : false,
+   "state" : "active",
+   "title" : "Guidelines: Integrating Agriculture in the National Adaptation Plans-Programme (NAP-Ag)",
+   "Q3" : "Global",
+   "relationships_as_subject" : [],
+   "license_title" : "Creative Commons Attribution",
+   "isopen" : true,
+   "id" : "b055e731-4cc5-494a-92e9-9ee9be48aafa",
+   "Q2" : "Implementing practices",
+   "tags" : [
+      {
+         "state" : "active",
+         "display_name" : "Adaptation",
+         "id" : "dc65daf3-719f-44e2-b121-8d4ca0c707d8",
+         "name" : "Adaptation",
+         "vocabulary_id" : null
+      },
+      {
+         "name" : "Crops",
+         "vocabulary_id" : null,
+         "display_name" : "Crops",
+         "state" : "active",
+         "id" : "52707c5e-813c-41d0-b47a-c1775b771c24"
+      },
+      {
+         "id" : "2c8786d9-60c1-4a56-ac24-01a7ce70b2f6",
+         "state" : "active",
+         "display_name" : "Fisheries",
+         "name" : "Fisheries",
+         "vocabulary_id" : null
+      },
+      {
+         "id" : "16377ffa-96cb-4e68-9caa-d4c4bb92575f",
+         "state" : "active",
+         "display_name" : "Forestry",
+         "name" : "Forestry",
+         "vocabulary_id" : null
+      },
+      {
+         "id" : "63f52349-8d52-44d9-b183-d998a81f06ed",
+         "display_name" : "Livestock",
+         "state" : "active",
+         "vocabulary_id" : null,
+         "name" : "Livestock"
+      }
+   ],
+   "maintainer_email" : "",
+   "revision_id" : "756a0111-f514-4f93-968f-41c71b19cd93",
+   "num_resources" : 1,
+   "author" : "",
+   "Q1" : "Methodologies and Guidelines",
+   "type" : "dataset",
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "license_id" : "cc-by",
+   "metadata_created" : "2018-10-12T13:06:41.213759",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "notes" : "The NAP-Ag programme, coordinated by the United Nations Development Programme (UNDP) and the Food and Agriculture Organization of the United Nations (FAO), aims to address climate change adaptation concerns related to the agriculture sectors in 11 developing countries' existing national planning and budgeting processes.",
+   "custom_text" : "2017",
+   "name" : "guideline-national-adaptation-plans-nap-ag",
+   "groups" : [],
+   "maintainer" : "",
+   "resources" : [
+      {
+         "state" : "active",
+         "last_modified" : null,
+         "resource_type" : null,
+         "position" : 0,
+         "mimetype_inner" : null,
+         "datastore_active" : false,
+         "format" : "PDF",
+         "cache_url" : null,
+         "url_type" : null,
+         "custom_resource_text" : "2017",
+         "hash" : "",
+         "id" : "c0e2804b-1793-49f6-8b60-8876512f085a",
+         "size" : null,
+         "name" : "Addressing agriculture, forestry and fisheries in National Adaptation Plans - Supplementary Guidelines",
+         "cache_last_updated" : null,
+         "package_id" : "b055e731-4cc5-494a-92e9-9ee9be48aafa",
+         "mimetype" : null,
+         "url" : "http://www.fao.org/in-action/naps/adaptation-planning/guidelines/en/",
+         "created" : "2018-10-12T13:08:05.175403",
+         "revision_id" : "4c240d70-06d2-4e8e-958d-3753e6adc4c2",
+         "description" : "The NAP-Ag Guidelines aim to support developing countries in: reducing vulnerability of the agriculture sectors to the impacts of climate change by building adaptive capacities and resilience; addressing agriculture in the formulation and implementation of NAPs; and enhancing the integration of adaptation in agricultural development policies, progammes and plans."
+      }
+   ],
+   "url" : "http://www.fao.org/in-action/naps/overview/en/",
+   "relationships_as_object" : [],
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "version" : ""
+}

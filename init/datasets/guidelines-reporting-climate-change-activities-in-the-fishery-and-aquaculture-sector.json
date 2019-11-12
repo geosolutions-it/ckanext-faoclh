@@ -1,0 +1,101 @@
+{
+   "organization" : {
+      "created" : "2018-06-18T21:48:24.043342",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "is_organization" : true,
+      "state" : "active",
+      "name" : "fao",
+      "type" : "organization",
+      "approval_status" : "approved",
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "title" : "FAO"
+   },
+   "url" : "",
+   "name" : "guidelines-reporting-climate-change-activities-in-the-fishery-and-aquaculture-sector",
+   "state" : "active",
+   "maintainer_email" : "",
+   "license_title" : "Creative Commons Attribution",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "revision_id" : "6be76b12-ae3c-42cb-9142-2c03aefadd23",
+   "metadata_modified" : "2018-11-07T16:11:17.221967",
+   "id" : "9e95b541-66c3-4acc-99ce-f02e2e194009",
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "metadata_created" : "2018-11-05T10:29:16.237267",
+   "license_id" : "cc-by",
+   "num_resources" : 1,
+   "title" : "Guidelines: reporting climate change activities in the fishery and aquaculture sector",
+   "custom_text" : "2015",
+   "resources" : [
+      {
+         "state" : "active",
+         "url" : "http://www.fao.org/3/a-i5109e.pdf",
+         "name" : "Assessing climate change vulnerability in fisheries and aquaculture. Available methodologies and their relevance for the sector",
+         "resource_type" : null,
+         "size" : null,
+         "custom_resource_text" : "2015",
+         "mimetype" : "application/pdf",
+         "mimetype_inner" : null,
+         "format" : "PDF",
+         "last_modified" : null,
+         "position" : 0,
+         "cache_url" : null,
+         "datastore_active" : false,
+         "url_type" : null,
+         "cache_last_updated" : null,
+         "created" : "2018-11-05T10:30:02.220605",
+         "hash" : "",
+         "description" : "This publication provides an overview of vulnerability assessment concepts and methodologies. It sheds light on the different vulnerability assessment methodologies that have been developed, and on how these are conditioned by the disciplinary traditions from which they have emerged.",
+         "revision_id" : "2dbb158e-a9a4-4d5b-8a9f-5b32894f8f97",
+         "id" : "94530ec5-674f-4e81-ae28-32258fb3c8cf",
+         "package_id" : "9e95b541-66c3-4acc-99ce-f02e2e194009"
+      }
+   ],
+   "private" : false,
+   "type" : "dataset",
+   "Q1" : "Methodologies and Guidelines",
+   "maintainer" : "",
+   "notes" : "Methodologies and guidelines to conduct climate change reporting activities specifically in the fishery and aquaculture sector. ",
+   "tags" : [
+      {
+         "vocabulary_id" : null,
+         "id" : "dc65daf3-719f-44e2-b121-8d4ca0c707d8",
+         "name" : "Adaptation",
+         "display_name" : "Adaptation",
+         "state" : "active"
+      },
+      {
+         "state" : "active",
+         "name" : "Aquaculture",
+         "display_name" : "Aquaculture",
+         "id" : "dca99c60-59f0-4c8f-9c19-9d3b5c0dfa6c",
+         "vocabulary_id" : null
+      },
+      {
+         "id" : "2c8786d9-60c1-4a56-ac24-01a7ce70b2f6",
+         "vocabulary_id" : null,
+         "display_name" : "Fisheries",
+         "name" : "Fisheries",
+         "state" : "active"
+      },
+      {
+         "state" : "active",
+         "display_name" : "Mitigation",
+         "name" : "Mitigation",
+         "id" : "e9f6a35d-90f1-4094-9c26-2f9b47880145",
+         "vocabulary_id" : null
+      }
+   ],
+   "Q2" : "Reporting CC activities",
+   "relationships_as_subject" : [],
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "author" : "",
+   "relationships_as_object" : [],
+   "groups" : [],
+   "author_email" : "",
+   "num_tags" : 4,
+   "Q3" : "Global",
+   "version" : "",
+   "isopen" : true
+}

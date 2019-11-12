@@ -1,0 +1,117 @@
+{
+   "notes" : "Climpag contains methodologies, tools, data and maps for a better understanding and analysis of the effect of the variability of weather and climate on agriculture. It aims at bringing together the various aspects and interactions between weather, climate and agriculture (including crops and grasslands, livestock husbandry, forestry and fisheries) in the general context of food security.",
+   "Q2" : "Increasing knowledge",
+   "metadata_created" : "2018-11-13T08:50:02.972813",
+   "relationships_as_subject" : [],
+   "relationships_as_object" : [],
+   "Q1" : "Platform",
+   "num_resources" : 1,
+   "Q3" : "Global",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "tags" : [
+      {
+         "name" : "Adaptation",
+         "vocabulary_id" : null,
+         "state" : "active",
+         "display_name" : "Adaptation",
+         "id" : "dc65daf3-719f-44e2-b121-8d4ca0c707d8"
+      },
+      {
+         "id" : "52707c5e-813c-41d0-b47a-c1775b771c24",
+         "display_name" : "Crops",
+         "state" : "active",
+         "vocabulary_id" : null,
+         "name" : "Crops"
+      },
+      {
+         "state" : "active",
+         "id" : "d7f98d53-1b75-4787-b370-e35a1ad5fc39",
+         "display_name" : "Food security",
+         "name" : "Food security",
+         "vocabulary_id" : null
+      },
+      {
+         "vocabulary_id" : null,
+         "name" : "Greenhouse gases",
+         "display_name" : "Greenhouse gases",
+         "id" : "4868fb3a-5217-498b-953a-50ce88ab6a21",
+         "state" : "active"
+      },
+      {
+         "state" : "active",
+         "display_name" : "Livestock",
+         "id" : "63f52349-8d52-44d9-b183-d998a81f06ed",
+         "name" : "Livestock",
+         "vocabulary_id" : null
+      }
+   ],
+   "isopen" : true,
+   "author" : "",
+   "organization" : {
+      "name" : "fao",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "title" : "FAO",
+      "is_organization" : true,
+      "created" : "2018-06-18T21:48:24.043342",
+      "type" : "organization",
+      "approval_status" : "approved",
+      "state" : "active",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36"
+   },
+   "revision_id" : "d3e5babc-5184-4697-86e1-42f8127a80d4",
+   "license_title" : "Creative Commons Attribution",
+   "id" : "83e068ee-fddf-49d0-9535-23e73cb9a545",
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "type" : "dataset",
+   "license_id" : "cc-by",
+   "maintainer" : "",
+   "custom_text" : "2014",
+   "maintainer_email" : "",
+   "metadata_modified" : "2018-11-16T08:35:38.657440",
+   "resources" : [
+      {
+         "name" : "Climate Impact on Agriculture (Climpag)",
+         "position" : 0,
+         "url" : "http://www.fao.org/nr/climpag/",
+         "size" : null,
+         "mimetype" : null,
+         "cache_url" : null,
+         "state" : "active",
+         "mimetype_inner" : null,
+         "package_id" : "83e068ee-fddf-49d0-9535-23e73cb9a545",
+         "resource_type" : null,
+         "format" : "HTML",
+         "description" : "Climpag contains methodologies, tools, data and maps for a better understanding and analysis of the effect of the variability of weather and climate on agriculture. It aims at bringing together the various aspects and interactions between weather, climate and agriculture (including crops and grasslands, livestock husbandry, forestry and fisheries) in the general context of food security.",
+         "cache_last_updated" : null,
+         "custom_resource_text" : "2014",
+         "last_modified" : null,
+         "datastore_active" : false,
+         "created" : "2018-11-13T08:50:35.701430",
+         "revision_id" : "d3e5babc-5184-4697-86e1-42f8127a80d4",
+         "url_type" : null,
+         "id" : "7a44bf5a-ba30-49f5-92c3-567ba6fc17fa",
+         "hash" : ""
+      }
+   ],
+   "name" : "climate-impact-on-agriculture-climpag",
+   "url" : "http://www.fao.org/nr/climpag/",
+   "state" : "active",
+   "title" : "Climate Impact on Agriculture (Climpag)",
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "num_tags" : 5,
+   "author_email" : "",
+   "version" : "",
+   "private" : false,
+   "groups" : [
+      {
+         "description" : "Climate change threatens our ability to ensure global food security, eradicate poverty and achieve sustainable development. Greenhouse gas (GHG) emissions from human activity and livestock are a significant driver of climate change, trapping heat in the earth's atmosphere and triggering global warming.",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091123.372567groupcca.png",
+         "name" : "climate-change-adaptation",
+         "title" : "Climate change adaptation and resilience",
+         "id" : "cf347799-c68d-41d5-9eea-00ab8d24e779",
+         "display_name" : "Climate change adaptation and resilience"
+      }
+   ]
+}

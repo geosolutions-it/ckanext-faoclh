@@ -1,0 +1,110 @@
+{
+   "private" : false,
+   "Q2" : "Increasing knowledge",
+   "author_email" : "",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "metadata_modified" : "2018-11-13T10:16:51.803470",
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "Q3" : "Global",
+   "maintainer" : "",
+   "metadata_created" : "2018-11-13T10:08:31.169967",
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "author" : "",
+   "Q1" : "Learning material",
+   "type" : "dataset",
+   "relationships_as_object" : [],
+   "state" : "active",
+   "groups" : [
+      {
+         "description" : "If the global food supply is to keep pace with population growth and dietary changes, agricultural productivity must increase. Changes in agricultural practices can help the world not only to meet its targets for reducing greenhouse gas emissions but also to contribute to food security.",
+         "id" : "6a97ef1b-ee43-4dd2-bc4c-d2a8edd184e2",
+         "display_name" : "Climate Change Mitigation",
+         "title" : "Climate Change Mitigation",
+         "name" : "climate-change-mitigation",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091217.791254groupccm.png"
+      }
+   ],
+   "organization" : {
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "type" : "organization",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "state" : "active",
+      "approval_status" : "approved",
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "is_organization" : true,
+      "title" : "FAO",
+      "created" : "2018-06-18T21:48:24.043342",
+      "name" : "fao"
+   },
+   "resources" : [
+      {
+         "custom_resource_text" : "2017",
+         "resource_type" : null,
+         "created" : "2018-11-13T10:09:19.724691",
+         "hash" : "",
+         "name" : "Webinars on peatlands",
+         "description" : "A series of webinars on peatland management and their mitigation potential.",
+         "datastore_active" : false,
+         "last_modified" : null,
+         "size" : null,
+         "position" : 0,
+         "format" : "Webinar",
+         "mimetype" : null,
+         "package_id" : "35587fb9-4694-4d98-89aa-b3e37f08d3de",
+         "cache_url" : null,
+         "url" : "http://www.fao.org/in-action/micca/resources/learning/peatlands-learning/en/",
+         "revision_id" : "302e2c6b-989c-4f4a-8b05-f6b762d9bd41",
+         "state" : "active",
+         "id" : "165b5486-ff81-4e48-82b9-191b41ad2322",
+         "url_type" : null,
+         "mimetype_inner" : null,
+         "cache_last_updated" : null
+      }
+   ],
+   "license_title" : "Creative Commons Attribution",
+   "notes" : "Useful resources on peatland management in the context of climate change and their mitigation opportunities. ",
+   "isopen" : true,
+   "name" : "learning-on-climate-change-and-peatlands",
+   "version" : "",
+   "relationships_as_subject" : [],
+   "title" : "Learning on climate change and peatlands",
+   "maintainer_email" : "",
+   "url" : "",
+   "license_id" : "cc-by",
+   "id" : "35587fb9-4694-4d98-89aa-b3e37f08d3de",
+   "custom_text" : "2017",
+   "revision_id" : "302e2c6b-989c-4f4a-8b05-f6b762d9bd41",
+   "num_resources" : 1,
+   "num_tags" : 4,
+   "tags" : [
+      {
+         "display_name" : "Greenhouse gases",
+         "vocabulary_id" : null,
+         "id" : "4868fb3a-5217-498b-953a-50ce88ab6a21",
+         "state" : "active",
+         "name" : "Greenhouse gases"
+      },
+      {
+         "name" : "Mitigation",
+         "display_name" : "Mitigation",
+         "vocabulary_id" : null,
+         "id" : "e9f6a35d-90f1-4094-9c26-2f9b47880145",
+         "state" : "active"
+      },
+      {
+         "name" : "Peatland",
+         "vocabulary_id" : null,
+         "display_name" : "Peatland",
+         "state" : "active",
+         "id" : "eb1eeefa-16e7-4dad-9d74-06481f491a8a"
+      },
+      {
+         "name" : "Remote sensing",
+         "state" : "active",
+         "id" : "1f15b84b-3225-499b-9821-a13980a70883",
+         "display_name" : "Remote sensing",
+         "vocabulary_id" : null
+      }
+   ]
+}

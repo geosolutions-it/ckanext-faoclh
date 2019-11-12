@@ -1,0 +1,117 @@
+{
+   "custom_text" : "2015",
+   "resources" : [
+      {
+         "format" : "HTML",
+         "hash" : "",
+         "created" : "2018-11-27T13:34:11.728163",
+         "name" : "MOSAICC MAROC Webpage",
+         "revision_id" : "4bbfcc6b-7a2d-456d-87e4-9fb37dc0ff28",
+         "package_id" : "e12869e5-0994-410a-8234-ed8769613a4c",
+         "id" : "9a0e7587-fdd1-4fdd-be03-522efc9daaae",
+         "position" : 0,
+         "size" : null,
+         "url" : "http://w3w.changementclimatique.ma/index7ca7.html?q=fr",
+         "cache_url" : null,
+         "mimetype_inner" : null,
+         "custom_resource_text" : "2015",
+         "state" : "active",
+         "mimetype" : null,
+         "resource_type" : null,
+         "description" : "Country experience of the application of the MOSAICC methodology in Morocco. The explaination of the process and the final results are presented in a user friendly and visual way.",
+         "datastore_active" : false,
+         "url_type" : null,
+         "cache_last_updated" : null,
+         "last_modified" : null
+      }
+   ],
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "metadata_created" : "2018-11-27T13:32:56.751432",
+   "groups" : [
+      {
+         "description" : "Climate change threatens our ability to ensure global food security, eradicate poverty and achieve sustainable development. Greenhouse gas (GHG) emissions from human activity and livestock are a significant driver of climate change, trapping heat in the earth's atmosphere and triggering global warming.",
+         "title" : "Climate change adaptation and resilience",
+         "display_name" : "Climate change adaptation and resilience",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091123.372567groupcca.png",
+         "id" : "cf347799-c68d-41d5-9eea-00ab8d24e779",
+         "name" : "climate-change-adaptation"
+      }
+   ],
+   "num_tags" : 5,
+   "relationships_as_subject" : [],
+   "license_id" : "cc-by",
+   "private" : false,
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "relationships_as_object" : [],
+   "Q3" : "Africa",
+   "num_resources" : 1,
+   "license_title" : "Creative Commons Attribution",
+   "organization" : {
+      "title" : "FAO",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "created" : "2018-06-18T21:48:24.043342",
+      "is_organization" : true,
+      "type" : "organization",
+      "state" : "active",
+      "name" : "fao",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "approval_status" : "approved",
+      "image_url" : "2018-06-19-070454.319366fao.png"
+   },
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "id" : "e12869e5-0994-410a-8234-ed8769613a4c",
+   "maintainer" : "",
+   "author_email" : "",
+   "maintainer_email" : "",
+   "Q1" : "Country experience",
+   "name" : "country-experience-on-mosaicc-africa",
+   "revision_id" : "4bbfcc6b-7a2d-456d-87e4-9fb37dc0ff28",
+   "metadata_modified" : "2018-11-27T13:34:31.009232",
+   "tags" : [
+      {
+         "vocabulary_id" : null,
+         "display_name" : "Adaptation",
+         "state" : "active",
+         "id" : "dc65daf3-719f-44e2-b121-8d4ca0c707d8",
+         "name" : "Adaptation"
+      },
+      {
+         "display_name" : "Agroforestry",
+         "vocabulary_id" : null,
+         "name" : "Agroforestry",
+         "id" : "f3bf75a9-bbf6-4bee-82fe-efe94cdfccb1",
+         "state" : "active"
+      },
+      {
+         "vocabulary_id" : null,
+         "display_name" : "Capacity Development",
+         "id" : "b78296e1-453c-47ba-bc32-1577bcbb5c20",
+         "state" : "active",
+         "name" : "Capacity Development"
+      },
+      {
+         "display_name" : "Crops",
+         "vocabulary_id" : null,
+         "name" : "Crops",
+         "id" : "52707c5e-813c-41d0-b47a-c1775b771c24",
+         "state" : "active"
+      },
+      {
+         "vocabulary_id" : null,
+         "display_name" : "Water Management",
+         "state" : "active",
+         "id" : "5d1d3121-3c8b-406b-9db9-9701e187f872",
+         "name" : "Water Management"
+      }
+   ],
+   "version" : "",
+   "author" : "",
+   "isopen" : true,
+   "Q2" : "Analysing/Modelling CC",
+   "title" : "Country experience on MOSAICC: Africa",
+   "notes" : "MOSAICC was implementated in Morocco as a a pilot study of the tool which aims at estimating the impact of the climate change on the agricultural and forest sectors. The process and outputs are outlined and presented in the website, including documentation of every stage.",
+   "type" : "dataset",
+   "state" : "active",
+   "url" : "http://w3w.changementclimatique.ma/index6b15.html?q=en/node/19"
+}

@@ -1,0 +1,140 @@
+{
+   "num_tags" : 5,
+   "metadata_created" : "2018-11-05T14:00:47.026528",
+   "Q3" : "Global",
+   "license_title" : "Creative Commons Attribution",
+   "title" : "Guidelines: leveraging finance and mitigation opportunities",
+   "organization" : {
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "is_organization" : true,
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "type" : "organization",
+      "created" : "2018-06-18T21:48:24.043342",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "approval_status" : "approved",
+      "name" : "fao",
+      "state" : "active",
+      "title" : "FAO"
+   },
+   "type" : "dataset",
+   "relationships_as_subject" : [],
+   "author_email" : "",
+   "isopen" : true,
+   "id" : "94dea50f-1256-439c-9b87-481ff47b9eb0",
+   "num_resources" : 2,
+   "Q2" : "Leveraging finance",
+   "name" : "guidelines-leveraging-finance-and-mitigation-opportunities",
+   "metadata_modified" : "2018-11-16T08:43:18.845864",
+   "Q1" : "Methodologies and Guidelines",
+   "url" : "",
+   "maintainer_email" : "",
+   "version" : "",
+   "license_id" : "cc-by",
+   "maintainer" : "",
+   "state" : "active",
+   "relationships_as_object" : [],
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "revision_id" : "1d7c9f0f-9e5f-4825-8a8c-5489fc55384e",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "groups" : [
+      {
+         "description" : "If the global food supply is to keep pace with population growth and dietary changes, agricultural productivity must increase. Changes in agricultural practices can help the world not only to meet its targets for reducing greenhouse gas emissions but also to contribute to food security.",
+         "title" : "Climate Change Mitigation",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091217.791254groupccm.png",
+         "display_name" : "Climate Change Mitigation",
+         "id" : "6a97ef1b-ee43-4dd2-bc4c-d2a8edd184e2",
+         "name" : "climate-change-mitigation"
+      }
+   ],
+   "custom_text" : "2010",
+   "private" : false,
+   "creator_user_id" : "c4d8d2d2-ac42-4e91-906d-dd83a090b605",
+   "notes" : "Methodologies and guidelines to increase the abilities of practitioners at leveraging finance through mitigation opportunities in the AFOLU sector. ",
+   "author" : "",
+   "tags" : [
+      {
+         "display_name" : "Agroforestry",
+         "id" : "f3bf75a9-bbf6-4bee-82fe-efe94cdfccb1",
+         "name" : "Agroforestry",
+         "state" : "active",
+         "vocabulary_id" : null
+      },
+      {
+         "id" : "52707c5e-813c-41d0-b47a-c1775b771c24",
+         "display_name" : "Crops",
+         "name" : "Crops",
+         "vocabulary_id" : null,
+         "state" : "active"
+      },
+      {
+         "vocabulary_id" : null,
+         "state" : "active",
+         "id" : "16377ffa-96cb-4e68-9caa-d4c4bb92575f",
+         "display_name" : "Forestry",
+         "name" : "Forestry"
+      },
+      {
+         "vocabulary_id" : null,
+         "state" : "active",
+         "name" : "Greenhouse gases",
+         "id" : "4868fb3a-5217-498b-953a-50ce88ab6a21",
+         "display_name" : "Greenhouse gases"
+      },
+      {
+         "vocabulary_id" : null,
+         "state" : "active",
+         "name" : "Mitigation",
+         "display_name" : "Mitigation",
+         "id" : "e9f6a35d-90f1-4094-9c26-2f9b47880145"
+      }
+   ],
+   "resources" : [
+      {
+         "revision_id" : "08912f29-ac7f-4105-b77f-23feebd875fd",
+         "mimetype" : "application/pdf",
+         "last_modified" : null,
+         "cache_url" : null,
+         "state" : "active",
+         "custom_resource_text" : "2010",
+         "size" : null,
+         "url_type" : null,
+         "resource_type" : null,
+         "mimetype_inner" : null,
+         "package_id" : "94dea50f-1256-439c-9b87-481ff47b9eb0",
+         "created" : "2018-11-05T14:01:55.484957",
+         "datastore_active" : false,
+         "description" : "This document aims to provide an overview of potential mitigation finance opportunities for soil carbon sequestration. The first part provides an overview of the opportunities for climate change mitigation from agricultural soil carbon sequestration, the emerging policy options and consequent institutional mechanisms for financing such mitigation, and the opportunities for smallholders to participate in them. The second part is aimed primarily at carbon project developers and decision makers at national level concerned with environmental and agriculture policies and incentives, and nongovernmental organizations (NGOs) and farmers’ associations working towards rural development and poverty alleviation. It provides step-by-step practical support to project development.",
+         "url" : "http://www.fao.org/docrep/015/i2485e/i2485e00.pdf",
+         "format" : "PDF",
+         "name" : "Climate change mitigation finance for smallholder agriculture",
+         "cache_last_updated" : null,
+         "id" : "9c3454fc-7207-49d8-928e-26c205e55da5",
+         "hash" : "",
+         "position" : 0
+      },
+      {
+         "name" : "Carbon finance possibiities for agriculture, forestry and other land use projects in  a smallholder context",
+         "cache_last_updated" : null,
+         "id" : "5c922262-19ee-4fd4-af9d-a4b196640eed",
+         "hash" : "",
+         "position" : 1,
+         "revision_id" : "43a5daad-57c3-4855-8502-3653a19dcbee",
+         "mimetype" : "text/html",
+         "cache_url" : null,
+         "last_modified" : null,
+         "state" : "active",
+         "custom_resource_text" : "2009",
+         "resource_type" : null,
+         "mimetype_inner" : null,
+         "url_type" : null,
+         "size" : null,
+         "datastore_active" : false,
+         "created" : "2018-11-05T14:02:39.393037",
+         "package_id" : "94dea50f-1256-439c-9b87-481ff47b9eb0",
+         "format" : "PDF",
+         "url" : "http://www.fao.org/docrep/012/i1632e/i1632e00.htm",
+         "description" : "This guide has been assembled for extension services and institutions working with smallholders to support them in their advisory role on developments of the carbon markets and financial mechanisms. It aims to enhance knowledge on carbon finance and facilitate\r\nthe integration of small-scale farmers into AFOLU mitigation activities. The participation of these farmers allows them to be involved in the development and implementation of the project, influence its design to generate positive impacts for the farmers and increase their knowledge about climate change mitigation and carbon finance."
+      }
+   ]
+}

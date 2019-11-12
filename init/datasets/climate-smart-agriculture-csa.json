@@ -1,0 +1,149 @@
+{
+   "isopen" : true,
+   "maintainer" : "",
+   "groups" : [
+      {
+         "description" : "If the global food supply is to keep pace with population growth and dietary changes, agricultural productivity must increase. Changes in agricultural practices can help the world not only to meet its targets for reducing greenhouse gas emissions but also to contribute to food security.",
+         "id" : "6a97ef1b-ee43-4dd2-bc4c-d2a8edd184e2",
+         "name" : "climate-change-mitigation",
+         "display_name" : "Climate Change Mitigation",
+         "title" : "Climate Change Mitigation",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091217.791254groupccm.png"
+      },
+      {
+         "title" : "Climate change adaptation and resilience",
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091123.372567groupcca.png",
+         "display_name" : "Climate change adaptation and resilience",
+         "id" : "cf347799-c68d-41d5-9eea-00ab8d24e779",
+         "description" : "Climate change threatens our ability to ensure global food security, eradicate poverty and achieve sustainable development. Greenhouse gas (GHG) emissions from human activity and livestock are a significant driver of climate change, trapping heat in the earth's atmosphere and triggering global warming.",
+         "name" : "climate-change-adaptation"
+      },
+      {
+         "image_display_url" : "http://10.10.100.1/uploads/group/2018-06-19-091432.861802groupfsn.png",
+         "title" : "Food Security and Nutrition",
+         "display_name" : "Food Security and Nutrition",
+         "name" : "food-security-and-nutrition",
+         "description" : "The 2030 Agenda for Sustainable Development and the UN Decade of Action on Nutrition 2016–2025 call on all countries and stakeholders to act together to end hunger and prevent all forms of malnutrition by 2030.",
+         "id" : "41ae50aa-2a21-4bb0-b906-05853f61ae43"
+      }
+   ],
+   "num_resources" : 2,
+   "author_email" : "",
+   "version" : "",
+   "url" : "http://www.fao.org/climate-smart-agriculture/en/",
+   "num_tags" : 4,
+   "Q2" : "Implementing practices",
+   "metadata_created" : "2018-07-27T09:41:19.607225",
+   "relationships_as_subject" : [],
+   "organization" : {
+      "state" : "active",
+      "is_organization" : true,
+      "type" : "organization",
+      "created" : "2018-06-18T21:48:24.043342",
+      "description" : "Food and Agriculture Organization of the United Nations",
+      "image_url" : "2018-06-19-070454.319366fao.png",
+      "name" : "fao",
+      "title" : "FAO",
+      "id" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+      "revision_id" : "56b402f0-b159-4996-84d0-7362b74a6d7d",
+      "approval_status" : "approved"
+   },
+   "metadata_modified" : "2018-10-12T09:52:34.817161",
+   "license_id" : "cc-by",
+   "state" : "active",
+   "type" : "dataset",
+   "Q3" : "Global",
+   "tags" : [
+      {
+         "id" : "dc65daf3-719f-44e2-b121-8d4ca0c707d8",
+         "name" : "Adaptation",
+         "state" : "active",
+         "vocabulary_id" : null,
+         "display_name" : "Adaptation"
+      },
+      {
+         "name" : "Crops",
+         "id" : "52707c5e-813c-41d0-b47a-c1775b771c24",
+         "state" : "active",
+         "vocabulary_id" : null,
+         "display_name" : "Crops"
+      },
+      {
+         "name" : "Livestock",
+         "id" : "63f52349-8d52-44d9-b183-d998a81f06ed",
+         "state" : "active",
+         "vocabulary_id" : null,
+         "display_name" : "Livestock"
+      },
+      {
+         "id" : "e9f6a35d-90f1-4094-9c26-2f9b47880145",
+         "name" : "Mitigation",
+         "vocabulary_id" : null,
+         "state" : "active",
+         "display_name" : "Mitigation"
+      }
+   ],
+   "title" : "Guidelines: Climate-Smart Agriculture (CSA)",
+   "license_title" : "Creative Commons Attribution",
+   "id" : "4851de40-4299-454d-b16f-47fd73c30e78",
+   "author" : "",
+   "private" : false,
+   "name" : "climate-smart-agriculture-csa",
+   "resources" : [
+      {
+         "url" : "http://www.fao.org/climate-smart-agriculture-sourcebook/en/",
+         "last_modified" : null,
+         "description" : "The Climate-Smart Agriculture Sourcebook comprises a wide range of knowledge and expertise on the concept of CSA to better guide policy makers, programme managers, sectoral experts, academics, extensionists, as well as practitioners to make the agricultural sectors (crops, livestock, fisheries and forestry) more sustainable and productive, while responding to the challenges of climate change and food security.",
+         "name" : "Climate-smart agriculture sourcebook",
+         "datastore_active" : false,
+         "resource_type" : null,
+         "custom_resource_text" : "2017",
+         "created" : "2018-07-27T09:42:36.274047",
+         "id" : "268f1717-403e-46d5-bfb4-14a21106c93a",
+         "position" : 0,
+         "cache_url" : null,
+         "package_id" : "4851de40-4299-454d-b16f-47fd73c30e78",
+         "hash" : "",
+         "mimetype_inner" : null,
+         "state" : "active",
+         "mimetype" : null,
+         "revision_id" : "0ec2a35c-1ae3-48d6-9fef-ae6a12f20c47",
+         "format" : "HTML",
+         "url_type" : null,
+         "cache_last_updated" : null,
+         "size" : null
+      },
+      {
+         "state" : "active",
+         "mimetype_inner" : null,
+         "mimetype" : "application/pdf",
+         "hash" : "",
+         "cache_last_updated" : null,
+         "size" : null,
+         "url_type" : null,
+         "format" : "PDF",
+         "revision_id" : "53df6662-4a09-4c20-8c57-7169dbfd9cb7",
+         "resource_type" : null,
+         "created" : "2018-10-11T13:40:58.932604",
+         "custom_resource_text" : "2014",
+         "description" : "This brief will first introduce the components of Climate-Smart Agriculture (CSA) and then\r\ndescribe the approach for its implementation at the country level as developed and\r\nimplemented by the Economics and Policy Innovations for Climate-Smart Agriculture\r\n(EPIC) Programme of work at the FAO. ",
+         "url" : "http://www.fao.org/3/a-i4314e.pdf",
+         "last_modified" : null,
+         "datastore_active" : false,
+         "name" : "How do we actually the business s usual management of agricultural systems? A methodology for building CSA",
+         "package_id" : "4851de40-4299-454d-b16f-47fd73c30e78",
+         "position" : 1,
+         "cache_url" : null,
+         "id" : "103ea949-fed6-4851-9437-02f0afa869e0"
+      }
+   ],
+   "owner_org" : "73c30a42-dfef-4c15-b828-3b4b37293e36",
+   "Q1" : "Methodologies and Guidelines",
+   "revision_id" : "3f6363ac-c7fc-4481-8df8-7ef42b1db87f",
+   "license_url" : "http://www.opendefinition.org/licenses/cc-by",
+   "relationships_as_object" : [],
+   "notes" : "CSA is an approach to help the people who manage agricultural systems respond effectively to climate change.  The CSA approach pursues the triple objectives of sustainably increasing productivity and incomes, adapting to climate change and reducing greenhouse gas emissions where possible.  This does not imply that every practice applied in every location should produce “triple wins”.  Rather the CSA approach seeks to reduce trade-offs and promote synergies by taking these objectives into consideration to inform decisions from the local to the global scales and over short and long time horizons, to derive locally-acceptable solutions.",
+   "custom_text" : "2017",
+   "creator_user_id" : "4d49e192-0af5-4eb2-9971-0541b4ef6610",
+   "maintainer_email" : ""
+}
