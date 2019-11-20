@@ -1,0 +1,26 @@
+{% set count = dataset_count or -1 %}
+<div class="fao-item-summary">
+    <a href="{{ dataset_url }}" class="fao-item-header">
+        {% if (thumbnail)%}
+        <div class="fao-item-thumbnail" style="background-image: url('{{ thumbnail }}')"></div>
+        {% else %}
+        <div class="fao-item-thumbnail"></div>
+        {% endif %}
+        <div class="fao-item-title">
+            <h3 title="{{ title }}">{{ h.truncate(title, length=45, whole_word=True) }}</h3>
+        </div>
+        <div class="fao-item-body">
+            <div class="fao-item-body">
+                {% if (count == -1) %}
+                <div class="fao-item-count"></div>
+                {% else %}
+                    {% if (count == 0) %}
+                    <div class="fao-item-count">{% trans %}{{ count }} Dataset{% endtrans %}</div>
+                    {% else %}
+                    <div class="fao-item-count"><strong>{% trans %}{{ count }} Datasets{% endtrans %}</strong></div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </a>
+</div>

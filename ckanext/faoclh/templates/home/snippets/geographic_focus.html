@@ -1,0 +1,29 @@
+{% set items = [
+    { "title": "Global", "href": "/dataset?Q3=Global", "thumbnail": "/fao/images/world.png" },
+    { "title": "Africa", "href": "/dataset?Q3=Africa", "thumbnail": "/fao/images/continent-africa.png" },
+    { "title": "Asia", "href": "/dataset?Q3=Asia", "thumbnail": "/fao/images/continent-asia.png" },
+    { "title": "America", "href": "/dataset?Q3=America", "thumbnail": "/fao/images/continent-america.png" }
+] %}
+
+<div class="container-fluid box">
+    <div class="row">
+        <div class="col-xs-8">
+            <h3 class="heading">{{ _('Geographic Focus') }}</h3>
+        </div>
+        <div class="col-xs-4">
+            <a href="/dataset">
+                <div class="fao-item-see-all">{{_('See all')}}</div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        {% for item in items %}
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            {% snippet 'home/snippets/fao_item_summary.html',
+                title=item.title,
+                dataset_url=item.href,
+                thumbnail=item.thumbnail %}
+        </div>
+        {% endfor %}
+    </div>
+</div>

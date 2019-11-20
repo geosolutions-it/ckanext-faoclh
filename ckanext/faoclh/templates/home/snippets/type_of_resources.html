@@ -1,0 +1,29 @@
+{% set items = [
+    { "title": "Database", "href": "/dataset?Q1=Database", "thumbnail": "/fao/images/database.png" },
+    { "title": "Learning Material", "href": "/dataset?Q1=Learning+Material", "thumbnail": "/fao/images/learning_material.png" },
+    { "title": "Methodologies and Guidelines", "href": "/dataset?Q1=Methodologies+and+Guidelines", "thumbnail": "/fao/images/methodologies.png" },
+    { "title": "Official Documents", "href": "/dataset?Q1=Official+documents", "thumbnail": "/fao/images/official_Docs.png" }
+] %}
+
+<div class="container-fluid box">
+    <div class="row">
+        <div class="col-xs-8">
+            <h3 class="heading">{{ _('Type of resources') }}</h3>
+        </div>
+        <div class="col-xs-4">
+            <a href="/dataset">
+                <div class="fao-item-see-all">{{_('See all')}}</div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        {% for item in items %}
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            {% snippet 'home/snippets/fao_item_summary.html',
+                title=item.title,
+                dataset_url=item.href,
+                thumbnail=item.thumbnail %}
+        </div>
+        {% endfor %}
+    </div>
+</div>
