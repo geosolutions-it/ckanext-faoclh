@@ -1,0 +1,33 @@
+{% set topics = h.featured_group_org([
+    'climate-change-adaptation',
+    'climate-change-mitigation',
+    'disaster-risk-reduction-and-disaster-risk-managment',
+    'food-security-and-nutrition'],
+    get_action='group_show',
+    list_action='group_list',
+    count = 4) %}
+
+<div class="container-fluid box">
+    <div class="row">
+        <div class="col-xs-8">
+            <h3 class="heading">{{ _('Topics') }}</h3>
+        </div>
+        <div class="col-xs-4">
+            <a href="/group">
+                <div class="fao-item-see-all">{{_('See all')}}</div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        {% for topic in topics %}
+        <div class="col-lg-3 col-md-3 col-sm-6">
+            {% set type = topic.type or 'group' %}
+            {% set url = h.url_for(type ~ '_read', action='read', id=topic.name) %}
+            {% snippet 'home/snippets/fao_item_summary.html',
+                title=topic.title,
+                dataset_url=url,
+                thumbnail=topic.image_display_url or h.url_for_static('/base/images/placeholder-group.png') %}
+        </div>
+        {% endfor %}
+    </div>
+</div>

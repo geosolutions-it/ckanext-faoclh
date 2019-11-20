@@ -1,0 +1,14 @@
+{
+  "name": "faoclh",
+  "version": "1.0.0",
+  "description": "faoclh-style",
+  "main": "index.js",
+  "scripts": {
+    "generate-less": "lessc less/main.less css/main.css"
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "less": "3.10.3"
+  }
+}
