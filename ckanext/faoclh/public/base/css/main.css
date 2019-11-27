@@ -10839,6 +10839,12 @@ h5 {
   color: #999;
   font-weight: normal;
 }
+.dataset-heading {
+  font-weight: bold;
+}
+.context-info h1.heading {
+  color: #0d6cac;
+}
 /* HEADER */
 .masthead .nav > li > a {
   color: #0d6cac;
