@@ -58,8 +58,8 @@ class VocabCommand(CkanCommand):
                                dest='vocfile',
                                default=None,
                                help='Path to a JSON file containing the vocabulary to load')
-#        self.parser.add_option('--name', dest='name', default=None,
-#                               help='Name of the vocabulary to work with')
+        self.parser.add_option('-n', '--name', dest='name', default=None,
+                              help='Name of the vocabulary to work with')
 
     def command(self):
         '''
@@ -76,12 +76,36 @@ class VocabCommand(CkanCommand):
 
         if cmd == 'load':
             self.load()
-        # elif cmd == 'initdb':
-        #     self.initdb()
+        elif cmd == 'delete':
+            self.delete()
         else:
             print(self.usage)
             print('ERROR: Command "%s" not recognized' % (cmd,))
             return
+
+    def delete(self):
+        vocab_name = self.options.name
+        if not(vocab_name):
+            print(self.usage)
+            print('ERROR: Missing vocabulary name')
+            return
+
+        print ("Removing vocabulary {}".format(vocab_name))
+        user = toolkit.get_action('get_site_user')({'ignore_auth': True}, {})
+        context = {'user': user['name'], 'ignore_auth': True}
+
+        vocab = self._vocab_get(context, vocab_name)
+        if not(vocab):
+            print("Vocabulary {0} does not exists.".format(vocab_name))
+            return
+
+        data = {'vocabulary_id': vocab_name}
+        tags = toolkit.get_action('tag_list')(context, data)
+        for tag in tags:
+            self._del_tag(context, vocab, tag)
+
+        data = {'id': vocab['id']}
+        return toolkit.get_action('vocabulary_delete')(context, data)
 
     def load(self):
 
@@ -100,20 +124,17 @@ class VocabCommand(CkanCommand):
             data = json.load(json_file)
 
             vocab_name = data["name"]
+            loaded_tags = data['tags']
+            tag_names = [tag['name']  for tag in loaded_tags]
+
             print ("Loaded vocabulary {}".format(vocab_name))
 
-            tags = [{'name':tag['name']} for tag in data['tags']]
-
-            if self._vocab_get(context, vocab_name):
-                print("Vocabulary {0} already exists, skipping import.".format(vocab_name))
-                # TODO: update vocab by only adding new entries
-                return
-
-            vocab = self._vocab_create(context, vocab_name, tags)
-
-            if not(vocab):
-                print('ERROR: Vocabulary "%s" not created' % (vocab_name))
-                return
+            vocab = self._vocab_get(context, vocab_name)
+            if vocab:
+                print("Vocabulary {0} already exists.".format(vocab_name))
+                ret = self._vocab_update(context, vocab, tag_names)
+            else:
+                ret = self._vocab_create(context, vocab_name, tag_names)
 
         print('Vocabulary successfully loaded ({0})'.format(vocab_name))
 
@@ -127,16 +148,53 @@ class VocabCommand(CkanCommand):
             return False
 
     @staticmethod
+    def _tags_get(context, vocab_name):
+        try:
+            data = {'vocabulary_id': vocab_name}
+            return toolkit.get_action('tag_list')(context, data)
+
+        except toolkit.ObjectNotFound:
+            return False
+
+    @staticmethod
     def _vocab_create(context, vocab_name, tags):
         print("Creating vocabulary '{0}'".format(vocab_name))
 
-        data = {'name': vocab_name, 'tags': tags}
+        tags_list_dict = [{'name': tag} for tag in tags]
+        data = {'name': vocab_name, 'tags': tags_list_dict}
         vocab = toolkit.get_action('vocabulary_create')(context, data)
 
         return vocab
 
-    @staticmethod
-    def _add_tag(context, vocab, tag):
-        print("Adding tag {0} to vocabulary '{1}'".format(tag, vocab['name']))
-        data = {'name': tag, 'vocabulary_id': vocab['id']}
-        toolkit.get_action('tag_create')(context, data)
+    def _vocab_update(self, context, vocab, tags):
+        vocab_name = vocab['name']
+        print("Updating vocabulary '{0}'".format(vocab_name))
+
+        data = {'vocabulary_id': vocab_name}
+        old_tags = toolkit.get_action('tag_list')(context, data)
+
+        to_add = [tag for tag in tags if tag not in old_tags]
+        to_del = [tag for tag in old_tags if tag not in tags]
+
+        print("Tags to add '{}'".format(to_add))
+        print("Tags to remove '{}'".format(to_del))
+
+        for tag in to_add:
+            self._add_tag(context, vocab, tag)
+
+        for tag in to_del:
+            self._del_tag(context, vocab, tag)
+
+        return True
+
+    def _add_tag(self, context, vocab, tag_name):
+        vocab_name = vocab['name']
+        print("Adding tag {1} : {0}".format(tag_name, vocab_name))
+        data = {'name': tag_name, 'vocabulary_id': vocab['id']}
+        return toolkit.get_action('tag_create')(context, data)
+
+    def _del_tag(self, context, vocab, tag_name):
+        vocab_name = vocab['name']
+        print("Removing tag {1} : {0}".format(tag_name, vocab_name))
+        data = {'id': tag_name, 'vocabulary_id': vocab['id']}
+        return toolkit.get_action('tag_delete')(context, data)

@@ -68,6 +68,17 @@ Then activate the virtualenv and load the vocabularies:
 - `paster --plugin=ckanext-faoclh vocab load -i /etc/ckan/default/vocab/fao_activity_type.json     --config=/etc/ckan/default/production.ini`
 - `paster --plugin=ckanext-faoclh vocab load -i /etc/ckan/default/vocab/fao_geographic_focus.json  --config=/etc/ckan/default/production.ini`
 
+If you need to update the vocabulary, edit the file and run the `vocab load` command again; the
+command will add and remove the related tags as needed.
+
+If you need to completely remove a vocabulary, you can run:
+
+    paster --plugin=ckanext-faoclh vocab delete -n VOCAB_NAME --config=/etc/ckan/default/production.ini
+
+for instance
+
+    paster --plugin=ckanext-faoclh vocab delete -n fao_resource_type --config=/etc/ckan/default/production.ini
+ 
 
 Load datasets
 -------------
