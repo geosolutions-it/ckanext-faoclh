@@ -100,4 +100,17 @@ msgstr[0] "{number} organization found for \"{query}\""
 msgstr[1] "{number} organisations found for \"{query}\""
 
 
+msgid "fao_resource_type"
+msgstr "Type of Resource"
 
+msgid "fao_activity_type"
+msgstr "Kind of Activity"
+
+msgid "fao_geographic_focus"
+msgstr "Geographic Focus"
+
+msgid "fao_release_year"
+msgstr "Year of Release"
+
+msgid "fao_resource_release_year"
+msgstr "Year of Release"

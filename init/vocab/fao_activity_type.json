@@ -1,0 +1,59 @@
+{
+  "name": "fao_activity_type",
+  "tags": [
+    {
+      "name": "Analysing-Modelling_CC",
+      "labels": {
+        "en": "Analysing/Modelling CC"
+      }
+    },
+    {
+      "name": "Policy_making",
+      "labels": {
+        "en": "Policy making"
+      }
+    },
+    {
+      "name": "Leveraging_finance",
+      "labels": {
+        "en": "Leveraging finance"
+      }
+    },
+    {
+      "name": "Monitoring_CC_activities",
+      "labels": {
+        "en": "Monitoring CC activities"
+      }
+    },
+    {
+      "name": "Reporting_CC_activities",
+      "labels": {
+        "en": "Reporting CC activities"
+      }
+    },
+    {
+      "name": "Implementing_practices",
+      "labels": {
+        "en": "Implementing practices"
+      }
+    },
+    {
+      "name": "Gathering_data",
+      "labels": {
+        "en": "Gathering data"
+      }
+    },
+    {
+      "name": "Increasing_knowledge",
+      "labels": {
+        "en": "Increasing knowledge"
+      }
+    },
+    {
+      "name": "Capacity_development",
+      "labels": {
+        "en": "Capacity development"
+      }
+    }
+  ]
+}

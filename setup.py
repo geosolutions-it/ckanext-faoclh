@@ -25,8 +25,11 @@ setup(
 	entry_points="""
         [ckan.plugins]
 			faoclh=ckanext.faoclh.plugin:FAOCLHGUIPlugin
+			
+		[paste.paster_command]
+        	vocab=ckanext.faoclh.cli.vocab:VocabCommand
+			
 	""",
-
 	message_extractors={
 		'ckanext': [
 			('**.py', 'python', None),

@@ -1,0 +1,41 @@
+{
+  "name": "fao_geographic_focus",
+  "tags": [
+    {
+      "name": "Global",
+      "labels": {
+        "en": "Global"
+      }
+    },
+    {
+      "name": "Africa",
+      "labels": {
+        "en": "Africa"
+      }
+    },
+    {
+      "name": "Asia",
+      "labels": {
+        "en": "Asia"
+      }
+    },
+    {
+      "name": "America",
+      "labels": {
+        "en": "America"
+      }
+    },
+    {
+      "name": "Europe",
+      "labels": {
+        "en": "Europe"
+      }
+    },
+    {
+      "name": "Oceania",
+      "labels": {
+        "en": "Oceania"
+      }
+    }
+  ]
+}

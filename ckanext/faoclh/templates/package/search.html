@@ -19,3 +19,18 @@
   %}
   {% snippet 'snippets/search_form.html', type='dataset', query=c.q, sorting=sorting, sorting_selected=c.sort_by_selected, count=c.page.item_count, facets=facets, show_empty=request.params, error=c.query_error %}
 {% endblock %}
+
+{% block secondary_content %}
+<div class="filters">
+  <div>
+    {% for facet in c.facet_titles %}
+      {% if facet  in ['fao_resource_type', 'fao_activity_type', 'fao_geographic_focus']  %}
+        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.fao_voc_label_func(facet)) }}
+      {% else %}
+        {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet) }}
+      {% endif %}
+    {% endfor %}
+  </div>
+  <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
+</div>
+{% endblock %}

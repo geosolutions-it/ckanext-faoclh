@@ -1,0 +1,59 @@
+{
+  "name": "fao_resource_type",
+  "tags": [
+    {
+      "name": "Country_experience",
+      "labels": {
+        "en": "Country experience"
+      }
+    },
+    {
+      "name": "Tool",
+      "labels": {
+        "en": "Tool"
+      }
+    },
+    {
+      "name": "Learning_material",
+      "labels": {
+        "en": "Learning material"
+      }
+    },
+    {
+      "name": "Database",
+      "labels": {
+        "en": "Database"
+      }
+    },
+    {
+      "name": "Methodologies_and_Guidelines",
+      "labels": {
+        "en": "Methodologies and Guidelines"
+      }
+    },
+    {
+      "name": "Policy_Brief",
+      "labels": {
+        "en": "Policy Brief"
+      }
+    },
+    {
+      "name": "Official_documents",
+      "labels": {
+        "en": "Official documents"
+      }
+    },
+    {
+      "name": "Study",
+      "labels": {
+        "en": "Study"
+      }
+    },
+    {
+      "name": "Platform",
+      "labels": {
+        "en": "Platform"
+      }
+    }
+  ]
+}
