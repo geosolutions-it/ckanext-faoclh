@@ -17,6 +17,7 @@ import ckan.common as common
 import ckan.logic as logic
 from paste.deploy.converters import asbool
 import ckan.model as model
+from routes.mapper import SubMapper
 
 log = logging.getLogger(__name__)
 
@@ -39,6 +40,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IRoutes)
 
     # IPackageController
     def before_search(self, search_params):
@@ -128,6 +130,29 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_public_directory(config, 'public')
         toolkit.add_resource('fanstatic', "faoclh")
+        toolkit.add_ckan_admin_tab(config, 'vocabs', 'My vocabs')
+
+    def before_map(self, map_obj):
+        u'''
+        Called before the routes map is generated. ``before_map`` is before any
+        other mappings are created so can override all other mappings.
+
+        :param map: Routes map object
+        :returns: Modified version of the map object
+        '''
+        with SubMapper(map_obj, controller=u'ckanext.faoclh.controller:VocabController') as mp:
+            mp.connect(u'vocabs', u'/ckan-admin/vocabs', action=u'get')
+        return map_obj
+
+    def after_map(self, map_obj):
+        u'''
+        Called after routes map is set up. ``after_map`` can be used to
+        add fall-back handlers.
+
+        :param map: Routes map object
+        :returns: Modified version of the map object
+        '''
+        return map_obj
 
     def _modify_package_schema(self, schema):
         # Our custom field
