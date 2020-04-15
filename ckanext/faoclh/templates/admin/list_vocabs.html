@@ -1,0 +1,20 @@
+{% extends "admin/base_vocab.html" %}
+
+{% block vocab_content %}
+<table style="width: 100%; border-collapse: collapse;">
+  <tr style="background-color: #f6f6f6; padding: 5px; border-bottom: 1px solid #ddd;">
+    <th style="width: 40%; text-align: center; padding: 5px 1px 5px 0px;">Name</th>
+    <th style="padding: 5px 1px 5px 0px;">Labels</th>
+  </tr>
+  {% for tag in tags %}
+  <tr style="border-bottom: 1px solid #f6f6f6;">
+    <td style="width: 40%; text-align: center; padding: 5px 1px 5px 0px;">
+      <a href="?vocab_type={{vocab_type}}&id={{tag['id']}}">
+        {{tag["display_name"]}}
+      </a>
+    </td>
+    <td style="padding: 5px 1px 5px 0px;">---</td>
+  </tr>
+  {% endfor %}
+</table>
+{% endblock %}

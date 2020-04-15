@@ -1,0 +1,36 @@
+{% extends "admin/base_vocab.html" %}
+
+{% block vocab_content %}
+<div>
+    <h3>Create/Edit new {{ vocab_type_name }}</h3>
+    <form>
+        <div class="form-group control-medium">
+            <div class="controls">
+                <div class="form-group control-medium">
+                    <label class="control-label" for="field-fao_release_year">
+                        <span class="control-required">*</span>
+                        Name
+                    </label>
+                    <div class="controls ">
+                        <input type="text" name="fao_release_year" value="" placeholder="vocabulary name"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="controls">
+                <div class="form-group control-medium">
+                    <label class="control-label" for="field-fao_release_year">Label</label>
+                    <div class="controls ">
+                        <input type="text" name="fao_release_year" value="" placeholder="vocabulary label"
+                            class="form-control">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <a class="btn btn-danger pull-left" href="#" data-module="confirm-action">Cancel</a>
+            <button class="btn btn-primary" name="save" type="submit">Create Vocabulary</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
