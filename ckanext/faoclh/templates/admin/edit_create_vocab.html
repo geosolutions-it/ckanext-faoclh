@@ -12,7 +12,7 @@
         </ul>
     </div>
     {% endif %}
-    <h3>Create/Edit new {{ vocab_name_name }}</h3>
+    <h3>{% if name %}Edit{% else %}Add New {%  endif %} {{ vocab_name_name }} Tag</h3>
     <form method="POST">
         <div class="form-group control-medium">
             <div class="controls">
@@ -22,7 +22,7 @@
                         Name
                     </label>
                     <div class="controls ">
-                        <input type="text" name="name" value="{{name}}" placeholder="vocabulary name"
+                        <input type="text" name="name" value="{{ name }}" placeholder="vocabulary name"
                             class="form-control" min="2" max="100" required>
                     </div>
                 </div>
