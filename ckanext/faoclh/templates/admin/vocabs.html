@@ -3,3 +3,20 @@
 {% block primary_content_inner %}
 <h1>Ckan Vocabs</h1>
 {% endblock %}
+
+
+{% block secondary_content %}
+<div class="module module-narrow module-shallow">
+  <h2 class="module-heading">
+    <i class="fa fa-info-circle"></i>
+    {{ _("Vocabularies") }}
+  </h2>
+  <div class="module-content">
+    <p>
+      {% trans %}
+      Some text about what vocabulararies are..
+      {% endtrans %}
+    </p>
+  </div>
+</div>
+{% endblock %}
