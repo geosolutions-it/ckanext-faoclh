@@ -130,7 +130,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_public_directory(config, 'public')
         toolkit.add_resource('fanstatic', "faoclh")
-        toolkit.add_ckan_admin_tab(config, 'vocabs', 'My vocabs')
+        toolkit.add_ckan_admin_tab(config, 'vocabs', 'Vocabularies')
 
     def before_map(self, map_obj):
         u'''
@@ -140,8 +140,8 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         :param map: Routes map object
         :returns: Modified version of the map object
         '''
-        with SubMapper(map_obj, controller=u'ckanext.faoclh.controller:VocabController') as mp:
-            mp.connect(u'vocabs', u'/ckan-admin/vocabs', action=u'get')
+        with SubMapper(map_obj, controller=u'ckanext.faoclh.controller:VocabularyController') as mp:
+            mp.connect(u'vocabs', u'/ckan-admin/vocabs', action=u'vocabularies')
         return map_obj
 
     def after_map(self, map_obj):
