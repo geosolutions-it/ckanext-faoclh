@@ -1,7 +1,49 @@
 {% extends "admin/base.html" %}
 
 {% block primary_content_inner %}
-<h1>Ckan Vocabs</h1>
+<div class="vocabs">
+  <button>Add Resource Type</button>
+  <hr />
+  <div style="display: flex; margin-top: 1%;">
+    <div style="background-color: #f6f6f6;width: 30%; display: flex; border-right: 1px solid #ddd;">
+      <ul style="list-style-type: none; padding: 22px 0px 35px 16px; width: 100%;">
+        <a href="?vocab_type=fao_resource_type" style="text-decoration: none;">
+          <li
+            style="padding: 8px;background-color: #ffffff; margin-right: -1px; border: 1px solid #ddd; border-right-color: transparent; text-align: center;">
+            Resource Type</li>
+        </a>
+        <a href="?vocab_type=fao_activity_type" style="text-decoration: none;">
+          <li
+            style="padding: 8px; width: inherit; margin-right: -1px; border-left-color: transparent; text-align: center;">
+            Activity Type</li>
+        </a>
+        <a href="?vocab_type=fao_geographic_focus" style="text-decoration: none;">
+          <li
+            style="padding: 8px; width: inherit; margin-right: -1px; border-left-color: transparent; text-align: center;">
+            Geographical Focus</li>
+        </a>
+      </ul>
+    </div>
+    <div style="width: 70%; padding: 1px 1px 1px 20px;">
+      <table style="width: 100%; border-collapse: collapse;">
+        <tr style="background-color: #f6f6f6; padding: 5px;">
+          <th>Name</th>
+          <th>Labels</th>
+        </tr>
+        {% for tag in tags %}
+        <tr>
+          <td>
+            <a href="?vocal_type={{vocal_type}}&id={{tag['id']}}">
+              {{tag["display_name"]}}
+            </a>
+          </td>
+          <td>---</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 
@@ -13,9 +55,7 @@
   </h2>
   <div class="module-content">
     <p>
-      {% trans %}
-      Some text about what vocabulararies are..
-      {% endtrans %}
+      {{_("Explain what vocabularies are..")}}
     </p>
   </div>
 </div>
