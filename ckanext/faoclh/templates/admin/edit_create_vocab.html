@@ -12,6 +12,11 @@
         </ul>
     </div>
     {% endif %}
+    {% if created %}
+    <div class="error-explanation alert alert-success">
+        <p>{{ vocab_name_name }} Tag {% if name %}Edited{% else %}Created{%  endif %} Successfuly</p>
+    </div>
+    {% endif %}
     <h3>{% if name %}Edit{% else %}Add New {%  endif %} {{ vocab_name_name }} Tag</h3>
     <form method="POST">
         <div class="form-group control-medium">
