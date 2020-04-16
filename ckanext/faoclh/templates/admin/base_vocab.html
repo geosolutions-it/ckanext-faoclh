@@ -7,27 +7,27 @@
     Add {{ vocab_name_name }}
   </a>
   <hr />
-  <div style="display: flex; margin-top: 1%;">
-    <div style="background-color: #f6f6f6;width: 30%; display: flex; border-right: 1px solid #ddd;">
-      <ul style="list-style-type: none; padding: 22px 0px 35px 16px; width: 100%;">
-        <a href="?vocab_name=fao_resource_type" style="text-decoration: none;">
+  <div class="vocab-container">
+    <div class="nav">
+      <ul>
+        <a href="?vocab_name=fao_resource_type">
           <li
-            style="text-align: center; padding: 8px; margin-right: -1px; {%if vocab_name == 'fao_resource_type' %}background-color: #ffffff; border: 1px solid #ddd; border-right-color: transparent;{% endif %}">
+          class="{%if vocab_name == 'fao_resource_type' %}active{% endif %}">
             Resource Type</li>
         </a>
-        <a href="?vocab_name=fao_activity_type" style="text-decoration: none;">
+        <a href="?vocab_name=fao_activity_type">
           <li
-            style="padding: 8px; width: inherit; margin-right: -1px; border-left-color: transparent; text-align: center; {%if vocab_name == 'fao_activity_type' %}background-color: #ffffff; border: 1px solid #ddd; border-right-color: transparent;{% endif %}">
+          class="{%if vocab_name == 'fao_activity_type' %}active{% endif %}">
             Activity Type</li>
         </a>
-        <a href="?vocab_name=fao_geographic_focus" style="text-decoration: none;">
+        <a href="?vocab_name=fao_geographic_focus">
           <li
-            style="padding: 8px; width: inherit; margin-right: -1px; border-left-color: transparent; text-align: center; {%if vocab_name == 'fao_geographic_focus' %}background-color: #ffffff; border: 1px solid #ddd; border-right-color: transparent;{% endif %}">
+            class="{%if vocab_name == 'fao_geographic_focus' %}active{% endif %}">
             Geographical Focus</li>
         </a>
       </ul>
     </div>
-    <div style="width: 70%; padding: 1px 1px 1px 20px;">
+    <div class="content">
       {% block vocab_content %}
       {# Vocab content #}
       {% endblock %}
