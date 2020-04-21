@@ -99,6 +99,107 @@ E.g.
 
 This step requires that groups and organizations have already been created.
 
+Enable multilingual support
+============
 
+Enable multilingual support for datasets, organizations/groups, tags, and resources using the [ckanext-multilang](https://github.com/geosolutions-it/ckanext-multilang) extension using the setup steps described below:
+
+#### Clone and install the [ckanext-spatial](https://github.com/ckan/ckanext-spatial) that is required by ckanext-multilang
+- Navigate to CKAN's source directory
+```
+$ cd /usr/lib/ckan/src/
+```
+
+- Clone ckanext-spatial
+```
+$ git clone https://github.com/ckan/ckanext-spatial
+```
+
+- Navigate to the ckanext-spatial root directory
+
+```
+$ cd ckanext-spatial
+```
+
+- Activate CKAN's virtual environment
+```
+$ . /usr/lib/ckan/default/bin/activate
+```
+
+- Install ckanext-spatial into CKAN's virtual environment
+```
+$ pip install -e .
+```
+
+### Clone and install the ckanext-multilang
+- Navigate to CKAN's source directory
+```
+$ cd /usr/lib/ckan/src/
+```
+
+- Clone ckanext-spatial
+```
+$ git clone https://github.com/geosolutions-it/ckanext-multilang
+```
+
+- Navigate to the ckanext-multilang root directory
+
+```
+$ cd ckanext-multilang
+```
+
+- Activate CKAN's virtual environment
+```
+$ . /usr/lib/ckan/default/bin/activate
+```
+
+- Install ckanext-spatial into CKAN's virtual environment
+```
+$ pip install -e .
+```
+
+### Initialize the DB with the mandatory Tables needed for localized records:
+```
+$ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/default/production.ini
+```
+
+NOTE: Make sure that the virtual environment is active before running the above command
+
+### Configure multilingual support in CKAN's configuration file (production.ini)
+To add multilingual configurations in CKAN's configuration file (production.ini) is found at `/etc/ckan/default/production.ini`, add the following configuration keys:
+
+- Add ckanext-spatial, ckanext-multilang extensions using the `ckan.plugins` configuration key separating each extension by space. Read more about adding extension [here](https://docs.ckan.org/en/ckan-1.4.3/extensions.html).
+```
+ckan.plugins = ckanext-spatial ckanext-multilang
+```
+
+ - Add all locales you intend to use in the user interface using ckan.locales_offered key by adding space separated locale codes. Read more about CKAN's internationalization settings here.
+ For example, to add English, and French, use the sample configuration below:
+```
+ckan.locales_offered = en fr
+```
+
+### Update the Solr schema.xml file used by CKAN introducing the following elements.
+Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/schema.xml`) with the following xml tags:
+
+Inside the `fields` tags, add the tag below:
+```
+<dynamicField name="package_multilang_localized_*" type="text" indexed="true" stored="true" multiValued="false"/>
+```
+
+Add the `copyField` tag shown below:
+```
+<copyField source="package_multilang_localized_*" dest="text"/>
+```
+
+Restart Solr
+```
+$ sudo service solr restart
+```
+
+### Restart CKAN
+```
+$ systemctl restart supervisord
+```
 
 
