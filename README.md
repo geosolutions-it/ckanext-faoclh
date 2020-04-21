@@ -135,7 +135,7 @@ $ pip install -e .
 $ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/default/production.ini
 ```
 
-NOTE: Make sure that the virtual environment is active before running the above command. See previous steps on how to activate the virtual environment.
+> **_NOTE:_** Make sure that the virtual environment is active before running the above command. See previous steps on how to activate the virtual environment.
 
 ### Configure multilingual support in CKAN's configuration file (production.ini)
 To add multilingual configurations in CKAN's configuration file (production.ini) found at `/etc/ckan/default/production.ini`, add the following configuration keys:
@@ -151,6 +151,8 @@ ckan.plugins = ckanext-multilang
 ```
 ckan.locales_offered = en fr
 ```
+
+>**_TIP:_** You can also enable/disable tag localization using the `enable_tag_localization` (with default `False`) settings tag by settings it to boolean True/False.
 
 ### Update the Solr schema.xml file used by CKAN introducing the following elements.
 Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/schema.xml`) with the following xml tags:
@@ -174,5 +176,3 @@ $ sudo service solr restart
 ```
 $ systemctl restart supervisord
 ```
-
-
