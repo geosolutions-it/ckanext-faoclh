@@ -102,7 +102,7 @@ This step requires that groups and organizations have already been created.
 Enable multilingual support
 ============
 
-Enable multilingual support for datasets, organizations/groups, tags, and resources using the [ckanext-multilang](https://github.com/geosolutions-it/ckanext-multilang) extension using the setup steps described below:
+Enable multilingual support for datasets, organizations/groups, tags, and resources using the [ckanext-multilang](https://github.com/geosolutions-it/ckanext-multilang) extension by following the setup steps described below:
 
 #### Clone and install the [ckanext-spatial](https://github.com/ckan/ckanext-spatial) that is required by ckanext-multilang
 - Navigate to CKAN's source directory
@@ -158,22 +158,23 @@ $ . /usr/lib/ckan/default/bin/activate
 $ pip install -e .
 ```
 
-### Initialize the DB with the mandatory Tables needed for localized records:
+### Initialize the database with the mandatory tables needed for localized records:
 ```
 $ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/default/production.ini
 ```
 
-NOTE: Make sure that the virtual environment is active before running the above command
+NOTE: Make sure that the virtual environment is active before running the above command. See previous steps on how to activate the virtual environment.
 
 ### Configure multilingual support in CKAN's configuration file (production.ini)
-To add multilingual configurations in CKAN's configuration file (production.ini) is found at `/etc/ckan/default/production.ini`, add the following configuration keys:
+To add multilingual configurations in CKAN's configuration file (production.ini) found at `/etc/ckan/default/production.ini`, add the following configuration keys:
 
 - Add ckanext-spatial, ckanext-multilang extensions using the `ckan.plugins` configuration key separating each extension by space. Read more about adding extension [here](https://docs.ckan.org/en/ckan-1.4.3/extensions.html).
 ```
 ckan.plugins = ckanext-spatial ckanext-multilang
 ```
 
- - Add all locales you intend to use in the user interface using ckan.locales_offered key by adding space separated locale codes. Read more about CKAN's internationalization settings here.
+ - Add all locales you intend to use in the user interface using `ckan.locales_offered` configuration key by adding space separated locale codes. Read more about CKAN's internationalization settings [here](https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#internationalisation-settings).
+ 
  For example, to add English, and French, use the sample configuration below:
 ```
 ckan.locales_offered = en fr
