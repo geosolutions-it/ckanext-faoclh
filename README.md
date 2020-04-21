@@ -173,7 +173,7 @@ To add multilingual configurations in CKAN's configuration file (production.ini)
 ckan.plugins = ckanext-spatial ckanext-multilang
 ```
 
- - Add all locales you intend to use in the user interface using `ckan.locales_offered` configuration key by adding space separated locale codes. Read more about CKAN's internationalization settings [here](https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#internationalisation-settings).
+ - Add all locales you intend to use in the user interface using `ckan.locales_offered` configuration key by adding space-separated locale codes. Read more about CKAN's internationalization settings [here](https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#internationalisation-settings).
  
  For example, to add English, and French, use the sample configuration below:
 ```
