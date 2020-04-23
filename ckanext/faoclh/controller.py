@@ -7,38 +7,71 @@ from ckan.common import _
 from ckan.lib.navl.dictization_functions import validate
 from ckan.logic import NotFound, ValidationError
 from ckanext.faoclh.cli.vocab import VocabCommand
+from ckan.lib.i18n import get_locales_from_config
+import ckanext.multilang.helpers as helpers
+from ckanext.multilang.model import PackageMultilang, TagMultilang
+from ckan.model import Tag
+from ckanext.multilang.model import PackageMultilang, GroupMultilang, TagMultilang
 
 log = logging.getLogger(__name__)
 
 
 class VocabularyController(base.BaseController):
-    def vocabularies(self, *args, **kwargs):
+    def __init__(self):
         self.created = False
-        self.errors = []
         self.template_mapper = {
             u'fao_resource_type': u'Resource Type',
             u'fao_activity_type': u'Activity Type',
             u'fao_geographic_focus': u'Geographical Focus'
         }
+        self.errors = []
+        self.available_locales = get_locales_from_config()
+        user = toolkit.get_action('get_site_user')({'ignore_auth': True}, {})
+        self.context = {'user': user['name'], 'ignore_auth': True}
+
+    def vocabularies(self, *args, **kwargs):
         request = kwargs[u'pylons'].request
         name = request.POST.get(u'name', u'')
-        label = request.POST.get(u'label', u'')
+
+        lang = helpers.getLanguage()
+        # log.info('hahha = {}'.format(lang))
+        # log.info('heheheh = {}'.format(get_locales_from_config()))
 
         self.vocab_name = request.GET.get(u'vocab_name', u'fao_resource_type')
         self.tag_name = request.GET.get(u'tag_name', u'')
-
         self.vocabs = self.get_vocab({}, self.vocab_name)
+        # log.info('vocabs = {}'.format(self.vocabs))
+
+        all_labels = TagMultilang.all_by_name(self.vocabs['id'])
+        print('all_labels', all_labels)
 
         if self.url_errors():
             return base.abort(404)
 
         if request.method == u'POST':
+            all_vocab_tags = Tag.all(self.vocabs['id'])
+            get_tag = (lambda tag: tag.name == self.tag_name)
+            tag = filter(get_tag, all_vocab_tags)
             self.errors = self.get_package_name_validation_errors(name)
-            if not self.errors:
-                if self.tag_name != u'NEW':
-                    self.del_tag({}, self.vocabs, self.tag_name)
+            labels = []
+            if tag:
+                labels = [
+                    {
+                        u'lang': lang,
+                        u'text': request.POST.get(lang, u''),
+                        u'name': self.vocabs[u'id'],
+                        u'id': tag[0].id,
+                    }
+                    for lang in self.available_locales
+                ]
 
-                self.add_tag({}, self.vocabs, name)
+            if not self.errors:
+                print('labels', labels)
+                TagMultilang.save_tags(*labels)
+                if self.tag_name != u'NEW':
+                    self.del_tag(self.context, self.vocabs, self.tag_name)
+
+                self.add_tag(self.context, self.vocabs, name)
 
         context = {
             u'vocab_name': self.vocab_name,
@@ -48,6 +81,7 @@ class VocabularyController(base.BaseController):
             u'errors': self.errors,
             u'name': self.tag_name if self.tag_name != u'NEW' else name,
             u'created': self.created,
+            u'available_locales': self.available_locales,
         }
 
         if self.tag_name:
@@ -59,7 +93,7 @@ class VocabularyController(base.BaseController):
         vocab_name = vocab[u'name']
         data = {u'name': tag_name, u'vocabulary_id': vocab[u'id']}
         try:
-            result = toolkit.get_action(u'tag_create')(context, data)
+            result = toolkit.get_action(u'tag_create')(self.context, data)
             self.created = True
         except ValidationError as e:
             if u'already belongs to vocabulary' in str(e):
@@ -93,3 +127,6 @@ class VocabularyController(base.BaseController):
         tags = [tag[u'name'] for tag in self.vocabs.get(u'tags', [])]
         return self.tag_name and (self.tag_name != u'NEW' and self.tag_name not in tags) \
             or not self.vocabs
+
+    # def persist_tags(self, tags):
+    #     TagMultilang.persist({'id': tag_id, 'name': tag.get('key'), 'text': tag.get('value')}, lang)
