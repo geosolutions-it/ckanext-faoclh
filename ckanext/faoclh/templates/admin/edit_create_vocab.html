@@ -34,10 +34,13 @@
             </div>
             <div class="controls">
                 <div class="form-group control-medium">
-                    <label class="control-label">Label</label>
-                    <div class="controls ">
-                        <input type="text" name="label" value="" placeholder="vocabulary label" class="form-control">
-                    </div>
+                    <label class="control-label">Label(s)</label>
+                    {% for lang in available_locales %}
+                    <div class="input-group" style="margin-top: 2%;">
+                        <label class="input-group-addon">{{ lang }}</label>
+                        <input class="form-control" id="{{ lang }}" type="text" name="{{ lang }}" value="" placeholder="">
+                      </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
