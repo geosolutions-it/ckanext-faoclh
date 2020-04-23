@@ -34,13 +34,10 @@ class VocabularyController(base.BaseController):
         name = request.POST.get(u'name', u'')
 
         lang = helpers.getLanguage()
-        # log.info('hahha = {}'.format(lang))
-        # log.info('heheheh = {}'.format(get_locales_from_config()))
 
         self.vocab_name = request.GET.get(u'vocab_name', u'fao_resource_type')
         self.tag_name = request.GET.get(u'tag_name', u'')
         self.vocabs = self.get_vocab({}, self.vocab_name)
-        # log.info('vocabs = {}'.format(self.vocabs))
 
         all_labels = TagMultilang.all_by_name(self.vocabs['id'])
         print('all_labels', all_labels)
