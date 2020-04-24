@@ -260,7 +260,6 @@ def fao_voc(voc_name):
 
 
 def fao_voc_label(voc_name, tag_name):
-    # log.info('called with hahahah ===== {}'.format(voc_name, tag_name))
     path = config.get('fao.vocab.path')
     vocab_file = os.path.join(path, voc_name + ".json")
 
