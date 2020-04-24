@@ -260,23 +260,27 @@ def fao_voc(voc_name):
 
 
 def fao_voc_label(voc_name, tag_name):
-    path = config.get('fao.vocab.path')
-    vocab_file = os.path.join(path, voc_name + ".json")
-
-    if not(tag_name):
+    if not tag_name:
         log.warn('Empty tag for vocab "{}"'.format(voc_name))
         return None
-
     if isinstance(tag_name, list):
         tag_name = tag_name[0]
 
-    with open(vocab_file) as json_file:
-        data = json.load(json_file)
-        ret = next((tag['labels']['en'] for tag in data['tags'] if tag['name'] == tag_name), None)
-        if not(ret):
-            log.warn('Tag "{}" not found in vocab "{}"'.format(tag_name, voc_name))
-        return ret or str(tag_name) + " (key not found)"
+    tag_dict = {}
+    try:
+        data = {u'id': voc_name}
+        tags = toolkit.get_action(u'vocabulary_show')({}, data).get('tags', [])
+        for tag in tags:
+            tag_dict[tag.get('id')] = tag.get('display_name')
 
+    except toolkit.ObjectNotFound:
+        tag_dict = {}
+
+    lang = helpers.getLanguage()
+    all_labels = TagMultilang.get_all(voc_name, lang)
+
+    tags = [tag.text for tag in all_labels if tag_dict.get(tag.tag_id) == tag_name]
+    return tags[0] if tags else u'{} key not found'.format(tag_name)
 
 def fao_voc_label_func(voc_name):
     return lambda item: fao_voc_label(voc_name, item.get('name'))
