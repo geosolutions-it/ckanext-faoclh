@@ -3,17 +3,17 @@
 {% block vocab_content %}
 <table>
   <thead>
-    <th class="tag-name">Name</th>
-    <th>Labels</th>
+    <th class="tag-name">{% trans %}Name{% endtrans %}</th>
+    <th>{% trans %}Labels{% endtrans %}</th>
   </thead>
   {% for tag in tags %}
   <tr>
     <td class="tag-name">
-      <a href="?vocab_name={{vocab_name}}&tag_name={{tag['display_name']}}">
+      <a href="?vocab_name={{vocab_name}}&tag={{tag['id']}}">
         {{tag["display_name"]}}
       </a>
     </td>
-    <td class="tag-label">---</td>
+    <td class="tag-label">{{ labels.get(tag["id"], '------') }}</td>
   </tr>
   {% endfor %}
 </table>

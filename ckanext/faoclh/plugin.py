@@ -18,6 +18,8 @@ import ckan.logic as logic
 from paste.deploy.converters import asbool
 import ckan.model as model
 from routes.mapper import SubMapper
+from ckanext.multilang.model import TagMultilang
+import ckanext.multilang.helpers as helpers
 
 log = logging.getLogger(__name__)
 
@@ -238,15 +240,27 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
 
 def fao_voc(voc_name):
-    path = config.get('fao.vocab.path')
-    vocab_file = os.path.join(path, voc_name + ".json")
+    tag_dict = {}
+    try:
+        data = {u'id': voc_name}
+        tags = toolkit.get_action(u'vocabulary_show')({}, data).get('tags', [])
+        for tag in tags:
+            tag_dict[tag.get('id')] = tag.get('display_name')
 
-    with open(vocab_file) as json_file:
-        data = json.load(json_file)
-        return [{'name': tag['name'], 'label': tag['labels']['en'] } for tag in data['tags']]
+    except toolkit.ObjectNotFound:
+        tag_dict = {}
+
+    lang = helpers.getLanguage()
+    all_labels = TagMultilang.get_all(voc_name, lang)
+
+    return [{
+        u'name': tag_dict.get(tag.tag_id),
+        u'label': tag.text
+    } for tag in all_labels]
 
 
 def fao_voc_label(voc_name, tag_name):
+    # log.info('called with hahahah ===== {}'.format(voc_name, tag_name))
     path = config.get('fao.vocab.path')
     vocab_file = os.path.join(path, voc_name + ".json")
 

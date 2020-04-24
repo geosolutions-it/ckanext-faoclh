@@ -2,9 +2,9 @@
 
 {% block primary_content_inner %}
 <div class="vocabs">
-  <a href="?vocab_name={{vocab_name}}&tag_name=NEW" class="btn btn-primary">
+  <a href="?vocab_name={{vocab_name}}&tag=NEW" class="btn btn-primary">
     <i class="fa fa-plus-square"></i>
-    Add {{ vocab_name_name }}
+    {% trans %}Add {{ vocab_name_name }}{% endtrans %}
   </a>
   <hr />
   <div class="vocab-container">
@@ -13,17 +13,17 @@
         <a href="?vocab_name=fao_resource_type">
           <li
           class="{%if vocab_name == 'fao_resource_type' %}active{% endif %}">
-            Resource Type</li>
+            {% trans %}Resource Type{% endtrans %}</li>
         </a>
         <a href="?vocab_name=fao_activity_type">
           <li
           class="{%if vocab_name == 'fao_activity_type' %}active{% endif %}">
-            Activity Type</li>
+            {% trans %}Activity Type{% endtrans %}</li>
         </a>
         <a href="?vocab_name=fao_geographic_focus">
           <li
             class="{%if vocab_name == 'fao_geographic_focus' %}active{% endif %}">
-            Geographical Focus</li>
+            {% trans %}Geographical Focus{% endtrans %}</li>
         </a>
       </ul>
     </div>
@@ -41,11 +41,11 @@
 <div class="module module-narrow module-shallow">
   <h2 class="module-heading">
     <i class="fa fa-info-circle"></i>
-    {{ _("Vocabularies") }}
+    {% trans %}Vocabularies{% endtrans %}
   </h2>
   <div class="module-content">
     <p>
-      {{_("Explain what vocabularies are..")}}
+     {% trans %}Vocabularies provide a way of grouping related tags together into custom fields. {% endtrans %}
     </p>
   </div>
 </div>

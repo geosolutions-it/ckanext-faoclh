@@ -12,7 +12,7 @@
         </ul>
     </div>
     {% endif %}
-    {% if created %}
+    {% if created == 'true' %}
     <div class="error-explanation alert alert-success">
         <p>{{ vocab_name_name }} Tag {% if name %}Edited{% else %}Created{%  endif %} Successfully</p>
     </div>
@@ -34,11 +34,14 @@
             </div>
             <div class="controls">
                 <div class="form-group control-medium">
-                    <label class="control-label">Label(s)</label>
-                    {% for lang in available_locales %}
+                    <label class="control-label">
+                        <span class="control-required">*</span>
+                        Label(s)
+                    </label>
+                    {% for locale in h.get_available_locales() %}
                     <div class="input-group" style="margin-top: 2%;">
-                        <label class="input-group-addon">{{ lang }}</label>
-                        <input class="form-control" id="{{ lang }}" type="text" name="{{ lang }}" value="" placeholder="">
+                        <label class="input-group-addon">{{ locale.display_name or locale.english_name }}</label>
+                        <input class="form-control" id="{{ lang }}" type="text" name="{{ locale.identifier }}" value="{% if name %} {{ labels.get(locale.identifier, '') }} {% endif %}" placeholder="" required>
                       </div>
                     {% endfor %}
                 </div>
