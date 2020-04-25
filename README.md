@@ -186,3 +186,38 @@ E.g.
     ./load_dataset.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c   
 
 This step requires that groups and organizations have already been created.
+
+Enabling Tracking
+==============
+To enable page view tracking, follow the steps below:
+- Set `ckan.tracking_enabled` to true in the `[app:main]` section of your CKAN configuration file (production.ini found at `/etc/ckan/default/production.ini`)
+
+Save the file and restart your web server. CKAN will now record raw page view tracking data in your CKAN database as pages are viewed.
+
+
+for example:
+```
+[app:main]
+ckan.tracking_enabled = true
+```
+- Setup a cron job to update the tracking summary data.
+
+For operations based on the tracking data CKAN uses a summarised version of the data, not the raw tracking data that is recorded “live” as page views happen. The `paster tracking update` and `paster search-index rebuild` commands need to be run periodicially to update this tracking summary data.
+
+
+You can setup a cron job to run these commands. On most UNIX systems you can setup a cron job by running `crontab -e` in a shell to edit your crontab file, and adding a line to the file to specify the new job. For more information run `man crontab` in a shell. For example, here is a crontab line to update the tracking data and rebuild the search index hourly:
+
+```
+@hourly /usr/lib/ckan/default/bin/paster --plugin=ckan tracking update -c /etc/ckan/default/production.ini && /usr/lib/ckan/default/bin/paster --plugin=ckan search-index rebuild -r -c /etc/ckan/default/production.ini
+```
+
+
+The `@hourly` can be replaced with `@daily`, `@weekly` or `@monthly`.
+
+## Retrieving Tracking Data
+Run the command below to generate a csv file with tracking data:
+```
+paster --plugin=ckan tracking export "/path/to/csv/file/tracking.csv" "2020-01-01" --config=/etc/ckan/default/production.ini
+```
+
+> **NOTE**: Replace "2020-01-01" with an offset date from which the tracking data will generate.
