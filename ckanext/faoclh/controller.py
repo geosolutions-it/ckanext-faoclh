@@ -2,16 +2,15 @@ import logging
 
 import ckan
 import ckan.lib.base as base
-from ckan.controllers.admin import AdminController
 import ckan.plugins.toolkit as toolkit
+import ckanext.multilang.helpers as helpers
 from ckan.common import _
+from ckan.controllers.admin import AdminController
+from ckan.lib.i18n import get_locales_from_config
 from ckan.lib.navl.dictization_functions import validate
 from ckan.logic import NotFound, ValidationError
-from ckanext.faoclh.cli.vocab import VocabCommand
-from ckan.lib.i18n import get_locales_from_config
-import ckanext.multilang.helpers as helpers
-from ckanext.multilang.model import TagMultilang
 from ckan.model import Tag
+from ckanext.faoclh.cli.vocab import VocabCommand
 from ckanext.multilang.model import TagMultilang
 
 log = logging.getLogger(__name__)
@@ -34,7 +33,8 @@ class VocabularyController(AdminController):
         self.request = kwargs[u'pylons'].request
         self.name = self.request.POST.get(u'name', u'')
         self.lang = helpers.getLanguage()
-        self.vocab_name = self.request.GET.get(u'vocab_name', u'fao_resource_type')
+        self.vocab_name = self.request.GET.get(
+            u'vocab_name', u'fao_resource_type')
         self.tag = self.request.GET.get(u'tag', u'')
         self.vocabs = self.get_vocab({}, self.vocab_name)
         success = self.request.GET.get('success', 'false')
@@ -42,7 +42,8 @@ class VocabularyController(AdminController):
         all_labels = TagMultilang.get_all(self.vocabs[u'name'])
         if self.tag and self.tag != 'NEW':
             all_labels = all_labels.filter(TagMultilang.tag_id == self.tag)
-        tag_name = [tag['display_name'] for tag in self.vocabs.get('tags', []) if tag['id'] == self.tag]
+        tag_name = [tag['display_name']
+                    for tag in self.vocabs.get('tags', []) if tag['id'] == self.tag]
 
         if self.url_errors():
             return base.abort(404)
@@ -139,4 +140,3 @@ class VocabularyController(AdminController):
         for label in labels.filter(TagMultilang.lang == self.lang):
             label_dict[label.tag_id] = label.text
         return label_dict
-
