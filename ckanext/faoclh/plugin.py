@@ -25,6 +25,8 @@ from ckan.model import Tag, meta, Group
 from sqlalchemy import or_
 from ckan.common import c, request
 from ckanext.faoclh.model.tag_image_url import TagImageUrl
+from ckanext.faoclh.reports import all_reports
+from ckanext.report.interfaces import IReport
 
 log = logging.getLogger(__name__)
 
@@ -40,6 +42,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                       toolkit.DefaultDatasetForm,
                       DefaultTranslation):
 
+    plugins.implements(IReport)
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IPackageController)
     plugins.implements(plugins.IFacets)
@@ -236,6 +239,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
     # ITemplateHelpers
     def get_helpers(self):
+        import ckanext.faoclh.helpers.report_helpers as gsh
         return {
             'fao_voc': fao_voc,
             'fao_voc_label': fao_voc_label,
@@ -247,7 +251,17 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_expanded_facet': fao_expanded_facet,
             'fao_generate_link_id': fao_generate_link_id,
             'fao_get_current_year': lambda: str(datetime.now().year),
+            u'gsreport_get_org_title': gsh.get_localized_org_title,
+            u'gsreport_get_pkg_title': gsh.get_localized_pkg_title,
+            u'get_unpublished_dataset': gsh.get_unpublished_dataset,
+            u'get_tagless_datasets': gsh.get_tagless_datasets,
+            u'get_dataset_without_resources': gsh.get_dataset_without_resources,
         }
+
+    # ------------- IReport ---------------#
+    def register_reports(self):
+        log.info('registering reports')
+        return all_reports()
 
 
 def fao_voc(voc_name):

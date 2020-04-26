@@ -15,25 +15,25 @@ CKAN 2.8.4+ (tested with CKAN 2.8.4)
 
 Activate virtualenv then install the extension, as user ckan:
 
-```
-$ cd /usr/lib/ckan/src/
-$ git clone https://github.com/geosolutions-it/ckanext-faoclh ## or this one in case of deployment in the FAO server: git clone https://tdipisa@bitbucket.org/cioapps/ckanext-faoclh.git
-$ cd ckanext-faoclh/
-$ pip install -e .
-
-## The following command is needed for the upload of custom images for vocabulary items
-$ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
-```
+    $ cd /usr/lib/ckan/src/
+    $ git clone https://github.com/geosolutions-it/ckanext-faoclh ## or this one in case of deployment in the FAO server: git clone https://tdipisa@bitbucket.org/cioapps/ckanext-faoclh.git
+    $ cd ckanext-faoclh/
+    $ pip install -e .
 
 To update an already installed faoclh extension, as user ckan:
 
-```
-$ cd /usr/lib/ckan/src/ckanext-faoclh/
-$ git pull
-$ pip install -e . ## only if required, it depends on the entity of the update 
-```
+    $ cd /usr/lib/ckan/src/ckanext-faoclh/
+    $ git pull
+    $ pip install -e . ## only if required, it depends on the entity of the update 
+
 	
 Activate virtualenv for other eventual installation steps of other involved extensions in the faoclh deploy.
+
+## Init DB 
+
+The following command is needed for the upload of custom images for vocabulary items
+
+    $ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
 
 ## Enable multilingual support
 
@@ -110,9 +110,8 @@ To add multilingual configurations in CKAN's configuration file `production.ini`
 
 Make sure the virtual environment is active before running the command below. See previous steps on how to activate the virtual environment.
 
-```
-$ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/default/production.ini 
-```
+    $ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/default/production.ini
+
 
 ### [multilang] Update the Solr schema
 
@@ -132,15 +131,12 @@ Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/
 
 - Restart Solr:
 
-  ```
-  $ sudo service solr restart
-  ```
+      sudo service solr restart
 
 - Restart CKAN:
 
-  ```
-  $ systemctl restart supervisord
-  ```
+      systemctl restart supervisord
+
 
 ## Enable filtering by "year of release"
 
@@ -166,16 +162,13 @@ To initialize database tables for the fao-clh extension, follow the steps below.
 
 Activate the virtual environment:	
 
-```
-$ . /usr/lib/ckan/default/bin/activate	
-```
+    $ . /usr/lib/ckan/default/bin/activate	
 
 Create database tables by running the command below:
 
-```
-$ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini	
-```
-	
+    $ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
+
+
 ## Configuring CKAN for CSV export
 
 CKAN allows you to create jobs that run in the ‘background’, i.e. asynchronously and without blocking the main application.
@@ -188,7 +181,6 @@ Basically, any piece of work that takes too long to perform while the main appli
 
 To enable CKAN's background jobs in [ckanext-faoclh](https://github.com/geosolutions-it/ckanext-faoclh), create a file name `ckan-worker.ini` in `/etc/supervisord.d/` then copy in the code below.
 
-```
     # =======================================================
     # Supervisor configuration for CKAN background job worker
     # =======================================================
@@ -220,44 +212,37 @@ To enable CKAN's background jobs in [ckanext-faoclh](https://github.com/geosolut
     # Need to wait for currently executing tasks to finish at shutdown.
     # Increase this if you have very long running tasks.
     stopwaitsecs = 600
-```
+
 
 Create a directory to hold all the generated CSV datasets and grant user 'ckan' permissions to it. You may need root privileges to do that.  
 Let's say we want to use `/var/lib/ckan/export`:
 
-```
-$ mkdir /var/lib/ckan/export
-$ chown ckan: /var/lib/ckan/export
-```
-    
+    mkdir /var/lib/ckan/export
+    chown ckan: /var/lib/ckan/export
+
+
 Add the created directory to CKAN configuration file (`/etc/ckan/default/production.ini`) using the `faoclh.export_dataset_dir` settings key as shown below
 
-```
-faoclh.export_dataset_dir = /var/lib/ckan/export 
-```
-	
+    faoclh.export_dataset_dir = /var/lib/ckan/export 
+
+
 Once the file is  created, restart CKAN using the command below:
 
-```
-$ systemctl restart supervisord
-```
-    
+    systemctl restart supervisord
+
 To run asynchronous worker in dev environment using the command below
 
-```
-$ paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
-```
-	
+    paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
+
+
 ## Enabling CKAN Tracking
 
 To enable page view tracking, follow the steps below:
 
 - Set `ckan.tracking_enabled` to true in the `[app:main]` section of your CKAN configuration file (production.ini found at `/etc/ckan/default/production.ini`)
 
-```
-[app:main]
-ckan.tracking_enabled = true
-```
+      [app:main]
+      ckan.tracking_enabled = true
 
 - Save the file and restart CKAN: CKAN will now record raw page view tracking data in your CKAN database as pages are viewed.
 	
@@ -267,25 +252,21 @@ For operations based on the tracking data CKAN uses a summarised version of the 
 
 You can setup a cron job to run these commands. On most UNIX systems you can setup a cron job by running `crontab -e` in a shell to edit your crontab file, and adding a line to the file to specify the new job. For more information run `man crontab` in a shell. 
 Below is a crontab line to update the tracking data and rebuild the search index. As root, in /etc/crontab add line:
-	
-```
-0 * * * * ckan /usr/lib/ckan/default/bin/paster --plugin=ckan tracking update -c /etc/ckan/default/production.ini && /usr/lib/ckan/default/bin/paster --plugin=ckan search-index rebuild -r -c /etc/ckan/default/production.ini
-```
+
+    0 * * * * ckan /usr/lib/ckan/default/bin/paster --plugin=ckan tracking update -c /etc/ckan/default/production.ini && /usr/lib/ckan/default/bin/paster --plugin=ckan search-index rebuild -r -c /etc/ckan/default/production.ini
 
 From command line:
 
-```
-$ service crond reload
-```
+    service crond reload
+
 	
 ### Retrieving Tracking Data
 
 Run the command below to generate a csv file with tracking data:
 
-```
-$ paster --plugin=ckan tracking export "/path/to/csv/file/tracking.csv" "2020-01-01" --config=/etc/ckan/default/production.ini 
-```
-	
+    paster --plugin=ckan tracking export "/path/to/csv/file/tracking.csv" "2020-01-01" --config=/etc/ckan/default/production.ini 
+
+
 > **NOTE**: Replace "2020-01-01" with an offset date from which the tracking data will generate.
 
 
@@ -525,6 +506,66 @@ resources:
 
          paster  --plugin=ckan views create -c /etc/ckan/default/production.ini 
 
+         
+## Enabling Reporting
+
+Enable reporting of broken Links, tagless dataset, dataset without resources, unpublished datasets.
+
+> **NOTE**: [ckanext-faoclh](https://github.com/geosolutions-it/ckanext-faoclh) depends on 
+> [ckanext-report](https://github.com/davidread/ckanext-report) CKAN extension 
+> and [OWSLib](https://pypi.org/project/OWSLib/) for reporting
+
+- Activate CKAN virtual environment:
+
+      . /usr/lib/ckan/default/bin/activate
+
+- Install [ckanext-report](https://github.com/davidread/ckanext-report) CKAN extension:
+
+      pip install -e git+https://github.com/datagovuk/ckanext-report.git#egg=ckanext-report
+
+- Install [OWSLib](https://pypi.org/project/OWSLib/) python library:
+
+      pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org OWSLib==0.10.3
+
+- Add `ckanext-reports` plugin to CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) 
+  using the `ckan.plugins` configuration key, separating each extension by space and save the file 
+  (**Note**: Order of entries matters. This `faoclh` should be placed before `report` plugin as shown below):
+
+    ckan.plugins = [...] faoclh report [...] 
+
+- Initialize `ckanext-reports` database:
+
+      paster --plugin=ckanext-report report initdb --config=/etc/ckan/default/production.ini
+
+- Run solr data reindexing (license and resource format reports are using special placeholders in solr to access data without value):
+
+      paster --plugin=ckan search-index rebuild_fast -c /etc/ckan/default/production.ini
+
+- Generate reports
+
+The reports can be generated in two ways:
+
+ * In CLI (this can be used to set up cron job):
+  
+   * generate all reports:
+
+         paster --plugin=ckanext-report report generate --config=/etc/ckan/default/production.ini
+
+   * generate one report
+
+         paster --plugin=ckanext-report report generate $report-name --config=/etc/ckan/default/production.ini
+
+> **NOTE**: This can take a while to produce results. Especially broken-links report may take a significant amount of time because it will check each resource for availability.
+
+At this point, you can navigate to `/report` route in the CKAN user interface and view the generated reports
+
+- Set up a crone job to generate reports
+Set up a crone job to generate reports You can set up a cron job to run these commands. On most UNIX systems you can set up a cron job by running `crontab -e` in a shell to edit your crontab file, and adding a line to the file to specify the new job. For more information run `man crontab` in a shell. For example, here is a crontab line to generate the reports daily:
+```
+@daily /usr/lib/ckan/default/bin/paster --plugin=ckanext-report report generate --config=/etc/ckan/default/production.ini
+```
+The `@daily` can be replaced with `@hourly`, `@weekly` or `@monthly`.
+
 
 ## Loading initial data
 
@@ -590,15 +631,12 @@ command will add and remove the related tags as needed.
 
 If you need to completely remove a vocabulary, you can run:
 
-```
-$ paster --plugin=ckanext-faoclh vocab delete -n VOCAB_NAME --config=/etc/ckan/default/production.ini
-```
-	
+    $ paster --plugin=ckanext-faoclh vocab delete -n VOCAB_NAME --config=/etc/ckan/default/production.ini
+
+
 for instance
 
-```
-$ paster --plugin=ckanext-faoclh vocab delete -n fao_resource_type --config=/etc/ckan/default/production.ini
-```
+    $ paster --plugin=ckanext-faoclh vocab delete -n fao_resource_type --config=/etc/ckan/default/production.ini
 
 ### Load datasets
 
@@ -618,6 +656,7 @@ E.g.
 	
 This step requires that groups and organizations have already been created.
 
+
 ### Further setup
 
 CKAN by default does not clean up the session cache files. Cache files are stored in a subdir of the `/tmp` direcotory; 
@@ -630,3 +669,4 @@ Edit file `/etc/crontab` and add the line
 Then have `cron` reload its configuration file:
 
     service cron reload
+
