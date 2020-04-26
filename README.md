@@ -99,6 +99,78 @@ E.g.
 
 This step requires that groups and organizations have already been created.
 
+Enabling Reporting
+================
+Enable reporting of broken Links, tagless dataset, dataset without resources, unpublished datasets using the [ckanext-gsreport](https://github.com/geosolutions-it/ckanext-gsreport) CKAN extension by following the setup steps described below:
+> **NOTE**: [ckanext-gsreport](https://github.com/geosolutions-it/ckanext-gsreport) depends on [ckanex-report](https://github.com/davidread/ckanext-report) CKAN extension and [OWSLib](https://pypi.org/project/OWSLib/)
 
+- Activate CKAN virtual environment.
+```
+$ . /usr/lib/ckan/default/bin/activate
+```
+- Install [ckanext-report](https://github.com/davidread/ckanext-report) CKAN extension.
+```
+$ pip install -e git+https://github.com/datagovuk/ckanext-report.git#egg=ckanext-report
+```
 
+- Install [OWSLib](https://pypi.org/project/OWSLib/) python library.
+```
+$ pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org OWSLib==0.10.3
+```
 
+- Navigate to ckanext-faoclh src directory, clone and Install [ckanext-gsreport](https://github.com/geosolutions-it/ckanext-gsreport).
+```
+$ cd /usr/lib/ckan/src/
+```
+
+```
+$ git clone https://github.com/geosolutions-it/ckanext-gsreport.git
+```
+
+```
+$ cdckanext-gsreport & pip install -e .
+```
+
+- Add `status_reports`, `ckanext-reports` extensions to CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) using the `ckan.plugins` configuration key separating each extension by space and save the file.
+Add status_reports to plugins. 
+> **Note**: Order of entries matters. This `status_reports` should be placed before report plugin as shown below.
+```
+ckan.plugins = ... status_reports report
+```
+
+- Initialize `ckanext-reports` database.
+```
+$ paster --plugin=ckanext-report report initdb --config=/etc/ckan/default/production.ini
+```
+
+- Run solr data reindexing (license and resource format reports are using special placeholders in solr to access data without value):
+```
+$ paster --plugin=ckan search-index rebuild_fast -c /etc/ckan/default/production.ini
+```
+
+- Generate reports
+
+The reports can be generated in two ways:
+
+ * in CLI (this can be used to set up cron job):
+  
+   * generate all reports:
+```
+$ paster --plugin=ckanext-report report generate --config=/etc/ckan/default/production.ini
+```
+
+   * generate one report
+```
+$ paster --plugin=ckanext-report report generate $report-name --config=/etc/ckan/default/production.ini
+```
+
+> **NOTE**: This can take a while to produce results. Especially broken-links report may take a significant amount of time because it will check each resource for availability.
+
+At this point, you can navigate to `/report` route in the CKAN user interface and view the generated reports
+
+- Set up a crone job to generate reports
+Set up a crone job to generate reports You can set up a cron job to run these commands. On most UNIX systems you can set up a cron job by running `crontab -e` in a shell to edit your crontab file, and adding a line to the file to specify the new job. For more information run `man crontab` in a shell. For example, here is a crontab line to generate the reports daily:
+```
+@daily /usr/lib/ckan/default/bin/paster --plugin=ckanext-report report generate --config=/etc/ckan/default/production.ini
+```
+The `@daily` can be replaced with `@hourly`, `@weekly` or `@monthly`.
