@@ -128,7 +128,7 @@ $ git clone https://github.com/geosolutions-it/ckanext-gsreport.git
 ```
 
 ```
-$ cdckanext-gsreport & pip install -e .
+$ cd ckanext-gsreport & pip install -e .
 ```
 
 - Add `status_reports`, `ckanext-reports` extensions to CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) using the `ckan.plugins` configuration key separating each extension by space and save the file.
