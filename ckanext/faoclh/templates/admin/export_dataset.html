@@ -1,0 +1,73 @@
+{% extends "admin/base.html" %}
+
+{% block primary_content_inner %}
+<form method="POST" id="export-dataset">
+    <button type="submit" id="export-dataset-btn" value="export" class="btn btn-info">
+        Export Dataset
+    </button>
+</form>
+<div style="display: none" id="dataset-info-alert" class="error-explanation alert alert-info">
+    <h1>Generating Export</h1>
+    <p>Please wait...</p>
+</div>
+<div style="display: none" id="dataset-success-alert" class="error-explanation alert alert-success">
+    <h1>Downloading Dataset...</h1>
+    <p>If the download doesn't start automatically in a few seconds, please click <a
+            href="/ckan-admin/download_dataset">here</a> to access the download URL directly.</p>
+</div>
+{% endblock %}
+
+{% block secondary_content %}
+<div class="module module-narrow module-shallow">
+    <h2 class="module-heading">
+        <i class="fa fa-info-circle"></i>
+        {% trans %}Export Dataset{% endtrans %}
+    </h2>
+    <div class="module-content">
+        <p>
+            {% trans %}More about export dataset. {% endtrans %}
+        </p>
+    </div>
+</div>
+<script>
+    var interval;
+
+    function check_download_status() {
+        console.log('this is running');
+        fetch("/ckan-admin/download_dataset", { method: "POST", data: {} })
+            .then(function (response) {
+                if (response.status === 200) {
+                    console.log('file is created', response)
+                    clearInterval(interval)
+                    $('#dataset-info-alert').hide()
+                    $('#dataset-success-alert').css("display", "block");
+                    $(location).attr('href', '/ckan-admin/download_dataset');
+                }
+                else {
+                    console.log('hehehh')
+                }
+            })
+            .catch(function (err) {
+                console.log(err)
+            })
+    }
+    window.addEventListener("load", function () {
+        $("#export-dataset").on("submit", function (e) {
+            e.preventDefault();
+            clearInterval()
+            fetch("/ckan-admin/export_dataset", { method: "POST", data: {} })
+                .then(function (response) {
+                    $('#export-dataset').hide();
+                    $('#dataset-info-alert').css("display", "block");
+                    if (response.status === 201) {
+                        interval = window.setInterval(check_download_status, 3000);
+                    }
+                    console.log(response);
+                })
+                .catch(function (err) {
+                    console.log('failed', err)
+                })
+        })
+    })
+</script>
+{% endblock %}

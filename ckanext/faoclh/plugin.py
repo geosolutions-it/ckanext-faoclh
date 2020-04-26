@@ -22,6 +22,7 @@ from ckanext.multilang.model import TagMultilang
 import ckanext.multilang.helpers as helpers
 from ckan.model import Tag, meta
 from sqlalchemy import or_
+import ckanext.multilang.helpers as helpers
 
 log = logging.getLogger(__name__)
 
@@ -134,6 +135,28 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_public_directory(config, 'public')
         toolkit.add_resource('fanstatic', "faoclh")
+        toolkit.add_ckan_admin_tab(config, 'export_dataset', 'Export Dataset')
+
+    def before_map(self, map_obj):
+        u'''
+        Called before the routes map is generated. ``before_map`` is before any
+        other mappings are created so can override all other mappings.
+        :param map: Routes map object
+        :returns: Modified version of the map object
+        '''
+        with SubMapper(map_obj, controller=u'ckanext.faoclh.controllers.export_dataset_controller:ExportDatasetController') as mp:
+            mp.connect(u'export_dataset', u'/ckan-admin/export_dataset', action=u'export_dataset')
+            mp.connect(u'download_dataset', u'/ckan-admin/download_dataset', action=u'download_dataset')
+        return map_obj
+
+    def after_map(self, map_obj):
+        u'''
+        Called after routes map is set up. ``after_map`` can be used to
+        add fall-back handlers.
+        :param map: Routes map object
+        :returns: Modified version of the map object
+        '''
+        return map_obj
 
     def before_map(self, map_obj):
         u'''
