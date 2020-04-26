@@ -2,6 +2,7 @@ import logging
 
 import ckan
 import ckan.lib.base as base
+from ckan.controllers.admin import AdminController
 import ckan.plugins.toolkit as toolkit
 from ckan.common import _
 from ckan.lib.navl.dictization_functions import validate
@@ -16,7 +17,7 @@ from ckanext.multilang.model import TagMultilang
 log = logging.getLogger(__name__)
 
 
-class VocabularyController(base.BaseController):
+class VocabularyController(AdminController):
     def __init__(self):
         self.created = False
         self.template_mapper = {
