@@ -1,0 +1,41 @@
+<ul>
+    <li>{% trans %}Number of datasets checked{% endtrans %}: {{ data['dataset_checked'] }}</li>
+</ul>
+
+<table class="table table-bordered table-condensed tablesorter">
+    {% if not options.get('org') %}
+    <thead>
+        <tr>
+                <th>{% trans %}Organization{% endtrans %}</th>
+                <th>{% trans %}All Datasets{% endtrans %}</th>
+                <th>{% trans %}Datasets without tags{% endtrans %}</th>
+                <th>% {% trans %}Datasets without tags{% endtrans %}</th>
+        </tr>
+    </thead>
+    <tbody>
+            {% for row in table %}
+            <tr>
+                <td><a href="?org={{ row.get('organization') }}">{{ org_title or row.get('organization') }}</a></td>
+                <td>{{ row.dataset_count }}</td>
+                <td>{{ row.tagless_datasets }}</td>
+                <td>{{ row.percentage_datasets_without_tags }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    {% else %}
+        <thead>
+        <tr>
+            <th>{% trans %}Dataset{% endtrans %}</th>
+            <th>{% trans %}Status{% endtrans %}</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in h.get_tagless_datasets(options.get('org'))%}
+        <tr>
+            <td><a href="/dataset/{{ row.name }}">{{ row.title }}</a></td>
+            <td>{{ row.state }}</td>
+        </tr>
+        {% endfor %}
+            </tbody>
+    {% endif%}
+</table>
