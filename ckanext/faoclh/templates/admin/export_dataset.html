@@ -33,18 +33,16 @@
     var interval;
 
     function check_download_status() {
-        console.log('this is running');
         fetch("/ckan-admin/download_dataset", { method: "POST", data: {} })
             .then(function (response) {
                 if (response.status === 200) {
-                    console.log('file is created', response)
                     clearInterval(interval)
                     $('#dataset-info-alert').hide()
                     $('#dataset-success-alert').css("display", "block");
                     $(location).attr('href', '/ckan-admin/download_dataset');
                 }
                 else {
-                    console.log('hehehh')
+                    console.log('debug err')
                 }
             })
             .catch(function (err) {
@@ -60,6 +58,7 @@
                     $('#export-dataset').hide();
                     $('#dataset-info-alert').css("display", "block");
                     if (response.status === 201) {
+                        check_download_status()
                         interval = window.setInterval(check_download_status, 3000);
                     }
                     console.log(response);

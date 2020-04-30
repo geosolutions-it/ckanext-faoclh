@@ -1,54 +1,51 @@
-import ckan.lib.base as base
 import csv
-import os
-from ckan.controllers.admin import AdminController
-from paste.fileapp import FileApp, DataApp
-import ckan.lib.jobs as jobs
-import logging
 import json
+import logging
+import os
 from datetime import datetime
 
+import ckan.lib.base as base
+import ckan.lib.jobs as jobs
+import ckan.logic as logic
+import ckan.plugins.toolkit as toolkit
+from ckan.controllers.admin import AdminController
+from ckan.model import Package, PackageTag, Resource, Tag, Vocabulary, meta
+from paste.fileapp import DataApp, FileApp
+from ckan.common import config
 
 log = logging.getLogger(__name__)
 
 
 class ExportDatasetController(AdminController):
     def __init__(self):
-        self.output_dir = u'/usr/lib/ckan/src/ckanext-faoclh/ckanext_faoclh.egg-info/exported-dataset/'
+        self.output_dir = config.get(u'export_dataset_dir',
+                                     u'/usr/lib/ckan/src/ckanext-faoclh/ckanext_faoclh.egg-info/exported-dataset/')
+        user = toolkit.get_action(u'get_site_user')({u'ignore_auth': True}, {})
+        self.context = {u'user': user[u'name'], u'ignore_auth': True}
 
     def export_dataset(self, *args, **kwargs):
         request = kwargs[u'pylons'].request
-        print('heheh', kwargs[u'pylons'].response.status)
         if request.method == u'POST':
-            result = jobs.enqueue(generate_dataset_csv, [self.output_dir, kwargs[u'pylons'].session.id])
-            print('heheh', result)
-            kwargs[u'pylons'].response.headers['Content-Type'] = 'application/json'
-            kwargs[u'pylons'].response.status = '201 CREATED'
+            result = jobs.enqueue(generate_dataset_csv, [
+                                  self.output_dir, kwargs[u'pylons'].session.id, self.context])
+            kwargs[u'pylons'].response.headers[u'Content-Type'] = u'application/json'
+            kwargs[u'pylons'].response.status = u'201 CREATED'
             return json.dumps({u'generating_export': True})
         return base.render(u'admin/export_dataset.html')
 
     def download_dataset(self, *args, **kwargs):
         self.request = kwargs[u'pylons'].request
         session_id = kwargs[u'pylons'].session.id
-        kwargs[u'pylons'].response.headers['Content-Type'] = 'application/json'
+        kwargs[u'pylons'].response.headers[u'Content-Type'] = u'application/json'
         output_filename = self.output_dir + u'{}.csv'.format(session_id)
         file_exists = os.path.exists(output_filename)
 
         if self.request.method == u'POST':
             if not file_exists:
-                kwargs[u'pylons'].response.status = '204'
+                kwargs[u'pylons'].response.status = u'204'
             return json.dumps({u'export_created': file_exists})
 
         return self._send_file_response(output_filename)
-
-    # def _check_file_existance(self, output_filename):
-    #     headers = [(u'Content-Type', u'application/json')]
-
-        # if not os.path.exists(output_filename):
-            # dapp = DataApp(json.dumps({u'export_generated': False}), headers=headers)
-            # return dapp(self.request.environ, self.start_response)
-            # return json.dumps({u'export_generated': True})
-        # return self._send_file_response(output_filename)
 
     def _send_file_response(self, output_filename):
         user_filename = '_'.join(output_filename.split(u'/')[-2:])
@@ -63,7 +60,32 @@ class ExportDatasetController(AdminController):
         return fapp(self.request.environ, self.start_response)
 
 
-def generate_dataset_csv(output_dir, session_id):
+class GetPackageData(Package):
+    @classmethod
+    def all_datasets(cls):
+        return meta.Session.query(Package.id, Package.title, Package.metadata_created).all()
+
+    @classmethod
+    def get_all_tags(cls, package_id):
+        package_tags = meta.Session.query(PackageTag.tag_id).filter(
+            PackageTag.package_id == package_id)
+        tags = meta.Session.query(Tag.name).filter(
+            Tag.id.in_([tag[0] for tag in package_tags])).all()
+        return ', '.join([tag[0] for tag in tags])
+
+    @classmethod
+    def get_resource(cls, model_field, package_id):
+        resource = meta.Session.query(model_field).filter(
+            Resource.package_id == package_id)
+        field_mapper = {
+            Resource.name: lambda package_resource: ', '.join([res[0] for res in package_resource]).encode('utf-8'),
+            Resource.format: lambda package_resource: ', '.join(
+                [res[0] for res in package_resource]).encode('utf-8')
+        }
+        return field_mapper[model_field](resource)
+
+
+def generate_dataset_csv(output_dir, session_id, context):
     """
     Write tracking summary to a csv file.
     :return: None
@@ -81,12 +103,28 @@ def generate_dataset_csv(output_dir, session_id):
         u'Type of Resource',
         u'Resource Title',
         u'Resource Format',
-        u'Year Of Release'
+        u'Year Of Release',
     ]
-    with open(output_file, 'w') as fh:
+
+    datasets = GetPackageData.all_datasets()
+    package_show = logic.get_action(u'package_show')
+
+    with open(output_file, u'w') as fh:
         f_out = csv.writer(fh)
         f_out.writerow(headings)
-        f_out.writerows([('hehhe', 'jd', 'kjdh', 'kjdh', 'nhd', 'kjdhf', 'jdh', r)
-                        for r in range(10)])
+        f_out.writerows([(
+            dataset.title,
+            (lambda x: u', '.join([z.get(u'name', u'') for z in x]))(
+                package_show(context, {u'id': dataset.id})[u'groups']),
+            GetPackageData.get_all_tags(package_id=dataset.id),
+            (lambda act_type: act_type[0] if act_type else u'')(
+                package_show(context, {u'id': dataset.id}).get(u'fao_activity_type')),
+            (lambda res_type: res_type[0] if res_type else u'')(
+                package_show(context, {u'id': dataset.id}).get(u'fao_resource_type')),
+            GetPackageData.get_resource(Resource.name, dataset.id),
+            GetPackageData.get_resource(Resource.format, dataset.id),
+            dataset.metadata_created.year
+        ) for dataset in datasets])
 
-    log.info(u'Successfully created dataset export file [path = {}]'.format(session_id, output_dir))
+    log.info(u'Successfully created dataset export file [path = {}]'.format(
+        session_id, output_dir))
