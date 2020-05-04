@@ -1,0 +1,19 @@
+{% ckan_extends %}
+
+{% set items = [
+    ('home.index', _('Home')),
+    ('search', _('Datasets')),
+    ('organizations_index', _('Organizations')),
+    ('group_index', _('Groups'))
+] %}
+
+{% block secondary %}
+    <div class="fao-sidebar">
+        <div class="fao-sidemenu">
+            <ul class="nav nav-pills nav-stacked">
+                {{ h.build_nav_main(*items)}}
+            </ul>
+        </diV>
+        {{ super() }}
+    </div>
+{% endblock %}

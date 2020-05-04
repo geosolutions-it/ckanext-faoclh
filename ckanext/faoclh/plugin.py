@@ -14,6 +14,9 @@ import ckan.plugins.toolkit as toolkit
 from ckan.lib.plugins import DefaultTranslation
 from ckan.common import config
 import ckan.common as common
+import ckan.logic as logic
+from paste.deploy.converters import asbool
+import ckan.model as model
 
 log = logging.getLogger(__name__)
 
@@ -204,7 +207,8 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         return {
             'fao_voc': fao_voc,
             'fao_voc_label': fao_voc_label,
-            'fao_voc_label_func': fao_voc_label_func
+            'fao_voc_label_func': fao_voc_label_func,
+            'fao_get_search_facet': fao_get_search_facet
         }
 
 
@@ -238,3 +242,42 @@ def fao_voc_label(voc_name, tag_name):
 
 def fao_voc_label_func(voc_name):
     return lambda item: fao_voc_label(voc_name, item.get('name'))
+
+def fao_get_search_facet(limit=6):
+
+    context = {
+        'model': model,
+        'session': model.Session,
+        'user': common.c.user,
+        'for_view': True,
+        'auth_user_obj': common.c.userobj
+    }
+
+    data_dict = {
+        'q': '*:*',
+        'fq': '',
+        'facet.field': VOCAB_FIELDS,
+        'rows': limit,
+        'start': 0,
+        'sort': 'count desc',
+        'extras': {},
+        'include_private': asbool(config.get(
+            'ckan.search.default_include_private', True)
+        ),
+    }
+
+    query = logic.get_action('package_search')(context, data_dict)
+
+    fao_search_facets = query['search_facets']
+
+    result = {}
+
+    for field in VOCAB_FIELDS:
+        try:
+            items = fao_search_facets[field]['items']
+            items.sort(key=lambda item: item['count'], reverse=True)
+            result[field] = items[:limit]
+        except KeyError:
+            result[field] = []
+
+    return result

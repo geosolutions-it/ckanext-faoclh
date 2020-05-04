@@ -1,29 +1,27 @@
-{% set items = [
-    { "title": "Analysing Modelling CC", "href": "/dataset?fao_activity_type=Analysing%2FModelling+CC", "thumbnail": "/fao/images/analysing_512x256.jpg" },
-    { "title": "Gathering Data", "href": "/dataset?fao_activity_type=Gathering+data", "thumbnail": "/fao/images/gathering_data_512x256.jpg" },
-    { "title": "Implementing Practices", "href": "/dataset?fao_activity_type=Implementing+practices", "thumbnail": "/fao/images/implementing_practices_512x256.jpg" },
-    { "title": "Increase Knowledge", "href": "/dataset?fao_activity_type=Increasing+knowledge", "thumbnail": "/fao/images/increasing_knowledge_512x256.jpg" }
-] %}
+{% set thumbnails = {
+    'Analysing-Modelling_CC': '/fao/images/analysing_512x256.jpg',
+    'Gathering_data': '/fao/images/gathering_data_512x256.jpg',
+    'Implementing_practices': '/fao/images/implementing_practices_512x256.jpg',
+    'Increasing_knowledge': '/fao/images/increasing_knowledge_512x256.jpg'
+} %}
 
-<div class="container-fluid box">
-    <div class="row">
-        <div class="col-xs-8">
-            <h3 class="heading">{{ _('Kind of activities') }}</h3>
-        </div>
-        <div class="col-xs-4">
-            <a href="/dataset">
-                <div class="fao-item-see-all">{{_('See all')}}</div>
-            </a>
-        </div>
+{% set items = items or [] %}
+
+<div class="fao-item-container">
+    <div class="fao-item-container-head">
+        <h3 class="heading"><strong>{{ _('Kind of activities') }}</strong></h3>
+        <a href="{{ h.url_for('search') }}">
+            <div class="fao-item-see-all">{{_('See all')}}</div>
+        </a>
     </div>
-    <div class="row">
+    <div class="fao-item-container-body box">
         {% for item in items %}
-        <div class="col-lg-3 col-md-3 col-sm-6">
+            {% set url = h.url_for(controller='package', action='search', fao_activity_type=item.name) %}
             {% snippet 'home/snippets/fao_item_summary.html',
-                title=item.title,
-                dataset_url=item.href,
-                thumbnail=item.thumbnail %}
-        </div>
+                title=h.fao_voc_label('fao_activity_type', item.name) or item.display_name,
+                dataset_url=url,
+                dataset_count= item.count,
+                thumbnail=item.thumbnail or thumbnails[item.name] or h.url_for_static('/base/images/fao/thumbnail-placeholder.png') %}
         {% endfor %}
     </div>
 </div>
