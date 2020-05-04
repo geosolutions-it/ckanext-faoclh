@@ -1,0 +1,5 @@
+# python cache files
+*.pyc*
+
+# ckan tracking file
+/ckanext_faoclh.egg-info
