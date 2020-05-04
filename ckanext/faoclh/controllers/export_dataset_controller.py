@@ -26,8 +26,13 @@ class ExportDatasetController(AdminController):
     def export_dataset(self, *args, **kwargs):
         request = kwargs[u'pylons'].request
         if request.method == u'POST':
+            output_file = self.output_dir + u'{}.csv'.format(kwargs[u'pylons'].session.id)
+
+            if os.path.exists(output_file):
+                os.remove(output_file)
+
             result = jobs.enqueue(generate_dataset_csv, [
-                                  self.output_dir, kwargs[u'pylons'].session.id, self.context])
+                                  self.output_dir, output_file, self.context])
             kwargs[u'pylons'].response.headers[u'Content-Type'] = u'application/json'
             kwargs[u'pylons'].response.status = u'201 CREATED'
             return json.dumps({u'generating_export': True})
@@ -85,7 +90,7 @@ class GetPackageData(Package):
         return field_mapper[model_field](resource)
 
 
-def generate_dataset_csv(output_dir, session_id, context):
+def generate_dataset_csv(output_dir, output_file, context):
     """
     Write tracking summary to a csv file.
     :return: None
@@ -93,7 +98,6 @@ def generate_dataset_csv(output_dir, session_id, context):
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
 
-    output_file = output_dir + u'{}.csv'.format(session_id)
     log.info(u'Creating dataset export file [path = {}]'.format(output_file))
     headings = [
         u'Dataset Title',
@@ -126,5 +130,4 @@ def generate_dataset_csv(output_dir, session_id, context):
             dataset.metadata_created.year
         ) for dataset in datasets])
 
-    log.info(u'Successfully created dataset export file [path = {}]'.format(
-        session_id, output_dir))
+    log.info(u'Successfully created dataset export file [path = {}]'.format(output_dir))
