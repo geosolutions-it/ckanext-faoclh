@@ -9,7 +9,7 @@
   {% for tag in tags %}
   <tr>
     <td class="tag-name">
-      <a href="?vocab_name={{vocab_name}}&tag={{tag['id']}}">
+      <a href="/ckan-admin/vocabulary/edit/{{vocab_name}}/tag/{{tag['id']}}">
         {{tag["display_name"]}}
       </a>
     </td>
