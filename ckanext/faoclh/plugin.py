@@ -143,10 +143,10 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         :returns: Modified version of the map object
         '''
         with SubMapper(map_obj, controller=u'ckanext.faoclh.controllers.admin:AdminController') as mp:
-            mp.connect(u'vocabs', u'/ckan-admin/vocabulary/all/{vocabulary_name:.*}', action=u'list_vocabulary_view')
-            mp.connect(u'vocabs', u'/ckan-admin/vocabulary/edit/{vocabulary_name:.*}/tag/{tag_id:.*}',
+            mp.connect(u'list_vocabs', u'/ckan-admin/vocabulary/all/{vocabulary_name:.*}', action=u'list_vocabulary_view')
+            mp.connect(u'edit_vocabs', u'/ckan-admin/vocabulary/edit/{vocabulary_name:.*}/tag/{tag_id:.*}',
                        action=u'update_vocabularies_view')
-            mp.connect(u'vocabs', u'/ckan-admin/vocabulary/create/{vocabulary_name:.*}',
+            mp.connect(u'create_vocabs', u'/ckan-admin/vocabulary/create/{vocabulary_name:.*}',
                        action=u'create_vocabularies_view')
         return map_obj
 

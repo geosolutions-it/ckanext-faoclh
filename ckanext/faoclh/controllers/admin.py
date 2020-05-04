@@ -8,11 +8,10 @@ from ckan.common import _
 from ckan.controllers.admin import AdminController
 from ckan.lib.i18n import get_locales_from_config
 from ckan.lib.navl.dictization_functions import validate
-from ckan.logic import NotFound, ValidationError
+from ckan.logic import ValidationError
 from ckan.model import Tag
-from ckanext.faoclh.cli.vocab import VocabCommand
 from ckanext.multilang.model import TagMultilang
-import ckan.lib.base as base
+from ckan.lib.helpers import url_for
 
 log = logging.getLogger(__name__)
 
@@ -42,18 +41,11 @@ class AdminController(AdminController):
         vocabulary = self.get_vocab({}, vocab_name)
         localized_tags = TagMultilang.get_all(vocab_name)
 
-        try:
-            vocab_label = self.vocab_name_template_mapper[vocab_name]
-        except KeyError:
-            return base.abort(404)
-
-        context = {
+        return self.prepare_response(u'admin/list_vocabs.html', **{
             u'vocab_name': vocab_name,
-            u'vocab_label': vocab_label,
             u'tags': vocabulary.get(u'tags', []),
             u'labels': self.format_list_labels(localized_tags, helpers.getLanguage())
-        }
-        return base.render(u'admin/list_vocabs.html', extra_vars=context)
+        })
 
     def create_vocabularies_view(self, *args, **kwargs):
         return self.http_method_handler(self.request, *args, **kwargs)
@@ -75,22 +67,14 @@ class AdminController(AdminController):
         result = self.add_tag(vocabulary, tag_name, vocab_name)
 
         if self.created:
-            toolkit.redirect_to('/ckan-admin/vocabulary/edit/{}/tag/{}'.format(
+            toolkit.redirect_to(u'/ckan-admin/vocabulary/edit/{}/tag/{}'.format(
                 vocab_name, result))
 
-        try:
-            vocab_label = self.vocab_name_template_mapper[vocab_name]
-        except KeyError:
-            return base.abort(404)
-
-        context = {
+        return self.prepare_response(u'admin/edit_create_vocab.html', **{
             u'vocab_name': vocab_name,
-            u'vocab_label': vocab_label,
             u'labels': self.format_labels(localized_tags),
-            u'tag_name': tag_name[0] if tag_name else '',
-        }
-
-        return base.render(u'admin/edit_create_vocab.html', extra_vars=context)
+            u'tag_name': tag_name[0] if tag_name else u'',
+        })
 
     def get(self, request, *args, **kwargs):
         vocab_name = kwargs.get(u'vocabulary_name', u'fao_resource_type')
@@ -99,35 +83,37 @@ class AdminController(AdminController):
         localized_tags = TagMultilang.get_all(vocab_name)
 
         if tag_id:
-            localized_tags = localized_tags.filter(TagMultilang.tag_id == tag_id)
+            localized_tags = localized_tags.filter(
+                TagMultilang.tag_id == tag_id)
+            if not Tag.by_id(tag_id):
+                return base.abort(404)
 
-            # if not localized_tags.count():
-            #     return base.abort(404)
+        tag_name = [tag[u'display_name']
+                    for tag in vocabulary.get(u'tags', []) if tag[u'id'] == tag_id]
 
-        tag_name = [tag['display_name']
-                    for tag in vocabulary.get('tags', []) if tag['id'] == tag_id]
-
-        try:
-            vocab_label = self.vocab_name_template_mapper[vocab_name]
-        except KeyError:
-            return base.abort(404)
-
-        context = {
+        return self.prepare_response(u'admin/edit_create_vocab.html', **{
             u'vocab_name': vocab_name,
-            u'vocab_label': vocab_label,
             u'labels': self.format_labels(localized_tags),
             u'tag_name': tag_name[0] if tag_name else '',
-        }
+        })
 
-        return base.render(u'admin/edit_create_vocab.html', extra_vars=context)
+    def prepare_response(self, template, **kwargs):
+        try:
+            vocab_label = self.vocab_name_template_mapper[kwargs.get(
+                u'vocab_name')]
+        except KeyError:
+            return base.abort(404)
+        kwargs[u'vocab_label'] = vocab_label
+
+        return base.render(template, extra_vars=kwargs)
 
     def add_tag(self, vocab, tag_name, vocab_name):
         data = {u'name': tag_name, u'vocabulary_id': vocab[u'id']}
         try:
             result = toolkit.get_action(u'tag_create')(self.context, data)
-            self.localize_tags(result.get('id'), vocab_name)
+            self.localize_tags(result.get(u'id'), vocab_name)
             self.created = True
-            return result.get('id')
+            return result.get(u'id')
         except ValidationError as e:
             if u'already belongs to vocabulary' in str(e):
                 self.errors.append(_(u'Vocabulary tag is already existent.'))
@@ -149,7 +135,7 @@ class AdminController(AdminController):
 
     @staticmethod
     def del_tag(context, vocab, tag_name):
-        data = {u'id': tag_name, 'vocabulary_id': vocab[u'id']}
+        data = {u'id': tag_name, u'vocabulary_id': vocab[u'id']}
         return toolkit.get_action(u'tag_delete')(context, data)
 
     @staticmethod
