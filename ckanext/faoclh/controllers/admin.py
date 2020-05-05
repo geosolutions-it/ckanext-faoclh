@@ -1,17 +1,14 @@
 import logging
 
-import ckan
 import ckan.lib.base as base
 import ckan.plugins.toolkit as toolkit
 import ckanext.multilang.helpers as helpers
 from ckan.common import _
 from ckan.controllers.admin import AdminController
 from ckan.lib.i18n import get_locales_from_config
-from ckan.lib.navl.dictization_functions import validate
 from ckan.logic import ValidationError
-from ckan.model import Tag
+from ckan.model import Tag, meta
 from ckanext.multilang.model import TagMultilang
-from ckan.lib.helpers import url_for
 
 log = logging.getLogger(__name__)
 
@@ -72,17 +69,17 @@ class AdminController(AdminController):
         vocab_name = kwargs.get(u'vocabulary_name', u'fao_resource_type')
         tag_id = kwargs.get(u'tag_id', None)
         vocabulary = self.get_vocab({}, vocab_name)
-        status = 'created'
 
         if tag_id:
-            self.del_tag(self.context, vocabulary, tag_id)
+            self.update_tag(tag_id, tag_name, vocab_name)
             status = 'edited'
-
-        result = self.add_tag(vocabulary, tag_name, vocab_name)
+        else:
+            status = 'created'
+            result = self.add_tag(vocabulary, tag_name, vocab_name)
 
         if self.created:
             toolkit.redirect_to(u'/ckan-admin/vocabulary/edit/{}/tag/{}?status={}'.format(
-                vocab_name, result, status))
+                vocab_name, tag_id or result, status))
 
         return self.prepare_response(u'admin/edit_create_vocab.html', **{
             u'vocab_name': vocab_name,
@@ -128,6 +125,14 @@ class AdminController(AdminController):
 
         return base.render(template, extra_vars=kwargs)
 
+    def update_tag(self, tag_id, tag_name, vocab_name):
+        print('kjnhsbgdv')
+        tag = meta.Session.query(Tag).get(tag_id)
+        tag.name = tag_name
+        meta.Session.commit()
+        self.localize_tags(tag.id, vocab_name)
+        self.created = True
+
     def add_tag(self, vocab, tag_name, vocab_name):
         data = {u'name': tag_name.strip(), u'vocabulary_id': vocab[u'id']}
         try:
@@ -152,6 +157,7 @@ class AdminController(AdminController):
             }
             for lang in self.available_locales
         ]
+        print
         TagMultilang.save_tags(*labels)
 
     @staticmethod
