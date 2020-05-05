@@ -109,7 +109,7 @@ Enable multilingual support for datasets, organizations/groups, tags, and resour
 $ cd /usr/lib/ckan/src/
 ```
 
-- Clone ckanext-spatial
+- Clone ckanext-multilang 
 ```
 $ git clone https://github.com/geosolutions-it/ckanext-multilang
 ```
@@ -140,19 +140,19 @@ $ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/defaul
 ### Configure multilingual support in CKAN's configuration file (production.ini)
 To add multilingual configurations in CKAN's configuration file (production.ini) found at `/etc/ckan/default/production.ini`, add the following configuration keys:
 
-- Add ckanext-spatial, ckanext-multilang extensions using the `ckan.plugins` configuration key separating each extension by space. Read more about adding extension [here](https://docs.ckan.org/en/ckan-1.4.3/extensions.html).
+- Add ckanext-multilang extensions using the `ckan.plugins` configuration key separating each extension by space. Read more about adding extension [here](https://docs.ckan.org/en/2.8/extensions/tutorial.html#creating-a-new-extension).
 ```
-ckan.plugins = ckanext-multilang
+ckan.plugins = multilang
 ```
 
- - Add all locales you intend to use in the user interface using `ckan.locales_offered` configuration key by adding space-separated locale codes. Read more about CKAN's internationalization settings [here](https://docs.ckan.org/en/ckan-2.7.3/maintaining/configuration.html#internationalisation-settings).
+ - Add all locales you intend to use in the user interface using `ckan.locales_offered` configuration key by adding space-separated locale codes. Read more about CKAN's internationalization settings [here](https://docs.ckan.org/en/2.8/extensions/translating-extensions.html).
  
  For example, to add English, and French, use the sample configuration below:
 ```
 ckan.locales_offered = en fr
 ```
 
->**_TIP:_** You can also enable/disable tag localization using the `enable_tag_localization` (with default `False`) settings tag by settings it to boolean True/False.
+>**_TIP:_** You can also enable/disable tag localization using the `multilang.enable_tag_localization` (with default `False`) settings tag by settings it to boolean True/False.
 
 ### Update the Solr schema.xml file used by CKAN introducing the following elements.
 Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/schema.xml`) with the following xml tags:
