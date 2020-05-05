@@ -47,10 +47,22 @@ class AdminController(AdminController):
             u'labels': self.format_list_labels(localized_tags, helpers.getLanguage())
         })
 
-    def create_vocabularies_view(self, *args, **kwargs):
+    def delete_vocabulary_tag_view(self, *args, **kwargs):
+        vocab_name = kwargs.get(u'vocabulary_name', u'fao_resource_type')
+        vocabulary = self.get_vocab({}, vocab_name)
+        tag_id = kwargs.get(u'tag_id', None)
+
+        try:
+            self.del_tag(self.context, vocabulary, tag_id)
+            toolkit.redirect_to(u'/ckan-admin/vocabulary/all/{}'.format(
+                vocab_name))
+        except toolkit.ObjectNotFound:
+            return base.abort(404)
+
+    def create_vocabulary_tag_view(self, *args, **kwargs):
         return self.http_method_handler(self.request, *args, **kwargs)
 
-    def update_vocabularies_view(self, *args, **kwargs):
+    def update_vocabulary_tag_view(self, *args, **kwargs):
         return self.http_method_handler(self.request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
@@ -58,8 +70,6 @@ class AdminController(AdminController):
         vocab_name = kwargs.get(u'vocabulary_name', u'fao_resource_type')
         tag_id = kwargs.get(u'tag_id', None)
         vocabulary = self.get_vocab({}, vocab_name)
-
-        self.errors = self.get_package_name_validation_errors(tag_name)
 
         if tag_id:
             self.del_tag(self.context, vocabulary, tag_id)
@@ -72,8 +82,11 @@ class AdminController(AdminController):
 
         return self.prepare_response(u'admin/edit_create_vocab.html', **{
             u'vocab_name': vocab_name,
-            u'labels': self.format_labels(localized_tags),
-            u'tag_name': tag_name[0] if tag_name else u'',
+            u'errors': self.errors,
+            u'labels': {lang: self.request.POST.get(lang, u'').strip()
+                        for lang in self.available_locales},
+            u'tag_name': tag_name,
+            u'tag_id': tag_id,
         })
 
     def get(self, request, *args, **kwargs):
@@ -95,6 +108,7 @@ class AdminController(AdminController):
             u'vocab_name': vocab_name,
             u'labels': self.format_labels(localized_tags),
             u'tag_name': tag_name[0] if tag_name else '',
+            u'tag_id': tag_id,
         })
 
     def prepare_response(self, template, **kwargs):
@@ -104,11 +118,12 @@ class AdminController(AdminController):
         except KeyError:
             return base.abort(404)
         kwargs[u'vocab_label'] = vocab_label
+        kwargs[u'active'] = True
 
         return base.render(template, extra_vars=kwargs)
 
     def add_tag(self, vocab, tag_name, vocab_name):
-        data = {u'name': tag_name, u'vocabulary_id': vocab[u'id']}
+        data = {u'name': tag_name.strip(), u'vocabulary_id': vocab[u'id']}
         try:
             result = toolkit.get_action(u'tag_create')(self.context, data)
             self.localize_tags(result.get(u'id'), vocab_name)
@@ -125,7 +140,7 @@ class AdminController(AdminController):
         labels = [
             {
                 u'lang': lang,
-                u'text': self.request.POST.get(lang, u''),
+                u'text': self.request.POST.get(lang, u'').strip(),
                 u'name': vocab_name,
                 u'id': tag_id,
             }
@@ -137,15 +152,6 @@ class AdminController(AdminController):
     def del_tag(context, vocab, tag_name):
         data = {u'id': tag_name, u'vocabulary_id': vocab[u'id']}
         return toolkit.get_action(u'tag_delete')(context, data)
-
-    @staticmethod
-    def get_package_name_validation_errors(package_name):
-        context = {u'model': ckan.model, u'session': ckan.model.Session}
-        schema = ckan.logic.schema.default_create_package_schema()
-
-        data_dict = {u'name': package_name}
-        data, errors = validate(data_dict, schema, context)
-        return errors.get(u'name', [])
 
     @staticmethod
     def get_vocab(context, vocab_name):

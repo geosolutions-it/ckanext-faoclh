@@ -8,7 +8,7 @@
   {{ h.build_nav_icon('admin.index', _('Sysadmins'), icon='gavel') }}
   {{ h.build_nav_icon('admin.config', _('Config'), icon='check-square-o') }}
   {{ h.build_nav_icon('admin.trash', _('Trash'), icon='trash-o') }}
-<li>
+<li {%  if active %}class="active"{% endif %}>
     <a href="/ckan-admin/vocabulary/all/fao_resource_type">
         Vocabularies
     </a>

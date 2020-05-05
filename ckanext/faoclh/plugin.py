@@ -132,7 +132,6 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         toolkit.add_template_directory(config, 'templates')
         toolkit.add_public_directory(config, 'public')
         toolkit.add_resource('fanstatic', "faoclh")
-        # toolkit.add_ckan_admin_tab(config, 'vocabs', 'Vocabularies')
 
     def before_map(self, map_obj):
         u'''
@@ -143,11 +142,14 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         :returns: Modified version of the map object
         '''
         with SubMapper(map_obj, controller=u'ckanext.faoclh.controllers.admin:AdminController') as mp:
-            mp.connect(u'list_vocabs', u'/ckan-admin/vocabulary/all/{vocabulary_name:.*}', action=u'list_vocabulary_view')
-            mp.connect(u'edit_vocabs', u'/ckan-admin/vocabulary/edit/{vocabulary_name:.*}/tag/{tag_id:.*}',
-                       action=u'update_vocabularies_view')
-            mp.connect(u'create_vocabs', u'/ckan-admin/vocabulary/create/{vocabulary_name:.*}',
-                       action=u'create_vocabularies_view')
+            mp.connect(u'list_vocab_tags', u'/ckan-admin/vocabulary/all/{vocabulary_name:.*}',
+                       action=u'list_vocabulary_view')
+            mp.connect(u'edit_vocabs_tags', u'/ckan-admin/vocabulary/edit/{vocabulary_name:.*}/tag/{tag_id:.*}',
+                       action=u'update_vocabulary_tag_view')
+            mp.connect(u'create_vocabs_tags', u'/ckan-admin/vocabulary/create/{vocabulary_name:.*}',
+                       action=u'create_vocabulary_tag_view')
+            mp.connect(u'delete_vocabs_tags', u'/ckan-admin/vocabulary/delete/{vocabulary_name:.*}/tag/{tag_id:.*}',
+                       action=u'delete_vocabulary_tag_view')
         return map_obj
 
     def after_map(self, map_obj):

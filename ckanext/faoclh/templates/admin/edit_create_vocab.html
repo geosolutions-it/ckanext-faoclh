@@ -14,10 +14,10 @@
     {% endif %}
     {% if created == 'true' %}
     <div class="error-explanation alert alert-success">
-        <p>{{ vocab_label }} Tag {% if tag_name %}Edited{% else %}Created{%  endif %} Successfully</p>
+        <p>{{ vocab_label }} Tag {% if tag_id %}Edited{% else %}Created{%  endif %} Successfully</p>
     </div>
     {% endif %}
-    <h3>{% if tag_name %}Edit{% else %}Add New {%  endif %} {{ vocab_label }} Vocabulary</h3>
+    <h3>{% if tag_id %}Edit{% else %}Add New {%  endif %} {{ vocab_label }} Vocabulary Tag</h3>
     <form method="post">
         <div class="form-group control-medium">
             <div class="controls">
@@ -41,14 +41,16 @@
                     {% for locale in h.get_available_locales() %}
                     <div class="input-group" style="margin-top: 2%;">
                         <label class="input-group-addon">{{ locale.display_name or locale.english_name }}</label>
-                        <input class="form-control" id="{{ lang }}" type="text" name="{{ locale.identifier }}" value="{% if tag_name %} {{ labels.get(locale.identifier, '') }} {% endif %}" placeholder="" required>
+                        <input class="form-control" id="{{ lang }}" type="text" name="{{ locale.identifier }}" {% if tag_name %}value="{{ labels.get(locale.identifier, '') }}"{% endif %} placeholder="" required>
                       </div>
                     {% endfor %}
                 </div>
             </div>
         </div>
         <div class="form-actions">
-            <a class="btn btn-danger pull-left" href="#" data-module="confirm-action">Delete</a>
+            <a class="btn btn-danger pull-left" href={% if tag_id %}/ckan-admin/vocabulary/delete/{{ vocab_name }}/tag/{{ tag_id }}{% else %}/ckan-admin/vocabulary/all/{{ vocab_name }}{% endif %} data-module="confirm-action">
+                {% if tag_id %}Delete{% else %}Cancel{% endif %}
+            </a>
             <button class="btn btn-primary" name="save" type="submit">Save Vocabulary</button>
         </div>
     </form>
