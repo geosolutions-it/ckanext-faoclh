@@ -72,9 +72,9 @@ class AdminController(AdminController):
 
         if tag_id:
             self.update_tag(tag_id, tag_name, vocab_name)
-            status = 'edited'
+            status = u'edited'
         else:
-            status = 'created'
+            status = u'created'
             result = self.add_tag(vocabulary, tag_name, vocab_name)
 
         if self.created:
