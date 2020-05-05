@@ -126,7 +126,6 @@ class AdminController(AdminController):
         return base.render(template, extra_vars=kwargs)
 
     def update_tag(self, tag_id, tag_name, vocab_name):
-        print('kjnhsbgdv')
         tag = meta.Session.query(Tag).get(tag_id)
         tag.name = tag_name
         meta.Session.commit()
@@ -157,7 +156,6 @@ class AdminController(AdminController):
             }
             for lang in self.available_locales
         ]
-        print
         TagMultilang.save_tags(*labels)
 
     @staticmethod
