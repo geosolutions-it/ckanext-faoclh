@@ -1,6 +1,11 @@
 {% extends "admin/base_vocab.html" %}
 
 {% block vocab_content %}
+{% if status == 'deleted' %}
+<div class="error-explanation alert alert-success">
+    <p>{% trans %}{{ vocab_label }} Tag Deleted Successfully{% endtrans %}</p>
+</div>
+{% endif %}
 <table>
   <thead>
     <th class="tag-name">{% trans %}Name{% endtrans %}</th>

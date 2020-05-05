@@ -40,11 +40,13 @@ class AdminController(AdminController):
         vocab_name = kwargs.get(u'vocabulary_name', u'fao_resource_type')
         vocabulary = self.get_vocab({}, vocab_name)
         localized_tags = TagMultilang.get_all(vocab_name)
+        status = self.request.GET.get('status')
 
         return self.prepare_response(u'admin/list_vocabs.html', **{
             u'vocab_name': vocab_name,
             u'tags': vocabulary.get(u'tags', []),
-            u'labels': self.format_list_labels(localized_tags, helpers.getLanguage())
+            u'labels': self.format_list_labels(localized_tags, helpers.getLanguage()),
+            u'status': status,
         })
 
     def delete_vocabulary_tag_view(self, *args, **kwargs):
@@ -54,7 +56,7 @@ class AdminController(AdminController):
 
         try:
             self.del_tag(self.context, vocabulary, tag_id)
-            toolkit.redirect_to(u'/ckan-admin/vocabulary/all/{}'.format(
+            toolkit.redirect_to(u'/ckan-admin/vocabulary/all/{}?status=deleted'.format(
                 vocab_name))
         except toolkit.ObjectNotFound:
             return base.abort(404)
@@ -70,15 +72,17 @@ class AdminController(AdminController):
         vocab_name = kwargs.get(u'vocabulary_name', u'fao_resource_type')
         tag_id = kwargs.get(u'tag_id', None)
         vocabulary = self.get_vocab({}, vocab_name)
+        status = 'created'
 
         if tag_id:
             self.del_tag(self.context, vocabulary, tag_id)
+            status = 'edited'
 
         result = self.add_tag(vocabulary, tag_name, vocab_name)
 
         if self.created:
-            toolkit.redirect_to(u'/ckan-admin/vocabulary/edit/{}/tag/{}'.format(
-                vocab_name, result))
+            toolkit.redirect_to(u'/ckan-admin/vocabulary/edit/{}/tag/{}?status={}'.format(
+                vocab_name, result, status))
 
         return self.prepare_response(u'admin/edit_create_vocab.html', **{
             u'vocab_name': vocab_name,
@@ -94,6 +98,7 @@ class AdminController(AdminController):
         tag_id = kwargs.get(u'tag_id', None)
         vocabulary = self.get_vocab({}, vocab_name)
         localized_tags = TagMultilang.get_all(vocab_name)
+        status = self.request.GET.get('status')
 
         if tag_id:
             localized_tags = localized_tags.filter(
@@ -109,6 +114,7 @@ class AdminController(AdminController):
             u'labels': self.format_labels(localized_tags),
             u'tag_name': tag_name[0] if tag_name else '',
             u'tag_id': tag_id,
+            u'status': status,
         })
 
     def prepare_response(self, template, **kwargs):
