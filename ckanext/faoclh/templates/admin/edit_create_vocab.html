@@ -4,27 +4,27 @@
 <div>
     {% if errors%}
     <div class="error-explanation alert alert-error ">
-        <p>{% trans %}The form contains invalid entries:{% endtrans %}</p>
+        <p>The form contains invalid entries:</p>
         <ul>
             {% for error in errors%}
-            <li data-field-label="Name">{% trans %}Name: {{error}}{% endtrans %}</li>
+            <li data-field-label="Name">Name: {{error}}</li>
             {% endfor %}
         </ul>
     </div>
     {% endif %}
     {% if status == 'created' or status  == 'edited' %}
     <div class="error-explanation alert alert-success">
-        <p>{% trans %}{{ vocab_label }} Tag {% if status  == 'edited' %}Edited{% else %}Created{%  endif %} Successfully{% endtrans %}</p>
+        <p>{{ vocab_label }} Tag {% if status  == 'edited' %}Edited{% else %}Created{%  endif %} Successfully</p>
     </div>
     {% endif %}
-    <h3>{% if tag_id %}{% trans %}Edit{% else %}Add New {%  endif %} {{ vocab_label }} Vocabulary Tag{% endtrans %}</h3>
+    <h3>{% if tag_id %}Edit{% else %}Add New {%  endif %} {{ vocab_label }} Vocabulary Tag</h3>
     <form method="post">
         <div class="form-group control-medium">
             <div class="controls">
                 <div class="form-group control-medium">
                     <label class="control-label">
                         <span class="control-required">*</span>
-                        {% trans %}Name{% endtrans %}
+                        Name
                     </label>
                     <div class="controls ">
                         <input type="text" name="tag_name" value="{{ tag_name }}" placeholder="vocabulary name"
@@ -49,7 +49,7 @@
         </div>
         <div class="form-actions">
             <a class="btn btn-danger pull-left" href={% if tag_id %}/ckan-admin/vocabulary/delete/{{ vocab_name }}/tag/{{ tag_id }}{% else %}/ckan-admin/vocabulary/all/{{ vocab_name }}{% endif %} data-module="confirm-action">
-                {% if tag_id %}{% trans %}Delete{% endtrans %}{% else %}Cancel{% endif %}
+                {% if tag_id %}{% trans %}Delete{% endtrans %}{% else %}{% trans %}Cancel{% endtrans %}{% endif %}
             </a>
             <button class="btn btn-primary" name="save" type="submit">{% trans %}Save Vocabulary{% endtrans %}</button>
         </div>
