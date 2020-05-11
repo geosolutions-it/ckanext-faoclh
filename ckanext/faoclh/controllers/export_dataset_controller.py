@@ -22,10 +22,10 @@ class ExportDatasetController(AdminController):
                                      u'/usr/lib/ckan/src/ckanext-faoclh/ckanext_faoclh.egg-info/exported-dataset/')
         user = toolkit.get_action(u'get_site_user')({u'ignore_auth': True}, {})
         self.context = {u'user': user[u'name'], u'ignore_auth': True}
+        self.request = base.request
 
     def export_dataset(self, *args, **kwargs):
-        request = kwargs[u'pylons'].request
-        if request.method == u'POST':
+        if self.request.method == u'POST':
             output_file = self.output_dir + u'{}.csv'.format(kwargs[u'pylons'].session.id)
 
             if os.path.exists(output_file):
@@ -39,7 +39,6 @@ class ExportDatasetController(AdminController):
         return base.render(u'admin/export_dataset.html')
 
     def download_dataset(self, *args, **kwargs):
-        self.request = kwargs[u'pylons'].request
         session_id = kwargs[u'pylons'].session.id
         kwargs[u'pylons'].response.headers[u'Content-Type'] = u'application/json'
         output_filename = self.output_dir + u'{}.csv'.format(session_id)
@@ -83,9 +82,9 @@ class GetPackageData(Package):
         resource = meta.Session.query(model_field).filter(
             Resource.package_id == package_id)
         field_mapper = {
-            Resource.name: lambda package_resource: ', '.join([res[0] for res in package_resource]).encode('utf-8'),
-            Resource.format: lambda package_resource: ', '.join(
-                [res[0] for res in package_resource]).encode('utf-8')
+            Resource.name: lambda package_resource: u', '.join([res[0] for res in package_resource]).encode(u'utf-8'),
+            Resource.format: lambda package_resource: u', '.join(
+                [res[0] for res in package_resource]).encode(u'utf-8')
         }
         return field_mapper[model_field](resource)
 
