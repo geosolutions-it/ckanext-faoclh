@@ -179,7 +179,7 @@ E.g.
 
 This step requires that groups and organizations have already been created.
 
-Configuring CKAN asynchronous background worker
+Configuring CKAN asynchronous background worker and generate CSV reports
 =============================================
 
 CKAN allows you to create jobs that run in the ‘background’, i.e. asynchronously and without blocking the main application.
@@ -222,6 +222,20 @@ startsecs=10
 # Need to wait for currently executing tasks to finish at shutdown.
 # Increase this if you have very long running tasks.
 stopwaitsecs = 600
+```
+
+Create a directory to hold all the generated CSV datasets and grant all users permissions to it. 
+```
+$ mkdir $path-to-your-dir
+```
+
+```
+$ chmod -R 777 $path-to-your-dir
+```
+
+Add the created directory to CKAN configuration file (`/etc/ckan/default/production.ini`) using the `faoclh.export_dataset_dir` settings key as shown below
+```
+faoclh.export_dataset_dir = path-to-your-dir
 ```
 
 Once the file is  created, restart CKAN using the command below:

@@ -18,7 +18,7 @@ log = logging.getLogger(__name__)
 
 class ExportDatasetController(AdminController):
     def __init__(self):
-        self.output_dir = config.get(u'export_dataset_dir',
+        self.output_dir = config.get(u'faoclh.export_dataset_dir',
                                      u'/usr/lib/ckan/src/ckanext-faoclh/ckanext_faoclh.egg-info/exported-dataset/')
         user = toolkit.get_action(u'get_site_user')({u'ignore_auth': True}, {})
         self.context = {u'user': user[u'name'], u'ignore_auth': True}
@@ -75,7 +75,7 @@ class GetPackageData(Package):
             PackageTag.package_id == package_id)
         tags = meta.Session.query(Tag.name).filter(
             Tag.id.in_([tag[0] for tag in package_tags])).all()
-        return ', '.join([tag[0] for tag in tags])
+        return u', '.join([tag[0] for tag in tags])
 
     @classmethod
     def get_resource(cls, model_field, package_id):
