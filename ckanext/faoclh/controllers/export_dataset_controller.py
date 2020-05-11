@@ -52,7 +52,7 @@ class ExportDatasetController(AdminController):
         return self._send_file_response(output_filename)
 
     def _send_file_response(self, output_filename):
-        user_filename = '_'.join(output_filename.split(u'/')[-2:])
+        user_filename = u'_'.join(output_filename.split(u'/')[-2:])
         file_size = os.path.getsize(output_filename)
 
         headers = [(u'Content-Disposition', u'attachment; filename=\"' + user_filename + u'\"'),
