@@ -83,27 +83,12 @@ for instance
 
     paster --plugin=ckanext-faoclh vocab delete -n fao_resource_type --config=/etc/ckan/default/production.ini
  
-
-Load datasets
--------------
-
-Enter in the `bin/` directory.
-
-Run
-
-    ./load_datasets.sh SERVER_URL API_KEY
-    
-E.g.    
-
-    ./load_dataset.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c   
-
-This step requires that groups and organizations have already been created.
-
+ 
 Enable multilingual support
-============
+---------------------------
 
 Enable multilingual support for datasets, organizations/groups, tags, and resources using the [ckanext-multilang](https://github.com/geosolutions-it/ckanext-multilang) extension by following the setup steps described below:
-### Clone and install the ckanext-multilang
+##### Clone and install the ckanext-multilang
 - Navigate to CKAN's extension source directory
 ```
 $ cd /usr/lib/ckan/src/
@@ -130,19 +115,12 @@ $ . /usr/lib/ckan/default/bin/activate
 $ pip install -e .
 ```
 
-### Initialize the database with the mandatory tables needed for localized records:
-```
-$ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/default/production.ini
-```
-
-> **_NOTE:_** Make sure that the virtual environment is active before running the above command. See previous steps on how to activate the virtual environment.
-
-### Configure multilingual support in CKAN's configuration file (production.ini)
+##### Configure multilingual support in CKAN's configuration file (production.ini)
 To add multilingual configurations in CKAN's configuration file (production.ini) found at `/etc/ckan/default/production.ini`, add the following configuration keys:
 
 - Add ckanext-multilang extensions using the `ckan.plugins` configuration key separating each extension by space. Read more about adding extension [here](https://docs.ckan.org/en/2.8/extensions/tutorial.html#creating-a-new-extension).
 ```
-ckan.plugins = multilang
+ckan.plugins = [...] multilang
 ```
 
  - Add all locales you intend to use in the user interface using `ckan.locales_offered` configuration key by adding space-separated locale codes. Read more about CKAN's internationalization settings [here](https://docs.ckan.org/en/2.8/extensions/translating-extensions.html).
@@ -154,25 +132,47 @@ ckan.locales_offered = en fr
 
 >**_TIP:_** You can also enable/disable tag localization using the `multilang.enable_tag_localization` (with default `False`) settings tag by settings it to boolean True/False.
 
-### Update the Solr schema.xml file used by CKAN introducing the following elements.
+##### Initialize the database with the mandatory tables needed for localized records:
+Make sure the virtual environment is active before running the command below. See previous steps on how to activate the virtual environment.
+```
+$ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/default/production.ini
+```
+
+##### Update the Solr schema.xml file used by CKAN introducing the following elements.
 Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/schema.xml`) with the following xml tags:
 
-Inside the `fields` tags, add the tag below:
+- Inside the `fields` tags, add the tag below:
 ```
 <dynamicField name="package_multilang_localized_*" type="text" indexed="true" stored="true" multiValued="false"/>
 ```
 
-Add the `copyField` tag shown below:
+- Add the `copyField` tag shown below:
 ```
 <copyField source="package_multilang_localized_*" dest="text"/>
 ```
 
-Restart Solr
+- Restart Solr
 ```
 $ sudo service solr restart
 ```
 
-### Restart CKAN
+- Restart CKAN
 ```
 $ systemctl restart supervisord
 ```
+
+
+Load datasets
+-------------
+
+Enter in the `bin/` directory.
+
+Run
+
+    ./load_datasets.sh SERVER_URL API_KEY
+    
+E.g.    
+
+    ./load_dataset.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c   
+
+This step requires that groups and organizations have already been created.
