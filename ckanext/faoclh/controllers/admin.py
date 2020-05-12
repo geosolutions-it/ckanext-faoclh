@@ -22,14 +22,14 @@ class AdminController(AdminController):
             u'fao_geographic_focus': u'Geographical Focus'
         }
         self.method_mapper = {
-            'GET': self.get,
-            'POST': self.post,
+            u'GET': self.get,
+            u'POST': self.post,
         }
 
         self.errors = []
         self.available_locales = get_locales_from_config()
-        user = toolkit.get_action('get_site_user')({'ignore_auth': True}, {})
-        self.context = {'user': user['name'], 'ignore_auth': True}
+        user = toolkit.get_action(u'get_site_user')({u'ignore_auth': True}, {})
+        self.context = {u'user': user[u'name'], u'ignore_auth': True}
         self.request = base.request
         self.http_method_handler = self.method_mapper[self.request.method]
 
@@ -37,7 +37,7 @@ class AdminController(AdminController):
         vocab_name = kwargs.get(u'vocabulary_name', u'fao_resource_type')
         vocabulary = self.get_vocab({}, vocab_name)
         localized_tags = TagMultilang.get_all(vocab_name)
-        status = self.request.GET.get('status')
+        status = self.request.GET.get(u'status')
 
         return self.prepare_response(u'admin/list_vocabs.html', **{
             u'vocab_name': vocab_name,
@@ -95,7 +95,7 @@ class AdminController(AdminController):
         tag_id = kwargs.get(u'tag_id', None)
         vocabulary = self.get_vocab({}, vocab_name)
         localized_tags = TagMultilang.get_all(vocab_name)
-        status = self.request.GET.get('status')
+        status = self.request.GET.get(u'status')
 
         if tag_id:
             localized_tags = localized_tags.filter(
@@ -109,7 +109,7 @@ class AdminController(AdminController):
         return self.prepare_response(u'admin/edit_create_vocab.html', **{
             u'vocab_name': vocab_name,
             u'labels': self.format_labels(localized_tags),
-            u'tag_name': tag_name[0] if tag_name else '',
+            u'tag_name': tag_name[0] if tag_name else u'',
             u'tag_id': tag_id,
             u'status': status,
         })
@@ -129,7 +129,7 @@ class AdminController(AdminController):
         tag = meta.Session.query(Tag).get(tag_id)
         tag.name = tag_name
         meta.Session.commit()
-        self.localize_tags(tag.id, vocab_name)
+        self.update_localized_tags(tag.id, vocab_name)
         self.created = True
 
     def add_tag(self, vocab, tag_name, vocab_name):
@@ -145,6 +145,20 @@ class AdminController(AdminController):
                 self.created = False
             return e
         return result
+
+    def update_localized_tags(self, tag_id, vocab_name):
+        multilang_tags = meta.Session.query(TagMultilang).filter(
+            TagMultilang.tag_name == vocab_name, TagMultilang.tag_id == tag_id)
+
+        if multilang_tags.count():
+            tag_mapping = [{
+                u'id': multilang_tag.id,
+                u'text': self.request.POST.get(multilang_tag.lang, u'').strip()
+            } for multilang_tag in multilang_tags]
+            meta.Session.bulk_update_mappings(TagMultilang, tag_mapping)
+            meta.Session.commit()
+        else:
+            self.localize_tags(tag_id, vocab_name)
 
     def localize_tags(self, tag_id, vocab_name):
         labels = [
@@ -174,10 +188,7 @@ class AdminController(AdminController):
 
     @staticmethod
     def format_labels(labels):
-        label_dict = {}
-        for label in labels:
-            label_dict[label.lang] = label.text
-        return label_dict
+        return {label.lang: label.text for label in labels}
 
     @staticmethod
     def format_list_labels(labels, lang):

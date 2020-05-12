@@ -51,7 +51,7 @@
             <a class="btn btn-danger pull-left" href={% if tag_id %}/ckan-admin/vocabulary/delete/{{ vocab_name }}/tag/{{ tag_id }}{% else %}/ckan-admin/vocabulary/all/{{ vocab_name }}{% endif %} data-module="confirm-action">
                 {% if tag_id %}{% trans %}Delete{% endtrans %}{% else %}{% trans %}Cancel{% endtrans %}{% endif %}
             </a>
-            <button class="btn btn-primary" name="save" type="submit">{% trans %}Save Vocabulary{% endtrans %}</button>
+            <button class="btn btn-primary" name="save" type="submit">{% trans %}Save Tag{% endtrans %}</button>
         </div>
     </form>
 </div>

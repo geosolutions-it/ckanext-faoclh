@@ -20,6 +20,7 @@ import ckan.model as model
 from routes.mapper import SubMapper
 from ckanext.multilang.model import TagMultilang
 import ckanext.multilang.helpers as helpers
+from ckan.model import Tag, meta
 
 log = logging.getLogger(__name__)
 
@@ -246,12 +247,10 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
 
 def fao_voc(voc_name):
-    tag_dict = {}
     try:
         data = {u'id': voc_name}
-        tags = toolkit.get_action(u'vocabulary_show')({}, data).get('tags', [])
-        for tag in tags:
-            tag_dict[tag.get('id')] = tag.get('display_name')
+        tags = toolkit.get_action(u'vocabulary_show')({}, data).get(u'tags', [])
+        tag_dict = {tag.get(u'id'):tag.get(u'display_name') for tag in tags}
 
     except toolkit.ObjectNotFound:
         tag_dict = {}
@@ -259,20 +258,32 @@ def fao_voc(voc_name):
     lang = helpers.getLanguage()
     all_labels = TagMultilang.get_all(voc_name, lang)
 
+    def get_tag_label(tag_id):
+        tag = all_labels.filter(TagMultilang.tag_id == tag_id, TagMultilang.lang == lang).first()
+        if tag:
+            return tag.text
+
     return [{
-        u'name': tag_dict.get(tag.tag_id),
-        u'label': tag.text
-    } for tag in all_labels]
+                u'name': value,
+                u'label': get_tag_label(tag_id) or value
+            } for tag_id, value in tag_dict.iteritems()]
 
 
 def fao_voc_label(voc_name, tag_name):
     if not tag_name:
-        log.warn('Empty tag for vocab "{}"'.format(voc_name))
+        log.warn(u'Empty tag for vocab "{}"'.format(voc_name))
         return None
     if isinstance(tag_name, list):
         tag_name = tag_name[0]
 
-    return tag_name
+    tag_id = meta.Session.query(Tag.id).filter(Tag.name == tag_name).first()
+
+    multilang_tag = meta.Session.query(TagMultilang.text).filter(
+        TagMultilang.tag_name == voc_name, TagMultilang.tag_id == tag_id,
+        TagMultilang.lang == helpers.getLanguage()
+    ).first()
+
+    return multilang_tag[0] if multilang_tag else tag_name
 
 
 def fao_voc_label_func(voc_name):
