@@ -1,6 +1,6 @@
 Requirements
 ============
-CKAN 2.8.3+ (tested with CKAN 2.8.3)
+CKAN 2.8.4+ (tested with CKAN 2.8.4)
 
 ckanext-faoclh
 ==============
