@@ -127,7 +127,10 @@ class AdminController(AdminController):
 
     def update_tag(self, tag_id, tag_name, vocab_name):
         tag = meta.Session.query(Tag).get(tag_id)
-        tag.name = tag_name
+        if tag.name != tag_name.strip():
+            self.localize_tags(tag_id, tag.name)
+
+        tag.name = tag_name.strip()
         meta.Session.commit()
         self.update_localized_tags(tag.id, vocab_name)
         self.created = True
@@ -147,8 +150,7 @@ class AdminController(AdminController):
         return result
 
     def update_localized_tags(self, tag_id, vocab_name):
-        multilang_tags = meta.Session.query(TagMultilang).filter(
-            TagMultilang.tag_name == vocab_name, TagMultilang.tag_id == tag_id)
+        multilang_tags = meta.Session.query(TagMultilang).filter(TagMultilang.tag_id == tag_id)
 
         if multilang_tags.count():
             tag_mapping = [{

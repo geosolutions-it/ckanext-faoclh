@@ -21,6 +21,7 @@ from routes.mapper import SubMapper
 from ckanext.multilang.model import TagMultilang
 import ckanext.multilang.helpers as helpers
 from ckan.model import Tag, meta
+from sqlalchemy import or_
 
 log = logging.getLogger(__name__)
 
@@ -278,10 +279,16 @@ def fao_voc_label(voc_name, tag_name):
 
     tag_id = meta.Session.query(Tag.id).filter(Tag.name == tag_name).first()
 
-    multilang_tag = meta.Session.query(TagMultilang.text).filter(
-        TagMultilang.tag_name == voc_name, TagMultilang.tag_id == tag_id,
-        TagMultilang.lang == helpers.getLanguage()
-    ).first()
+    if tag_id:
+        multilang_tag = meta.Session.query(TagMultilang.text).filter(
+            TagMultilang.tag_name == voc_name, TagMultilang.tag_id == tag_id,
+            TagMultilang.lang == helpers.getLanguage()
+        ).first()
+    else:
+        multilang_tag = meta.Session.query(TagMultilang.text).filter(
+            TagMultilang.tag_name == tag_name,
+            TagMultilang.lang == helpers.getLanguage()
+        ).first()
 
     return multilang_tag[0] if multilang_tag else tag_name
 
