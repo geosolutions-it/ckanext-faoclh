@@ -35,6 +35,8 @@ E.g.
 In order to remove the groups:
 
     ./purge_groups.sh SERVER_URL API_KEY
+    
+Please note that groups image names changed over time, so if you already have your groups and the images are not properly loaded, please consider editing the groups info and setting the filenames according to the [actual files](https://github.com/geosolutions-it/ckanext-faoclh/tree/master/ckanext/faoclh/public/fao/images/group).
 
 
 Load default organizations
