@@ -128,7 +128,10 @@ class AdminController(AdminController):
     def update_tag(self, tag_id, tag_name, vocab_name):
         tag = meta.Session.query(Tag).get(tag_id)
         if tag.name != tag_name.strip():
-            self.localize_tags(tag_id, tag.name)
+            new_tag_name = u'{}:{}'.format(vocab_name, tag.name)
+            query = meta.Session.query(TagMultilang).filter(TagMultilang.tag_name == new_tag_name)
+            if not query.count():
+                self.localize_tags(tag_id, new_tag_name)
 
         tag.name = tag_name.strip()
         meta.Session.commit()

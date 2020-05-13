@@ -286,7 +286,7 @@ def fao_voc_label(voc_name, tag_name):
         ).first()
     else:
         multilang_tag = meta.Session.query(TagMultilang.text).filter(
-            TagMultilang.tag_name == tag_name,
+            TagMultilang.tag_name == u'{}:{}'.format(voc_name, tag_name),
             TagMultilang.lang == helpers.getLanguage()
         ).first()
 
