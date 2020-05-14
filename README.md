@@ -238,3 +238,8 @@ Once the file is  created, restart CKAN using the command below:
 ```
 $ systemctl restart supervisord
 ```
+
+#### To run asynchronous worker in dev environment using the command below
+```
+$ paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
+```
