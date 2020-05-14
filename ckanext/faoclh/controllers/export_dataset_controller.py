@@ -18,8 +18,12 @@ log = logging.getLogger(__name__)
 
 class ExportDatasetController(AdminController):
     def __init__(self):
-        self.output_dir = config.get(u'faoclh.export_dataset_dir',
-                                     u'/usr/lib/ckan/src/ckanext-faoclh/ckanext_faoclh.egg-info/exported-dataset/')
+        try:
+            self.output_dir = config[u'faoclh.export_dataset_dir']
+        except KeyError:
+            raise Exception(u"Set a dataset export directory path in CKAN's configuration (production.ini)"
+                            u" file using 'faoclh.export_dataset_dir' settings key")
+
         user = toolkit.get_action(u'get_site_user')({u'ignore_auth': True}, {})
         self.context = {u'user': user[u'name'], u'ignore_auth': True}
         self.request = base.request
