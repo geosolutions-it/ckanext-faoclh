@@ -1,29 +1,27 @@
-{% set items = [
-    { "title": "Global", "href": "/dataset?fao_geographic_focus=Global", "thumbnail": "/fao/images/world_512x256.jpg" },
-    { "title": "Africa", "href": "/dataset?fao_geographic_focus=Africa", "thumbnail": "/fao/images/continent-africa_512x256.jpg" },
-    { "title": "Asia", "href": "/dataset?fao_geographic_focus=Asia", "thumbnail": "/fao/images/continent-asia_512x256.jpg" },
-    { "title": "America", "href": "/dataset?fao_geographic_focus=America", "thumbnail": "/fao/images/continent-america_512x256.jpg" }
-] %}
+{% set thumbnails = {
+    'Global': '/fao/images/world_512x256.jpg',
+    'Africa': '/fao/images/continent-africa_512x256.jpg',
+    'Asia': '/fao/images/continent-asia_512x256.jpg',
+    'America': '/fao/images/continent-america_512x256.jpg'
+} %}
 
-<div class="container-fluid box">
-    <div class="row">
-        <div class="col-xs-8">
-            <h3 class="heading">{{ _('Geographic Focus') }}</h3>
-        </div>
-        <div class="col-xs-4">
-            <a href="/dataset">
-                <div class="fao-item-see-all">{{_('See all')}}</div>
-            </a>
-        </div>
+{% set items = items or [] %}
+
+<div class="fao-item-container">
+    <div class="fao-item-container-head">
+        <h3 class="heading"><strong>{{ _('Geographic Focus') }}</strong></h3>
+        <a href="{{ h.url_for('search') }}">
+            <div class="fao-item-see-all">{{_('See all')}}</div>
+        </a>
     </div>
-    <div class="row">
+    <div class="fao-item-container-body box">
         {% for item in items %}
-        <div class="col-lg-3 col-md-3 col-sm-6">
+            {% set url = h.url_for(controller='package', action='search', fao_geographic_focus=item.name) %}
             {% snippet 'home/snippets/fao_item_summary.html',
-                title=item.title,
-                dataset_url=item.href,
-                thumbnail=item.thumbnail %}
-        </div>
+                title=h.fao_voc_label('fao_geographic_focus', item.name) or item.display_name,
+                dataset_url=url,
+                dataset_count= item.count,
+                thumbnail=item.thumbnail or thumbnails[item.name] or h.url_for_static('/base/images/fao/thumbnail-placeholder.png') %}
         {% endfor %}
     </div>
 </div>

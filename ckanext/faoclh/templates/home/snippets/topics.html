@@ -5,29 +5,24 @@
     'food-security-and-nutrition'],
     get_action='group_show',
     list_action='group_list',
-    count = 4) %}
+    count = 12) %}
 
-<div class="container-fluid box">
-    <div class="row">
-        <div class="col-xs-8">
-            <h3 class="heading">{{ _('Topics') }}</h3>
-        </div>
-        <div class="col-xs-4">
-            <a href="/group">
-                <div class="fao-item-see-all">{{_('See all')}}</div>
-            </a>
-        </div>
+<div class="fao-item-container">
+    <div class="fao-item-container-head">
+        <h3 class="heading"><strong>{{ _('Topics') }}</strong></h3>
+        <a href="{{ h.url_for('group_index') }}">
+            <div class="fao-item-see-all">{{_('See all')}}</div>
+        </a>
     </div>
-    <div class="row">
+    <div class="fao-item-container-body box">
         {% for topic in topics %}
-        <div class="col-lg-3 col-md-3 col-sm-6">
             {% set type = topic.type or 'group' %}
             {% set url = h.url_for(type ~ '_read', action='read', id=topic.name) %}
             {% snippet 'home/snippets/fao_item_summary.html',
                 title=topic.title,
                 dataset_url=url,
-                thumbnail=topic.image_display_url or h.url_for_static('/base/images/placeholder-group.png') %}
-        </div>
+                dataset_count= topic.package_count,
+                thumbnail=topic.image_display_url or h.url_for_static('/base/images/fao/thumbnail-placeholder.png') %}
         {% endfor %}
     </div>
 </div>

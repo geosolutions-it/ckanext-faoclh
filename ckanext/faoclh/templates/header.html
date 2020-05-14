@@ -1,34 +1,96 @@
- {% ckan_extends %} {% block header_account %}
-    {{ super() }}
-    <header class="navbar-static-top masthead navbar-logo">
-        <div class="container">
-            <hgroup class="{{ g.header_class }} pull-left">
-                {% if g.site_logo %}
-                <a class="logo" href="{{ h.url_for('home') }}">
-                    <img src="{{ h.url_for_static_or_external(g.site_logo) }}" alt="{{ g.site_title }}" title="{{ g.site_title }}" />
+
+{% block header_wrapper %}
+
+<header class="account-masthead">
+    <hgroup class="{{ g.header_class }} pull-left">
+        {% if g.site_logo %}
+        <a class="logo" href="{{ h.url_for('home.index') }}">
+            <img src="{{ h.url_for_static_or_external(g.site_logo) }}" alt="{{ g.site_title }}" title="{{ g.site_title }}" />
+        </a>
+        {% endif %}
+        <h1>
+            {{ g.site_title }}
+        </h1>
+    </hgroup>
+
+    {% if c.userobj %}
+    <div class="account avatar authed" data-module="me" data-me="{{ c.userobj.id }}">
+        <ul class="list-unstyled">
+            {% if c.userobj.sysadmin %}
+            <li>
+                <a href="{{ h.url_for(controller='admin', action='index') }}" title="{{ _('Sysadmin settings') }}">
+                    <i class="fa fa-gavel" aria-hidden="true"></i>
+                    <span class="text">{{ _('Admin') }}</span>
                 </a>
-                {% else %}
-                <h1>
-                    <a href="{{ h.url_for('home') }}">{{ g.site_title }}</a>
-                </h1>
-                {% if g.site_description %}
-                <h2>{{ g.site_description }}</h2>
-                {% endif %} {% endif %}
-            </hgroup>
+            </li>
+            {% endif %}
+            <li>
+                <a href="{{ h.url_for('user.read', id=c.userobj.name) }}" class="image" title="{{ _('View profile') }}">
+                    {{ h.gravatar((c.userobj.email_hash if c and c.userobj else ''), size=22) }}
+                    <span class="username">{{ c.userobj.display_name }}</span>
+                </a>
+            </li>
+            {% set new_activities = h.new_activities() %}
+            <li class="notifications {% if new_activities > 0 %}notifications-important{% endif %}">
+                {% set notifications_tooltip = ngettext('Dashboard (%(num)d new item)', 'Dashboard (%(num)d new items)', new_activities)%}
+                <a href="{{ h.url_for('dashboard.index') }}" title="{{ notifications_tooltip }}">
+                    <i class="fa fa-tachometer" aria-hidden="true"></i>
+                    <span class="text">{{ _('Dashboard') }}</span>
+                    <span class="badge">{{ new_activities }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ h.url_for('user.edit', id=c.userobj.name) }}" title="{{ _('Edit settings') }}">
+                    <i class="fa fa-cog" aria-hidden="true"></i>
+                    <span class="text">{{ _('Settings') }}</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ h.url_for('/user/_logout') }}" title="{{ _('Log out') }}">
+                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                    <span class="text">{{ _('Log out') }}</span>
+                    </a>
+            </li>
+            <li>
+                <a href="{{ h.url_for('home.index') }}" title="{{ _('Home') }}">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    <span class="text">{{ _('Home') }}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    {% else %}
+    <nav class="account not-authed">
+        <ul class="list-unstyled">
+            <li>
+                <a href="{{ h.url_for('/user/login') }}" title="{{ _('Log in') }}">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span class="text">{{ _('Log in') }}</span>
+                </a>
+            </li>
+            {% if h.check_access('user_create') %}
+            <li>
+                <a href="{{ h.url_for('/user/register') }}" title="{{ _('Register') }}">
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    <span class="text">{{ _('Register') }}</span>
+                </a>
+            </li>
+            {% endif %}
+            <li>
+                <a href="{{ h.url_for('home.index') }}" title="{{ _('Home') }}">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    <span class="text">{{ _('Home') }}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+</header>
+<header class="navbar-static-top masthead language-header">
+    <div class="container-fluid">
+        <div class="language-header-container pull-right">
+            {% snippet "snippets/language_selector.html" %}
         </div>
-    </header>
-    <header class="navbar-static-top masthead language-header">
-        <div class="container">
-            <div class="language-header-container pull-right">
-                {% snippet "snippets/language_selector.html" %}
-            </div>
-        </div>
-    </header>
-{% endblock %}
-
-{% block header_logo %}
-    <span></span>
-{% endblock %}
-
-{% block header_site_search %}
+    </div>
+</header>
 {% endblock %}

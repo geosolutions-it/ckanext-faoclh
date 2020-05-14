@@ -1,33 +1,35 @@
 <!-- S TEMPLATE 20180724-->
-<div role="main">
-    <div class="container">
-
-        <!-- S INTRO TEXT -->
-        <div class="row">
-            <div class="col-xs-12">
-                <h2>Climate and Land Hub</h2>
-                <p>The aim of this hub is to provide comprehensive resources to mobilize ambition and actions in the
-                    agriculture and land sectors in relation to climate change. This hub intends to respond to countries
-                    needs of stakeholder engagement and capacity development, facilitating access to effective tools,
-                    guidance, policy advice and learning material in order to support decision makers and practitioners
-                    to deliver on their climate and sustainable development goals. <br><br>
-                    You can navigate through our resources by looking at climate change topics or at your specific
-                    activity needs, as well as at a particular type of resources. You can then narrow down the results
-                    using faceted search that allows you to choose one or more filters to progressively reduce the
-                    resources, ensuring that the result is what you’re looking for.
-                </p>
-            </div>
+<div class="homepage-main" role="main">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid">
+            <p class="lead">
+            {% trans %}
+                The aim of this hub is to provide comprehensive resources to mobilize ambition and actions in the
+                agriculture and land sectors in relation to climate change. This hub intends to respond to countries
+                needs of stakeholder engagement and capacity development, facilitating access to effective tools,
+                guidance, policy advice and learning material in order to support decision makers and practitioners
+                to deliver on their climate and sustainable development goals.
+            {% endtrans %}
+            <br/><br/>
+            {% trans %}
+                You can navigate through our resources by looking at climate change topics or at your specific
+                activity needs, as well as at a particular type of resources. You can then narrow down the results
+                using faceted search that allows you to choose one or more filters to progressively reduce the
+                resources, ensuring that the result is what you’re looking for.
+            {% endtrans %}
+            </p>
         </div>
-        <!-- E INTRO TEXT -->
     </div>
-    <div class="container">
+
+    <div class="fao-container">
         <!-- S SEARCH -->
         {% block search %}
         {% snippet 'home/snippets/search.html' %}
         {% endblock %}
         <!-- E SEARCH -->
     </div>
-    <div class="container fao-sections">
+
+    <div class="fao-container fao-sections">
         <!-- S TOPICS -->
         <div class="row">
             <div class="col-xs-12">
@@ -36,10 +38,15 @@
         </div>
         <!-- E TOPICS -->
 
+        {% set fao_facets = h.fao_get_search_facet(6) %}
+
         <!-- S RESOURCES -->
+        {# set fao_resource_type_facets = fao_search_facets['fao_resource_tpe'] or {} #}
         <div class="row">
             <div class="col-xs-12">
-                {% snippet 'home/snippets/type_of_resources.html' %}
+                {% snippet 'home/snippets/type_of_resources.html',
+                    items = fao_facets['fao_resource_type']
+                %}
             </div>
         </div>
         <!-- S RESOURCES -->
@@ -47,7 +54,9 @@
         <!-- S ACTIVITIES -->
         <div class="row">
             <div class="col-xs-12">
-                {% snippet 'home/snippets/kind_of_activities.html' %}
+                {% snippet 'home/snippets/kind_of_activities.html',
+                    items = fao_facets['fao_activity_type']
+                %}
             </div>
         </div>
         <!-- E ACTIVITIES -->
@@ -55,10 +64,27 @@
         <!-- S GEO -->
         <div class="row">
             <div class="col-xs-12">
-                {% snippet 'home/snippets/geographic_focus.html' %}
+                {% snippet 'home/snippets/geographic_focus.html',
+                    items = fao_facets['fao_geographic_focus']
+                %}
             </div>
         </div>
         <!-- E GEO -->
     </div>
+</div>
+<div class="fao-container fao-disclaimer">
+    {% trans %}
+    Hyperlinks to non-FAO websites do not imply any official endorsement of or responsibility on the part of FAO for the opinions,
+    ideas, data or products presented at these locations, or guarantee the validity of the information provided.
+    {% endtrans %}
+    <br />
+    {% trans %}
+    The sole purpose of links to non-FAO sites is to indicate further information available on related topics.
+    {% endtrans %}
+    <br />
+    {% trans %}
+    The information is provided on the basis
+    that users accessing the platform assume responsibility for assessing its relevance, accuracy and suitability for application.
+    {% endtrans %}
 </div>
 <!-- E TEMPLATE 20180724-->

@@ -14,10 +14,10 @@
                 {% if (count == -1) %}
                 <div class="fao-item-count"></div>
                 {% else %}
-                    {% if (count == 0) %}
+                    {% if (count == 0 or count == 1) %}
                     <div class="fao-item-count">{% trans %}{{ count }} Dataset{% endtrans %}</div>
                     {% else %}
-                    <div class="fao-item-count"><strong>{% trans %}{{ count }} Datasets{% endtrans %}</strong></div>
+                    <div class="fao-item-count">{% trans %}{{ count }} Datasets{% endtrans %}</div>
                     {% endif %}
                 {% endif %}
             </div>
