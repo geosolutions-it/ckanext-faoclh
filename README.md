@@ -105,6 +105,42 @@ Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/
   $ systemctl restart supervisord
   ```
 
+Sending tracking data to Google Analytics
+---------------------------
+Send tracking data to google analytics using the [ckanext-googleanalytics](https://github.com/ckan/ckanext-googleanalytics) extension by following the steps below.
+
+- Activate CKAN's virtual environment
+```
+$ . /usr/lib/ckan/default/bin/activate
+```
+
+
+- Install [ckanext-googleanalytics](https://github.com/ckan/ckanext-googleanalytics)
+```
+$ pip install -e  git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics
+```
+
+- Add ckanext-googleanalytics extensions using the `ckan.plugins` configuration key separating each extension by space. Read more about adding extension [here](https://docs.ckan.org/en/2.8/extensions/tutorial.html#creating-a-new-extension).
+```
+ckan.plugins = [...] googleanalytics
+```
+
+- Edit your development.ini (or similar) to provide these necessary parameters:
+```
+googleanalytics.id = UA-XXXXXX-1
+googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
+googleanalytics.username = googleaccount@gmail.com
+googleanalytics.password = googlepassword
+googleanalytics.show_downloads = true
+```
+
+> **Note**: Your password will probably be readable by other people; so you may want to set up a new Gmail account with [2fa](https://www.google.com/landing/2step/) enabled specifically for accessing your Gmail profile.
+
+- Restart CKAN to enable google analytics
+  ```
+  $ systemctl restart supervisord
+  ```
+
 Loading initial data
 ====================
 
