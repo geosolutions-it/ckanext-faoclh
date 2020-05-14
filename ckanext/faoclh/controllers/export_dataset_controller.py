@@ -30,7 +30,7 @@ class ExportDatasetController(AdminController):
 
     def export_dataset(self, *args, **kwargs):
         if self.request.method == u'POST':
-            output_file = self.output_dir + u'{}.csv'.format(kwargs[u'pylons'].session.id)
+            output_file = os.path.join(self.output_dir, u'{}.csv'.format(kwargs[u'pylons'].session.id))
 
             if os.path.exists(output_file):
                 os.remove(output_file)
@@ -45,7 +45,7 @@ class ExportDatasetController(AdminController):
     def download_dataset(self, *args, **kwargs):
         session_id = kwargs[u'pylons'].session.id
         kwargs[u'pylons'].response.headers[u'Content-Type'] = u'application/json'
-        output_filename = self.output_dir + u'{}.csv'.format(session_id)
+        output_filename = os.path.join(self.output_dir, u'{}.csv'.format(session_id))
         file_exists = os.path.exists(output_filename)
 
         if self.request.method == u'POST':
