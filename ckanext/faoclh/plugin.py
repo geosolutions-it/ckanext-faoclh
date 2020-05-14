@@ -137,18 +137,6 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         toolkit.add_resource('fanstatic', "faoclh")
         toolkit.add_ckan_admin_tab(config, 'export_dataset', 'Export Dataset')
 
-    def before_map(self, map_obj):
-        u'''
-        Called before the routes map is generated. ``before_map`` is before any
-        other mappings are created so can override all other mappings.
-        :param map: Routes map object
-        :returns: Modified version of the map object
-        '''
-        with SubMapper(map_obj, controller=u'ckanext.faoclh.controllers.export_dataset_controller:ExportDatasetController') as mp:
-            mp.connect(u'export_dataset', u'/ckan-admin/export_dataset', action=u'export_dataset')
-            mp.connect(u'download_dataset', u'/ckan-admin/download_dataset', action=u'download_dataset')
-        return map_obj
-
     def after_map(self, map_obj):
         u'''
         Called after routes map is set up. ``after_map`` can be used to
@@ -175,6 +163,13 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                        action=u'create_vocabulary_tag_view')
             mp.connect(u'delete_vocabs_tags', u'/ckan-admin/vocabulary/delete/{vocabulary_name:.*}/tag/{tag_id:.*}',
                        action=u'delete_vocabulary_tag_view')
+
+        with SubMapper(
+                map_obj, controller=u'ckanext.faoclh.controllers.export_dataset_controller:ExportDatasetController'
+        ) as mp:
+            mp.connect(u'export_dataset', u'/ckan-admin/export_dataset', action=u'export_dataset')
+            mp.connect(u'download_dataset', u'/ckan-admin/download_dataset', action=u'download_dataset')
+
         return map_obj
 
     def after_map(self, map_obj):
