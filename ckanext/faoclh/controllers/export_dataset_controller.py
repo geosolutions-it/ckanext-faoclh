@@ -37,20 +37,21 @@ class ExportDatasetController(AdminController):
 
             result = jobs.enqueue(generate_dataset_csv, [
                                   self.output_dir, output_file, self.context])
-            kwargs[u'pylons'].response.headers[u'Content-Type'] = u'application/json'
-            kwargs[u'pylons'].response.status = u'201 CREATED'
+
+            toolkit.response.headers[u'Content-Type'] = u'application/json'
+            toolkit.response.status = u'201 CREATED'
             return json.dumps({u'generating_export': True})
         return base.render(u'admin/export_dataset.html')
 
     def download_dataset(self, *args, **kwargs):
         session_id = kwargs[u'pylons'].session.id
-        kwargs[u'pylons'].response.headers[u'Content-Type'] = u'application/json'
+        toolkit.response.headers[u'Content-Type'] = u'application/json'
         output_filename = os.path.join(self.output_dir, u'{}.csv'.format(session_id))
         file_exists = os.path.exists(output_filename)
 
         if self.request.method == u'POST':
             if not file_exists:
-                kwargs[u'pylons'].response.status = u'204'
+                toolkit.response.status = u'204'
             return json.dumps({u'export_created': file_exists})
 
         return self._send_file_response(output_filename)
