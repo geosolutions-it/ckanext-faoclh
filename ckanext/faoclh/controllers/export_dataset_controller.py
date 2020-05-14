@@ -60,7 +60,8 @@ class ExportDatasetController(AdminController):
         user_filename = u'_'.join(output_filename.split(u'/')[-2:])
         file_size = os.path.getsize(output_filename)
 
-        headers = [(u'Content-Disposition', u'attachment; filename=\"' + user_filename + u'\"'),
+        headers = [(u'Content-Disposition', u'attachment; filename=\"dataset {}.csv\"'.format(
+            datetime.now().strftime(u'%m-%d-%Y'))),
                    (u'Content-Type', u'text/plain'),
                    (u'Content-Length', str(file_size))]
 
