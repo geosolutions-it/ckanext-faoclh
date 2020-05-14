@@ -229,6 +229,10 @@ Create a directory to hold all the generated CSV datasets and grant all users pe
 $ mkdir $path-to-your-dir
 ```
 
+```
+$ sudo chown -R ckan:ckan $path-to-your-dir
+```
+
 Add the created directory to CKAN configuration file (`/etc/ckan/default/production.ini`) using the `faoclh.export_dataset_dir` settings key as shown below
 ```
 faoclh.export_dataset_dir = path-to-your-dir
