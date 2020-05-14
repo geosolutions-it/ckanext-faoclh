@@ -123,7 +123,7 @@ def generate_dataset_csv(output_dir, output_file, context):
         f_out.writerow(headings)
         f_out.writerows([(
             dataset.title,
-            (lambda x: u', '.join([z.get(u'name', u'') for z in x]))(
+            (lambda topics: u', '.join([topic.get(u'name', u'') for topic in topics]))(
                 package_show(context, {u'id': dataset.id})[u'groups']),
             GetPackageData.get_all_tags(package_id=dataset.id),
             (lambda act_type: act_type[0] if act_type else u'')(
