@@ -23,7 +23,7 @@
 {% block secondary_content %}
 <div class="filters">
   <div>
-    {% for facet in c.facet_titles %}
+    {% for facet in h.order_facets_titles(c.facet_titles) %}
       {% if facet  in ['fao_resource_type', 'fao_activity_type', 'fao_geographic_focus']  %}
         {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.fao_voc_label_func(facet)) }}
       {% else %}

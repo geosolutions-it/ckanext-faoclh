@@ -22,6 +22,7 @@ from ckanext.multilang.model import TagMultilang
 import ckanext.multilang.helpers as helpers
 from ckan.model import Tag, meta
 from sqlalchemy import or_
+from collections import OrderedDict
 
 log = logging.getLogger(__name__)
 
@@ -243,7 +244,8 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_voc': fao_voc,
             'fao_voc_label': fao_voc_label,
             'fao_voc_label_func': fao_voc_label_func,
-            'fao_get_search_facet': fao_get_search_facet
+            'fao_get_search_facet': fao_get_search_facet,
+            'order_facets_titles': order_facets_titles
         }
 
 
@@ -334,3 +336,25 @@ def fao_get_search_facet(limit=6):
             result[field] = []
 
     return result
+
+
+def order_facets_titles(facet_titles):
+    facet_titles_order_mapper = {
+        u'groups': u'0',
+        u'fao_activity_type': u'1',
+        u'fao_resource_type': u'2',
+        u'tags': u'3',
+        u'fao_geographic_focus': u'4',
+        u'organization': u'5',
+        u'res_format': u'6'
+    }
+
+    sorted_list = sorted(
+        [
+            (title, value, facet_titles_order_mapper.get(title, u''))
+            for title, value in facet_titles.iteritems()
+        ],
+        key=(lambda facet_title: facet_title[2])
+    )
+
+    return OrderedDict([(key, title) for key, title, index in sorted_list])
