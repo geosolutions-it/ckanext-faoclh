@@ -11348,3 +11348,40 @@ h5 {
   border-right-color: transparent;
 }
 
+.faoclh-collapsible-nav nav{
+  display: block !important;
+}
+
+.faoclh-collapsible-nav .module-footer {
+  display: block !important;
+}
+
+.faoclh-collapsible-nav .glyphicon-chevron-down {
+  display: block !important;
+  float: left;
+  margin-right: 3px;
+}
+
+.faoclh-collapsible-nav .glyphicon-chevron-right {
+  display: none !important;
+}
+
+.module-shallow {
+    cursor: pointer;
+}
+
+.module-shallow nav {
+  display: none;
+}
+
+.module-shallow .module-footer {
+  display: none;
+}
+
+.module-shallow .glyphicon-chevron-down {
+  display: none;
+}
+
+.module-heading .fa-filter {
+  float: right;
+}
