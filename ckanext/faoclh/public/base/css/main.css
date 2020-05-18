@@ -11283,3 +11283,68 @@ h5 {
 .filters .nav-facet li a .item-count {
   padding: 0 10px;
 }
+
+
+.vocab-container {
+  display: flex;
+  margin-top: 1%;
+}
+.vocab-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.vocab-container table .tag-name {
+  width: 40%;
+  text-align: center;
+  padding: 5px 1px 5px 0px;
+}
+.vocab-container table .tag-label {
+  padding: 5px 1px 5px 0px;
+}
+.vocab-container table thead {
+  background-color: #f6f6f6;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+.vocab-container table tr {
+  border-bottom: 1px solid #f6f6f6;
+}
+.vocab-container .content {
+  width: 70%;
+  padding: 1px 1px 1px 20px;
+}
+.vocab-container .nav {
+  background-color: #f6f6f6;
+  width: 30%;
+  display: flex;
+  border-right: 1px solid #ddd;
+}
+.vocab-container .nav ul {
+  list-style-type: none;
+  padding: 22px 0px 35px 16px;
+  width: 100%;
+}
+.vocab-container .nav ul a {
+  text-decoration: none;
+}
+.vocab-container .nav ul li {
+  padding: 8px;
+  width: inherit;
+  margin-right: -1px;
+  border-left-color: transparent;
+  text-align: center;
+  margin-top: 1px;
+  border: 1px solid transparent;
+}
+.vocab-container .nav ul li:hover {
+  background-color: #ffffff;
+  border: 1px solid;
+  border-color: #eeeeee #eeeeee #ddd;
+  text-decoration: none;
+}
+.vocab-container .nav ul .active {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-right-color: transparent;
+}
+

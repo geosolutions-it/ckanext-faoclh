@@ -1,0 +1,62 @@
+.vocab-container {
+	display: flex;
+	margin-top: 1%;
+	table {
+		width: 100%;
+		border-collapse: collapse;
+		.tag-name {
+			width: 40%;
+			text-align: center;
+			padding: 5px 1px 5px 0px;
+		}
+		.tag-label {
+			padding: 5px 1px 5px 0px;
+		}
+		thead {
+			background-color: #f6f6f6;
+			padding: 5px;
+			border-bottom: 1px solid #ddd;
+		}
+		tr {
+			border-bottom: 1px solid #f6f6f6;
+		}
+	}
+	.content {
+		width: 70%;
+		padding: 1px 1px 1px 20px;
+	}
+	.nav {
+		background-color: #f6f6f6;
+		width: 30%;
+		display: flex;
+		border-right: 1px solid #ddd;
+		ul {
+			list-style-type: none;
+			padding: 22px 0px 35px 16px;
+			width: 100%;
+			a {
+				text-decoration: none;
+			}
+			li {
+				padding: 8px;
+				width: inherit;
+				margin-right: -1px;
+				border-left-color: transparent;
+				text-align: center;
+				margin-top: 1px;
+				border: 1px solid transparent;
+			}
+			li:hover {
+				background-color: #ffffff;
+				border: 1px solid;
+				border-color: #eeeeee #eeeeee #ddd;
+				text-decoration: none;
+			}
+			.active {
+				background-color: #ffffff;
+				border: 1px solid #ddd;
+				border-right-color: transparent;
+			}
+		}
+	}
+}

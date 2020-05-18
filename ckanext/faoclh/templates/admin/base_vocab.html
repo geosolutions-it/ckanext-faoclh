@@ -1,0 +1,52 @@
+{% extends "admin/base.html" %}
+
+{% block primary_content_inner %}
+<div class="vocabs">
+  <a href="/ckan-admin/vocabulary/create/{{vocab_name}}" class="btn btn-primary">
+    <i class="fa fa-plus-square"></i>
+    {% trans %}Add {{ vocab_label }}{% endtrans %}
+  </a>
+  <hr />
+  <div class="vocab-container">
+    <div class="nav">
+      <ul>
+        <a href="/ckan-admin/vocabulary/all/fao_resource_type">
+          <li
+          class="{%if vocab_name == 'fao_resource_type' %}active{% endif %}">
+            {% trans %}Resource Type{% endtrans %}</li>
+        </a>
+        <a href="/ckan-admin/vocabulary/all/fao_activity_type">
+          <li
+          class="{%if vocab_name == 'fao_activity_type' %}active{% endif %}">
+            {% trans %}Activity Type{% endtrans %}</li>
+        </a>
+        <a href="/ckan-admin/vocabulary/all/fao_geographic_focus">
+          <li
+            class="{%if vocab_name == 'fao_geographic_focus' %}active{% endif %}">
+            {% trans %}Geographical Focus{% endtrans %}</li>
+        </a>
+      </ul>
+    </div>
+    <div class="content">
+      {% block vocab_content %}
+      {# Vocab content #}
+      {% endblock %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+{% block secondary_content %}
+<div class="module module-narrow module-shallow">
+  <h2 class="module-heading">
+    <i class="fa fa-info-circle"></i>
+    {% trans %}Vocabularies{% endtrans %}
+  </h2>
+  <div class="module-content">
+    <p>
+     {% trans %}Vocabularies provide a way of grouping related tags together into custom fields. {% endtrans %}
+    </p>
+  </div>
+</div>
+{% endblock %}

@@ -17,6 +17,11 @@ import ckan.common as common
 import ckan.logic as logic
 from paste.deploy.converters import asbool
 import ckan.model as model
+from routes.mapper import SubMapper
+from ckanext.multilang.model import TagMultilang
+import ckanext.multilang.helpers as helpers
+from ckan.model import Tag, meta
+from sqlalchemy import or_
 
 log = logging.getLogger(__name__)
 
@@ -39,6 +44,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IRoutes)
 
     # IPackageController
     def before_search(self, search_params):
@@ -129,6 +135,35 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         toolkit.add_public_directory(config, 'public')
         toolkit.add_resource('fanstatic', "faoclh")
 
+    def before_map(self, map_obj):
+        u'''
+        Called before the routes map is generated. ``before_map`` is before any
+        other mappings are created so can override all other mappings.
+
+        :param map: Routes map object
+        :returns: Modified version of the map object
+        '''
+        with SubMapper(map_obj, controller=u'ckanext.faoclh.controllers.admin:AdminController') as mp:
+            mp.connect(u'list_vocab_tags', u'/ckan-admin/vocabulary/all/{vocabulary_name:.*}',
+                       action=u'list_vocabulary_view')
+            mp.connect(u'edit_vocabs_tags', u'/ckan-admin/vocabulary/edit/{vocabulary_name:.*}/tag/{tag_id:.*}',
+                       action=u'update_vocabulary_tag_view')
+            mp.connect(u'create_vocabs_tags', u'/ckan-admin/vocabulary/create/{vocabulary_name:.*}',
+                       action=u'create_vocabulary_tag_view')
+            mp.connect(u'delete_vocabs_tags', u'/ckan-admin/vocabulary/delete/{vocabulary_name:.*}/tag/{tag_id:.*}',
+                       action=u'delete_vocabulary_tag_view')
+        return map_obj
+
+    def after_map(self, map_obj):
+        u'''
+        Called after routes map is set up. ``after_map`` can be used to
+        add fall-back handlers.
+
+        :param map: Routes map object
+        :returns: Modified version of the map object
+        '''
+        return map_obj
+
     def _modify_package_schema(self, schema):
         # Our custom field
 
@@ -213,31 +248,49 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
 
 def fao_voc(voc_name):
-    path = config.get('fao.vocab.path')
-    vocab_file = os.path.join(path, voc_name + ".json")
+    try:
+        data = {u'id': voc_name}
+        tags = toolkit.get_action(u'vocabulary_show')({}, data).get(u'tags', [])
+        tag_dict = {tag.get(u'id'):tag.get(u'display_name') for tag in tags}
 
-    with open(vocab_file) as json_file:
-        data = json.load(json_file)
-        return [{'name': tag['name'], 'label': tag['labels']['en'] } for tag in data['tags']]
+    except toolkit.ObjectNotFound:
+        tag_dict = {}
+
+    lang = helpers.getLanguage()
+    all_labels = TagMultilang.get_all(voc_name, lang)
+
+    def get_tag_label(tag_id):
+        tag = all_labels.filter(TagMultilang.tag_id == tag_id, TagMultilang.lang == lang).first()
+        if tag:
+            return tag.text
+
+    return [{
+                u'name': value,
+                u'label': get_tag_label(tag_id) or value
+            } for tag_id, value in tag_dict.iteritems()]
 
 
 def fao_voc_label(voc_name, tag_name):
-    path = config.get('fao.vocab.path')
-    vocab_file = os.path.join(path, voc_name + ".json")
-
-    if not(tag_name):
-        log.warn('Empty tag for vocab "{}"'.format(voc_name))
+    if not tag_name:
+        log.warn(u'Empty tag for vocab "{}"'.format(voc_name))
         return None
-
     if isinstance(tag_name, list):
         tag_name = tag_name[0]
 
-    with open(vocab_file) as json_file:
-        data = json.load(json_file)
-        ret = next((tag['labels']['en'] for tag in data['tags'] if tag['name'] == tag_name), None)
-        if not(ret):
-            log.warn('Tag "{}" not found in vocab "{}"'.format(tag_name, voc_name))
-        return ret or str(tag_name) + " (key not found)"
+    tag_id = meta.Session.query(Tag.id).filter(Tag.name == tag_name).first()
+
+    if tag_id:
+        multilang_tag = meta.Session.query(TagMultilang.text).filter(
+            TagMultilang.tag_name == voc_name, TagMultilang.tag_id == tag_id,
+            TagMultilang.lang == helpers.getLanguage()
+        ).first()
+    else:
+        multilang_tag = meta.Session.query(TagMultilang.text).filter(
+            TagMultilang.tag_name == u'{}:{}'.format(voc_name, tag_name),
+            TagMultilang.lang == helpers.getLanguage()
+        ).first()
+
+    return multilang_tag[0] if multilang_tag else tag_name
 
 
 def fao_voc_label_func(voc_name):
