@@ -7669,8 +7669,8 @@ select[multiple].control-large input {
 .form-actions .control-required-message:first-child {
   margin-left: 0;
 }
-.form-actions {
-  overflow: auto;
+article.module .form-actions {
+  overflow: unset;
 }
 @media (min-width: 768px) {
   .form-actions {
