@@ -112,19 +112,18 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
     # IFacets
     def _fao_facets(self, src_facets_dict, package_type):
-        facets_dict = OrderedDict()
-        for field in VOCAB_FIELDS:
-            facets_dict[field] = toolkit._(field)
-
-        for k in ['tags', 'res_format', 'organization', 'groups']:
-            facets_dict[k] = src_facets_dict[k]
-
         facet_titles_order = [
             'groups', 'fao_activity_type', 'fao_resource_type', 'tags', 'fao_geographic_focus', 'organization',
             'res_format',
         ]
 
-        return OrderedDict([(item, facets_dict[item]) for item in facet_titles_order])
+        def get_facet_value(field):
+            try:
+                return field, src_facets_dict[field]
+            except KeyError:
+                return field, toolkit._(field)
+
+        return OrderedDict([get_facet_value(item) for item in facet_titles_order])
 
     def dataset_facets(self, facets_dict, package_type):
         return self._fao_facets(facets_dict, package_type)
