@@ -22,7 +22,7 @@
                 title=topic.title,
                 dataset_url=url,
                 dataset_count= topic.package_count,
-                thumbnail=topic.image_display_url or h.url_for_static('/base/images/fao/thumbnail-placeholder.png') %}
+                thumbnail=topic.image_display_url %}
         {% endfor %}
     </div>
 </div>
