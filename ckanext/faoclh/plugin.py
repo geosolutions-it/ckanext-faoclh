@@ -20,7 +20,7 @@ import ckan.model as model
 from routes.mapper import SubMapper
 from ckanext.multilang.model import TagMultilang
 import ckanext.multilang.helpers as helpers
-from ckan.model import Tag, meta
+from ckan.model import Tag, meta, Group
 from sqlalchemy import or_
 from ckan.common import c, request
 from ckanext.faoclh.model.tag_image_url import TagImageUrl
@@ -260,6 +260,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_get_search_facet': fao_get_search_facet,
             'contains_active_facets': contains_active_facets,
             'get_tag_image_url': TagImageUrl.get
+            'fao_get_org_image_url': fao_get_org_image_url
         }
 
 
@@ -354,3 +355,9 @@ def fao_get_search_facet(limit=6):
 
 def contains_active_facets(vocab_name):
     return request.params.has_key(vocab_name)
+
+
+def fao_get_org_image_url(org_id):
+    image_url = meta.Session.query(Group.image_url).filter(Group.id == org_id).first()
+    if image_url[0]:
+        return u'/uploads/group/{}'.format(image_url[0])
