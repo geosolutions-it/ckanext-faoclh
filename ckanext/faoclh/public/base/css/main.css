@@ -11399,3 +11399,32 @@ h5 {
 .module-heading .fa-filter {
   float: right;
 }
+
+.vocab-container .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.vocab-container .nav ul {
+  margin-bottom: -10px;
+}
+
+.vocab-upload-buttons .image-buttons{
+  display: block !important;
+}
+
+.image-url-form {
+  margin-top: -20px;
+}
+
+.image-buttons {
+  margin-top: 2px;
+}
+
+.vocab-upload-buttons .image-url-form{
+  display: none !important;
+}
+
+.vocab-image .image-buttons{
+  display: none;
+}

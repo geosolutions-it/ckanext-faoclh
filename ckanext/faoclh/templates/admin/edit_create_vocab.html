@@ -18,7 +18,7 @@
     </div>
     {% endif %}
     <h3>{% if tag_id %}Edit{% else %}Add New {%  endif %} {{ vocab_label }} Vocabulary Tag</h3>
-    <form method="post">
+    <form method="post" accept-charset="utf-8" enctype="multipart/form-data" >
         <div class="form-group control-medium">
             <div class="controls">
                 <div class="form-group control-medium">
@@ -29,6 +29,23 @@
                     <div class="controls ">
                         <input type="text" name="tag_name" value="{{ tag_name }}" placeholder="vocabulary name"
                             class="form-control" min="2" max="100" required>
+                    </div>
+                </div>
+            </div>
+            <div class="controls vocab-image {% if not image_url%}vocab-upload-buttons{%endif%}" id="vocab-image-control">
+                <div class="form-group control-full" style="">
+                    <label class="control-label" for="field-image-url">Image URL</label>
+                    <div class="image-url-form">
+                        <a href="javascript:;" onclick="remove_image_url()" class="btn btn-danger" style="margin-right: 0; top: 28px; float: right; right: 7px; padding: 0 12px; border-radius: 100px;" title="Remove">Remove</a>
+                        <input id="field-image-url" type="url" name="image_url" value="{{ image_url }}" placeholder="http://example.com/my-image.jpg" class="form-control" readonly=""> </div>
+                    <div class="image-buttons" id="image-upload-buttons">
+                        <input style="display: none;" onchange="fill_upload_form(this.files[0].name, 'text')" id="field-image-upload" type="file" accept="image/*" name="image_upload" value="" placeholder="" class="form-control" title="Upload a file on your computer" style="width: 93.7031px;">
+                        <a style="margin-right: 1%;" href="javascript:;" class="btn btn-default" onclick="document.getElementById('field-image-upload').click()">
+                            <i class="fa fa-cloud-upload"></i>Upload
+                        </a>
+                        <a href="javascript:;" onclick="fill_upload_form(null, 'url')" class="btn btn-default" title="Link to a URL on the internet (you can also link to an API)" style="">
+                            <i class="fa fa-globe"></i>Link
+                        </a>
                     </div>
                 </div>
             </div>
@@ -55,4 +72,22 @@
         </div>
     </form>
 </div>
+<script>
+    function toggle_image_upload() {
+        document.getElementById('vocab-image-control').classList.toggle('vocab-upload-buttons')
+    }
+
+    function remove_image_url(){
+        document.getElementById('field-image-url').value = '';
+        toggle_image_upload();
+    }
+
+    function fill_upload_form(image_name, form_type) {
+        const elem = document.getElementById('field-image-url');
+        elem.value = image_name;
+        elem.type = form_type;
+        elem.readOnly = false;
+        toggle_image_upload();
+    }
+</script>
 {% endblock %}

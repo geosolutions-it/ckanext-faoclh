@@ -28,6 +28,7 @@ setup(
 			
 		[paste.paster_command]
         	vocab=ckanext.faoclh.cli.vocab:VocabCommand
+        	initdb=ckanext.faoclh.cli.initdb:InitializeDatabaseTables
 			
 	""",
 	message_extractors={

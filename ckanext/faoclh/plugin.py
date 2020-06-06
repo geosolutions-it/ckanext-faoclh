@@ -23,7 +23,7 @@ import ckanext.multilang.helpers as helpers
 from ckan.model import Tag, meta
 from sqlalchemy import or_
 from ckan.common import c, request
-
+from ckanext.faoclh.model.tag_image_url import TagImageUrl
 
 log = logging.getLogger(__name__)
 
@@ -268,6 +268,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_voc_label_func': fao_voc_label_func,
             'fao_get_search_facet': fao_get_search_facet,
             'contains_active_facets': contains_active_facets,
+            'get_tag_image_url': TagImageUrl.get
         }
 
 
