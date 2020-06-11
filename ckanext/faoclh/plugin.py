@@ -31,10 +31,9 @@ FIELD_RESOURCE_TYPE = 'fao_resource_type'
 FIELD_ACTIVITY_TYPE = 'fao_activity_type'
 FIELD_FOCUS         = 'fao_geographic_focus'
 
-FIELD_RELEASE_YEAR  = 'fao_release_year'
 FIELD_RESOURCE_YEAR = 'fao_resource_release_year'
 
-VOCAB_FIELDS = [FIELD_RESOURCE_TYPE, FIELD_ACTIVITY_TYPE, FIELD_FOCUS]
+VOCAB_FIELDS = [FIELD_RESOURCE_TYPE, FIELD_ACTIVITY_TYPE, FIELD_FOCUS, FIELD_RESOURCE_YEAR]
 
 class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                       toolkit.DefaultDatasetForm,
@@ -67,7 +66,9 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             if v and isinstance(v, list):
                 dataset_dict[faokey] = v[0]
                 # log.debug("DUMPING {}".format(v[0]))
-
+        year_of_release = request.params.get('custom_resource_text')
+        if year_of_release:
+            dataset_dict[FIELD_RESOURCE_YEAR] = year_of_release
         return dataset_dict
 
     def before_view(self, pkg_dict):
@@ -197,12 +198,6 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                     toolkit.get_converter('convert_to_tags')(field)],
             })
 
-        schema.update({
-            FIELD_RELEASE_YEAR: [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_extras')],
-        })
-
         # Add our custom_RESOURCE_text metadata field to the schema
         schema['resources'].update({
             FIELD_RESOURCE_YEAR: [toolkit.get_validator('ignore_missing')]
@@ -236,12 +231,6 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                     toolkit.get_converter('convert_from_tags')(field),
                     toolkit.get_validator('ignore_missing')],
             })
-
-        schema.update({
-            FIELD_RELEASE_YEAR: [
-                toolkit.get_converter('convert_from_extras'),
-                toolkit.get_validator('ignore_missing')],
-        })
 
         schema['resources'].update({
             FIELD_RESOURCE_YEAR: [
