@@ -11366,11 +11366,19 @@ h5 {
   display: none !important;
 }
 
+.faoclh-collapsible-nav .empty {
+  display: block !important;
+}
+
 .module-shallow {
     cursor: pointer;
 }
 
 .module-shallow nav {
+  display: none;
+}
+
+.module-shallow .empty {
   display: none;
 }
 
