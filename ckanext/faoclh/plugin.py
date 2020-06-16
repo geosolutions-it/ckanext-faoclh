@@ -22,6 +22,7 @@ from ckanext.multilang.model import TagMultilang
 import ckanext.multilang.helpers as helpers
 from ckan.model import Tag, meta
 from sqlalchemy import or_
+from ckan.common import c, request
 
 log = logging.getLogger(__name__)
 
@@ -247,7 +248,8 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_voc': fao_voc,
             'fao_voc_label': fao_voc_label,
             'fao_voc_label_func': fao_voc_label_func,
-            'fao_get_search_facet': fao_get_search_facet
+            'fao_get_search_facet': fao_get_search_facet,
+            'contains_active_facets': contains_active_facets,
         }
 
 
@@ -338,3 +340,7 @@ def fao_get_search_facet(limit=6):
             result[field] = []
 
     return result
+
+
+def contains_active_facets(vocab_name):
+    return request.params.has_key(vocab_name)

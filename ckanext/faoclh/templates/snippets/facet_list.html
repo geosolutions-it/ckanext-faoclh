@@ -47,9 +47,9 @@ within_tertiary
         {% set wrapper_class = 'nav-facet nav-facet-tertiary' %}
       {% endif %}
       {% block facet_list_item %}
-        <section class="{{ wrapper_class or 'module module-narrow module-shallow' }}" onclick="this.classList.toggle('faoclh-collapsible-nav')">
+        <section class="{{ wrapper_class or 'module module-narrow module-shallow' }} {% if h.contains_active_facets(name) %}faoclh-collapsible-nav {% endif %}" id="{{ name }}_facet">
           {% block facet_list_heading %}
-            <h2 class="module-heading">
+            <h2 class="module-heading" onclick="document.getElementById('{{ name }}_facet').classList.toggle('faoclh-collapsible-nav')">
               <i class="glyphicon glyphicon-chevron-down"></i>
               <i class="glyphicon glyphicon-chevron-right"></i>
               {% set title = title or h.get_facet_title(name) %}
