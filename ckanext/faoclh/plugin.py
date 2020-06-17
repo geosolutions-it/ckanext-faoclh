@@ -142,15 +142,6 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         toolkit.add_resource('fanstatic', "faoclh")
         toolkit.add_ckan_admin_tab(config, 'export_dataset', 'Export Dataset')
 
-    def after_map(self, map_obj):
-        u'''
-        Called after routes map is set up. ``after_map`` can be used to
-        add fall-back handlers.
-        :param map: Routes map object
-        :returns: Modified version of the map object
-        '''
-        return map_obj
-
     def before_map(self, map_obj):
         u'''
         Called before the routes map is generated. ``before_map`` is before any
