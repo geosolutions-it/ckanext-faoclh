@@ -33,7 +33,7 @@ FIELD_FOCUS         = 'fao_geographic_focus'
 
 FIELD_RESOURCE_YEAR = 'fao_resource_release_year'
 
-VOCAB_FIELDS = [FIELD_RESOURCE_TYPE, FIELD_ACTIVITY_TYPE, FIELD_FOCUS, FIELD_RESOURCE_YEAR]
+VOCAB_FIELDS = [FIELD_RESOURCE_TYPE, FIELD_ACTIVITY_TYPE, FIELD_FOCUS]
 
 class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                       toolkit.DefaultDatasetForm,
@@ -116,8 +116,8 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
     # IFacets
     def _fao_facets(self, src_facets_dict, package_type):
         facet_titles_order = [
-            'groups', 'fao_activity_type', 'fao_resource_type', 'tags', 'fao_geographic_focus', 'organization',
-            'res_format',
+            'groups', FIELD_ACTIVITY_TYPE, FIELD_RESOURCE_TYPE, 'tags', FIELD_FOCUS, 'organization',
+            'res_format', FIELD_RESOURCE_YEAR
         ]
 
         def get_facet_value(field):
