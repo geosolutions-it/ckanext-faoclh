@@ -22,7 +22,8 @@ from ckanext.multilang.model import TagMultilang
 import ckanext.multilang.helpers as helpers
 from ckan.model import Tag, meta
 from sqlalchemy import or_
-import ckanext.multilang.helpers as helpers
+from ckan.common import c, request
+
 
 log = logging.getLogger(__name__)
 
@@ -113,14 +114,18 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
     # IFacets
     def _fao_facets(self, src_facets_dict, package_type):
-        facets_dict = OrderedDict()
-        for field in VOCAB_FIELDS:
-            facets_dict[field] = toolkit._(field)
+        facet_titles_order = [
+            'groups', 'fao_activity_type', 'fao_resource_type', 'tags', 'fao_geographic_focus', 'organization',
+            'res_format',
+        ]
 
-        for k in ['tags', 'res_format', 'organization', 'groups']:
-            facets_dict[k] = src_facets_dict[k]
+        def get_facet_value(field):
+            try:
+                return field, src_facets_dict[field]
+            except KeyError:
+                return field, toolkit._(field)
 
-        return facets_dict
+        return OrderedDict([get_facet_value(item) for item in facet_titles_order])
 
     def dataset_facets(self, facets_dict, package_type):
         return self._fao_facets(facets_dict, package_type)
@@ -261,7 +266,8 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_voc': fao_voc,
             'fao_voc_label': fao_voc_label,
             'fao_voc_label_func': fao_voc_label_func,
-            'fao_get_search_facet': fao_get_search_facet
+            'fao_get_search_facet': fao_get_search_facet,
+            'contains_active_facets': contains_active_facets,
         }
 
 
@@ -352,3 +358,7 @@ def fao_get_search_facet(limit=6):
             result[field] = []
 
     return result
+
+
+def contains_active_facets(vocab_name):
+    return request.params.has_key(vocab_name)
