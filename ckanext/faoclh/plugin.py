@@ -259,7 +259,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_voc_label_func': fao_voc_label_func,
             'fao_get_search_facet': fao_get_search_facet,
             'contains_active_facets': contains_active_facets,
-            'get_tag_image_url': TagImageUrl.get
+            'get_tag_image_url': TagImageUrl.get,
             'fao_get_org_image_url': fao_get_org_image_url
         }
 
