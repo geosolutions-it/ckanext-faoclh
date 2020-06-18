@@ -1,4 +1,5 @@
 import logging
+import os
 
 import ckan.lib.base as base
 import ckan.plugins.toolkit as toolkit
@@ -9,6 +10,10 @@ from ckan.lib.i18n import get_locales_from_config
 from ckan.logic import ValidationError
 from ckan.model import Tag, meta
 from ckanext.multilang.model import TagMultilang
+from ckanext.faoclh.model.tag_image_url import TagImageUrl
+from ckan.lib.uploader import get_storage_path
+from sqlalchemy import exc
+import shutil
 
 log = logging.getLogger(__name__)
 
@@ -67,15 +72,17 @@ class AdminController(AdminController):
     def post(self, request, *args, **kwargs):
         tag_name = request.POST.get(u'tag_name', u'')
         vocab_name = kwargs.get(u'vocabulary_name', u'fao_resource_type')
-        tag_id = kwargs.get(u'tag_id', None)
+        image_upload = request.POST.get(u'image_upload')
+        image_url = request.POST.get(u'image_url')
+        tag_id = kwargs.get(u'tag_id')
         vocabulary = self.get_vocab({}, vocab_name)
 
         if tag_id:
-            self.update_tag(tag_id, tag_name, vocab_name)
+            self.update_tag(tag_id, tag_name, vocab_name, image_upload, image_url)
             status = u'edited'
         else:
             status = u'created'
-            result = self.add_tag(vocabulary, tag_name, vocab_name)
+            result = self.add_tag(vocabulary, tag_name, vocab_name, image_upload, image_url)
 
         if self.created:
             toolkit.redirect_to(u'/ckan-admin/vocabulary/edit/{}/tag/{}?status={}'.format(
@@ -112,7 +119,14 @@ class AdminController(AdminController):
             u'tag_name': tag_name[0] if tag_name else u'',
             u'tag_id': tag_id,
             u'status': status,
+            u'image_url': TagImageUrl.get_tag_image_url(tag_id) or u''
         })
+
+    def create_or_update_tag_image_url(self, **tag_image_dict):
+        try:
+            TagImageUrl.persist(**tag_image_dict)
+        except exc.IntegrityError:
+            TagImageUrl.update(**tag_image_dict)
 
     def prepare_response(self, template, **kwargs):
         try:
@@ -125,7 +139,29 @@ class AdminController(AdminController):
 
         return base.render(template, extra_vars=kwargs)
 
-    def update_tag(self, tag_id, tag_name, vocab_name):
+    def get_tag_image_url(self, image_upload, image_url, tag_id):
+        try:
+            file_ext = image_upload.filename.split(u'.')[-1]
+        except AttributeError:
+            return image_url
+        if file_ext.lower() in [u'jpg', u'gif', u'png', u'webp', u'jpeg', u'svg']:
+            path = get_storage_path()
+            if not path:
+                raise Exception(u'Image storage directory not configured. Use the "ckan.storage_path" settings key to '
+                                u'specify image storage directory')
+            storage_path = os.path.join(path, u'storage', u'tag_images')
+            try:
+                os.makedirs(storage_path)
+            except OSError as e:
+                log.debug(u'Debug: {}'.format(e))
+            file_path = u'{}.{}'.format(tag_id, file_ext)
+
+            output_file_path = os.path.join(storage_path, file_path)
+            with open(output_file_path, u'wb') as output_file:
+                shutil.copyfileobj(image_upload.file, output_file)
+            return os.path.join(u'/tag_images', file_path)
+
+    def update_tag(self, tag_id, tag_name, vocab_name, image_upload, image_url):
         tag = meta.Session.query(Tag).get(tag_id)
         if tag.name != tag_name.strip():
             new_tag_name = u'{}:{}'.format(vocab_name, tag.name)
@@ -136,13 +172,25 @@ class AdminController(AdminController):
         tag.name = tag_name.strip()
         meta.Session.commit()
         self.update_localized_tags(tag.id, vocab_name)
+        self.create_or_update_tag_image_url(**{
+            u'tag_id': tag.id,
+            u'image_url': self.get_tag_image_url(image_upload, image_url, tag_id),
+            u'vocabulary': vocab_name,
+            u'tag_name': tag_name
+        })
         self.created = True
 
-    def add_tag(self, vocab, tag_name, vocab_name):
+    def add_tag(self, vocab, tag_name, vocab_name, image_upload, image_url):
         data = {u'name': tag_name.strip(), u'vocabulary_id': vocab[u'id']}
         try:
             result = toolkit.get_action(u'tag_create')(self.context, data)
             self.localize_tags(result.get(u'id'), vocab_name)
+            self.create_or_update_tag_image_url(**{
+                u'tag_id': result.get(u'id'),
+                u'image_url': self.get_tag_image_url(image_upload, image_url, result.get(u'id')),
+                u'vocabulary': vocab_name,
+                u'tag_name': tag_name
+            })
             self.created = True
             return result.get(u'id')
         except ValidationError as e:

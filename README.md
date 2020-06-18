@@ -254,3 +254,18 @@ $ systemctl restart supervisord
 ```
 $ paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
 ```
+
+Initialize database tables
+--------------------------
+To initialize database tables, follow the steps below
+
+#### Activate the virtual environment
+```
+$ . /usr/lib/ckan/default/bin/activate
+```
+
+#### Create database tables by running the commend below
+
+```
+$ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
+```

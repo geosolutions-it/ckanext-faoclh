@@ -1,10 +1,3 @@
-{% set thumbnails = {
-    'Analysing-Modelling_CC': '/fao/images/analysing_512x256.jpg',
-    'Gathering_data': '/fao/images/gathering_data_512x256.jpg',
-    'Implementing_practices': '/fao/images/implementing_practices_512x256.jpg',
-    'Increasing_knowledge': '/fao/images/increasing_knowledge_512x256.jpg'
-} %}
-
 {% set items = items or [] %}
 
 <div class="fao-item-container">
@@ -21,7 +14,7 @@
                 title=h.fao_voc_label('fao_activity_type', item.name) or item.display_name,
                 dataset_url=url,
                 dataset_count= item.count,
-                thumbnail=item.thumbnail or thumbnails[item.name] %}
+                thumbnail=item.thumbnail or h.get_tag_image_url('fao_activity_type', item.name) or h.url_for_static('/base/images/fao/thumbnail-placeholder.png') %}
         {% endfor %}
     </div>
 </div>

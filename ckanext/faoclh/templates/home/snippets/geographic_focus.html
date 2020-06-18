@@ -1,10 +1,3 @@
-{% set thumbnails = {
-    'Global': '/fao/images/world_512x256.jpg',
-    'Africa': '/fao/images/continent-africa_512x256.jpg',
-    'Asia': '/fao/images/continent-asia_512x256.jpg',
-    'America': '/fao/images/continent-america_512x256.jpg'
-} %}
-
 {% set items = items or [] %}
 
 <div class="fao-item-container">
@@ -21,7 +14,7 @@
                 title=h.fao_voc_label('fao_geographic_focus', item.name) or item.display_name,
                 dataset_url=url,
                 dataset_count= item.count,
-                thumbnail=item.thumbnail or thumbnails[item.name] %}
+                thumbnail=item.thumbnail or h.get_tag_image_url('fao_geographic_focus', item.name) or h.url_for_static('/base/images/fao/thumbnail-placeholder.png') %}
         {% endfor %}
     </div>
 </div>
