@@ -284,6 +284,60 @@ for instance
 
     paster --plugin=ckanext-faoclh vocab delete -n fao_resource_type --config=/etc/ckan/default/production.ini
 
+Enabling dataset rating
+---------------------------
+Enable dataset rating using [ckanext-rating](https://github.com/6aika/ckanext-rating) by following the steps below.
+
+- Activate CKAN's virtual environment
+```
+$ . /usr/lib/ckan/default/bin/activate
+```
+
+- Install [ckanext-rating](https://github.com/6aika/ckanext-rating)
+```
+$ pip install -e git+https://github.com/6aika/ckanext-rating.git#egg=ckanext-rating
+```
+
+-  Add `ckanext-rating` extensions to CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) using the `ckan.plugins` configuration key separating each extension by space and save the file as shown in the example below.
+```
+ckan.plugins = [...] rating
+```
+
+- Initialize database tables used by ckanext-rating
+```
+$ paster --plugin=ckanext-rating rating init --config=/etc/ckan/default/production.ini
+```
+
+> **TIP**: Enabled/disabled ratings for unauthenticated users using `rating.enabled_for_unauthenticated_users` configuaration key as shown below
+```
+rating.enabled_for_unauthenticated_users = true or false
+```
+
+Optionally, list dataset types for which the rating will be shown (defaults to ['dataset']) using the `ckanext.rating.enabled_dataset_types` settings key.
+
+Enable a user commenting feature on dataset
+---------------------------
+Enable user commenting functionality on datasets using [ckanext-ytp-comments](https://github.com/vrk-kpa/ckanext-ytp-comments) by following the steps below:
+
+- Activate CKAN's virtual environment
+```
+$ . /usr/lib/ckan/default/bin/activate
+```
+
+- Install [ckanext-ytp-comments](https://github.com/vrk-kpa/ckanext-ytp-comments)
+```
+$ pip install -e  git+https://github.com/yhteentoimivuuspalvelut/ckanext-ytp-comments#egg=ckanext-ytp-comments
+```
+
+-  Add `ckanext-ytp-comments` extensions to CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) using the `ckan.plugins` configuration key separating each extension by space and save the file as shown in the example below.
+```
+ckan.plugins = [...] ytp_comments
+```
+
+- Initialize database tables used by ckanext-ytp-comments
+```
+$ paster --plugin=ckanext-ytp-comments initdb --config=/etc/ckan/default/production.ini
+```
 
 ### Load datasets
 
