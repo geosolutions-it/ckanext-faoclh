@@ -103,6 +103,90 @@ Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/
   $ systemctl restart supervisord
   ```
 
+Initialize database tables
+==========================
+
+To initialize database tables, follow the steps below
+
+Activate the virtual environment
+
+    $ . /usr/lib/ckan/default/bin/activate
+
+
+Create database tables by running the command below
+
+    $ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
+
+
+
+Configuring CKAN for CSV export
+===============================
+
+CKAN allows you to create jobs that run in the ‘background’, i.e. asynchronously and without blocking the main application.
+
+Background jobs can be essential to providing certain kinds of functionality, for example:
+* Generate a CSV dataset export file asynchronously.
+* Creating webhooks that notify other services when certain changes occur (for example a dataset is updated)
+
+Basically, any piece of work that takes too long to perform while the main application is waiting is a good candidate for a background job. Read more about CKAN's background job [here](https://docs.ckan.org/en/2.8/maintaining/background-tasks.html)
+
+To enable CKAN's background jobs in [ckanext-faoclh](https://github.com/geosolutions-it/ckanext-faoclh), create a file name `ckan-worker.ini` in `/etc/supervisord.d/` then copy in the code below.
+
+    # =======================================================
+    # Supervisor configuration for CKAN background job worker
+    # =======================================================
+    
+    [program:ckan-worker]
+    # Use the full paths to the virtualenv and your configuration file here.
+    command=/usr/lib/ckan/default/bin/paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
+    
+    user=ckan
+    
+    # Start just a single worker. Increase this number if you have many or
+    # particularly long running background jobs.
+    numprocs=1
+    process_name=%(program_name)s-%(process_num)02d
+    
+    # Log files.
+    stdout_logfile=/var/log/ckan/worker.log
+    stderr_logfile=/var/log/ckan/worker.err
+    
+    # Make sure that the worker is started on system start and automatically
+    # restarted if it crashes unexpectedly.
+    autostart=true
+    autorestart=true
+    
+    # Number of seconds the process has to run before it is considered to have
+    # started successfully.
+    startsecs=10
+    
+    # Need to wait for currently executing tasks to finish at shutdown.
+    # Increase this if you have very long running tasks.
+    stopwaitsecs = 600
+
+Create a directory to hold all the generated CSV datasets and grant user 'ckan' permissions to it. You may need root privileges to do that.  
+Let's say we want to use `/var/lib/ckan/export':
+
+    $ mkdir /var/lib/ckan/export
+    $ chown ckan: /var/lib/ckan/export
+
+
+Add the created directory to CKAN configuration file (`/etc/ckan/default/production.ini`) using the `faoclh.export_dataset_dir` settings key as shown below
+
+    faoclh.export_dataset_dir = /var/lib/ckan/export
+
+
+Once the file is  created, restart CKAN using the command below:
+
+    $ systemctl restart supervisord
+
+
+#### To run asynchronous worker in dev environment using the command below
+```
+$ paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
+```
+
+
 Loading initial data
 ====================
 
@@ -120,9 +204,9 @@ Run
 
     ./load_groups.sh SERVER_URL API_KEY
     
-E.g.    
+E.g.
 
-    ./load_groups.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c   
+    ./load_groups.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c
    
 In order to remove the groups:
 
@@ -140,7 +224,7 @@ Run
 
     ./load_orgs.sh SERVER_URL API_KEY
     
-E.g.    
+E.g.
 
     ./load_orgs.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c   
 
@@ -179,93 +263,8 @@ Run
 
     ./load_datasets.sh SERVER_URL API_KEY
     
-E.g.    
+E.g.
 
-    ./load_dataset.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c   
+    ./load_dataset.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c
 
 This step requires that groups and organizations have already been created.
-
-Configuring CKAN for CSV export
-===============================
-
-CKAN allows you to create jobs that run in the ‘background’, i.e. asynchronously and without blocking the main application.
-
-Background jobs can be essential to providing certain kinds of functionality, for example:
-* Generate a CSV dataset export file asynchronously.
-* Creating webhooks that notify other services when certain changes occur (for example a dataset is updated)
-
-Basically, any piece of work that takes too long to perform while the main application is waiting is a good candidate for a background job. Read more about CKAN's background job [here](https://docs.ckan.org/en/2.8/maintaining/background-tasks.html)
-
-To enable CKAN's background jobs in [ckanext-faoclh](https://github.com/geosolutions-it/ckanext-faoclh), create a file name `ckan-worker.ini` in `/etc/supervisord.d/` then copy in the code below.
-
-```
-# =======================================================
-# Supervisor configuration for CKAN background job worker
-# =======================================================
-
-[program:ckan-worker]
-# Use the full paths to the virtualenv and your configuration file here.
-command=/usr/lib/ckan/default/bin/paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
-
-user=ckan
-
-# Start just a single worker. Increase this number if you have many or
-# particularly long running background jobs.
-numprocs=1
-process_name=%(program_name)s-%(process_num)02d
-
-# Log files.
-stdout_logfile=/var/log/ckan/worker.log
-stderr_logfile=/var/log/ckan/worker.err
-
-# Make sure that the worker is started on system start and automatically
-# restarted if it crashes unexpectedly.
-autostart=true
-autorestart=true
-
-# Number of seconds the process has to run before it is considered to have
-# started successfully.
-startsecs=10
-
-# Need to wait for currently executing tasks to finish at shutdown.
-# Increase this if you have very long running tasks.
-stopwaitsecs = 600
-```
-
-Create a directory to hold all the generated CSV datasets and grant user 'ckan' permissions to it. You may need root privileges to do that.  
-Let's say we want to use `/var/lib/ckan/export':
-
-```
-$ mkdir /var/lib/ckan/export
-$ chown ckan: /var/lib/ckan/export
-```
-
-Add the created directory to CKAN configuration file (`/etc/ckan/default/production.ini`) using the `faoclh.export_dataset_dir` settings key as shown below
-```
-faoclh.export_dataset_dir = /var/lib/ckan/export
-```
-
-Once the file is  created, restart CKAN using the command below:
-```
-$ systemctl restart supervisord
-```
-
-#### To run asynchronous worker in dev environment using the command below
-```
-$ paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
-```
-
-Initialize database tables
---------------------------
-To initialize database tables, follow the steps below
-
-#### Activate the virtual environment
-```
-$ . /usr/lib/ckan/default/bin/activate
-```
-
-#### Create database tables by running the commend below
-
-```
-$ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
-```
