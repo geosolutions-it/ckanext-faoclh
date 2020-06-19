@@ -1,0 +1,92 @@
+{% extends "admin/base.html" %}
+
+{% block primary_content_inner %}
+<div style="display: none" id="dataset-failed-alert" class="error-explanation alert alert-danger">
+    <h1>An error may have occurred.</h1>
+    <p>Check your internet connection or click the button below to re-generate export file</p>
+</div>
+<form method="POST" id="export-dataset">
+    <button type="submit" id="export-dataset-btn" value="export" class="btn btn-info">
+        Export Dataset
+    </button>
+</form>
+<div style="display: none" id="dataset-info-alert" class="error-explanation alert alert-info">
+    <h1>Generating Export</h1>
+    <p>Please wait...</p>
+</div>
+<div style="display: none" id="dataset-success-alert" class="error-explanation alert alert-success">
+    <h1>Downloading Dataset...</h1>
+    <p>If the download doesn't start automatically in a few seconds, please click <a
+            href="/ckan-admin/download_dataset">here</a> to access the download URL directly.</p>
+</div>
+{% endblock %}
+
+{% block secondary_content %}
+<div class="module module-narrow module-shallow">
+    <h2 class="module-heading">
+        <i class="fa fa-info-circle"></i>
+        {% trans %}Export Dataset{% endtrans %}
+    </h2>
+    <div class="module-content">
+        <p>
+            {% trans %}Export all datasets to a CSV file.{% endtrans %}
+        </p>
+    </div>
+</div>
+<script>
+    let interval;
+    let failure_count = 0;
+
+    function reset_query(show_err = false) {
+        if (failure_count > 10 || show_err){
+            clearInterval(interval);
+            failure_count = 0;
+            $('#dataset-failed-alert').show();
+            $('#export-dataset').show();
+            $('#dataset-info-alert').hide();
+            return;
+        }else {
+            failure_count++;
+        }
+    };
+
+    function check_download_status() {
+        fetch("/ckan-admin/download_dataset", { method: "POST", data: {} })
+            .then(function (response) {
+                if (response.status === 200) {
+                    clearInterval(interval);
+                    $('#dataset-info-alert').hide();
+                    $('#dataset-success-alert').show();
+                    $(location).attr('href', '/ckan-admin/download_dataset');
+                }
+                else {
+                    return reset_query();
+                }
+            })
+            .catch(function (err) {
+                return reset_query();
+            })
+    }
+    window.addEventListener("load", function () {
+        $("#export-dataset").on("submit", function (e) {
+            e.preventDefault();
+            clearInterval()
+            fetch("/ckan-admin/export_dataset", { method: "POST", data: {} })
+                .then(function (response) {
+                    $('#export-dataset').hide();
+                    $('#dataset-failed-alert').hide();
+                    $('#dataset-info-alert').show();
+                    if (response.status === 201) {
+                        check_download_status();
+                        interval = window.setInterval(check_download_status, 3000);
+                        return;
+                    }
+                    reset_query(true);
+                })
+                .catch(function (err) {
+                    reset_query(true);
+                })
+        })
+    })
+</script>
+{% endblock %}

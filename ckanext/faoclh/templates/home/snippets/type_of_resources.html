@@ -1,10 +1,3 @@
-{% set thumbnails = {
-    'Database': '/fao/images/database_512x256.jpg',
-    'Learning_material': '/fao/images/learning_material_512x256.jpg',
-    'Methodologies_and_Guidelines': '/fao/images/methodologies_512x256.jpg',
-    'Policy_Brief': '/fao/images/official_Docs_512x256.jpg'
-} %}
-
 {% set items = items or [] %}
 
 <div class="fao-item-container">
@@ -21,7 +14,7 @@
                 title=h.fao_voc_label('fao_resource_type', item.name) or item.display_name,
                 dataset_url=url,
                 dataset_count= item.count,
-                thumbnail=item.thumbnail or thumbnails[item.name] or h.url_for_static('/base/images/fao/thumbnail-placeholder.png') %}
+                thumbnail=item.thumbnail or h.get_tag_image_url('fao_resource_type', item.name) or h.url_for_static('/base/images/fao/thumbnail-placeholder.png') %}
         {% endfor %}
     </div>
 </div>

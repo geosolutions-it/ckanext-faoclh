@@ -7669,8 +7669,8 @@ select[multiple].control-large input {
 .form-actions .control-required-message:first-child {
   margin-left: 0;
 }
-.form-actions {
-  overflow: auto;
+article.module .form-actions {
+  overflow: unset;
 }
 @media (min-width: 768px) {
   .form-actions {
@@ -11348,3 +11348,83 @@ h5 {
   border-right-color: transparent;
 }
 
+.faoclh-collapsible-nav nav{
+  display: block !important;
+}
+
+.faoclh-collapsible-nav .module-footer {
+  display: block !important;
+}
+
+.faoclh-collapsible-nav .glyphicon-chevron-down {
+  display: block !important;
+  float: left;
+  margin-right: 3px;
+}
+
+.faoclh-collapsible-nav .glyphicon-chevron-right {
+  display: none !important;
+}
+
+.faoclh-collapsible-nav .empty {
+  display: block !important;
+}
+
+.module-shallow {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
+}
+
+.module-shallow nav {
+  display: none;
+}
+
+.module-shallow .empty {
+  display: none;
+}
+
+.module-shallow .module-footer {
+  display: none;
+}
+
+.module-shallow .glyphicon-chevron-down {
+  display: none;
+}
+
+.module-heading .fa-filter {
+  float: right;
+}
+
+.vocab-container .nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.vocab-container .nav ul {
+  margin-bottom: -10px;
+}
+
+.vocab-upload-buttons .image-buttons{
+  display: block !important;
+}
+
+.image-url-form {
+  margin-top: -20px;
+}
+
+.image-buttons {
+  margin-top: 2px;
+}
+
+.vocab-upload-buttons .image-url-form{
+  display: none !important;
+}
+
+.vocab-image .image-buttons{
+  display: none;
+}
