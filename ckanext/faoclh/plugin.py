@@ -196,11 +196,6 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                     toolkit.get_converter('convert_to_tags')(field)],
             })
 
-        # Add our custom_RESOURCE_text metadata field to the schema
-        schema['resources'].update({
-            FIELD_RESOURCE_YEAR: [toolkit.get_validator('ignore_missing')]
-        })
-
         return schema
 
     def create_package_schema(self):
