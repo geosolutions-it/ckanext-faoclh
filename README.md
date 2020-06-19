@@ -104,19 +104,18 @@ Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/
   $ systemctl restart supervisord
   ```
 
-## Initialize database tables
+## Initialize database tables	
 
-To initialize database tables for the fao-clh extension, follow the steps below.
+To initialize database tables for the fao-clh extension, follow the steps below.	
 
-Activate the virtual environment
+Activate the virtual environment	
 
-    $ . /usr/lib/ckan/default/bin/activate
+    $ . /usr/lib/ckan/default/bin/activate	
 
 
-Create database tables by running the command below
+Create database tables by running the command below	
 
-    $ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
-
+    $ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini	
 
 
 ## Configuring CKAN for CSV export
@@ -184,7 +183,7 @@ To run asynchronous worker in dev environment using the command below
 
     $ paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
 
-## Enabling Tracking
+## Enabling CKAN Tracking
 
 To enable page view tracking, follow the steps below:
 - Set `ckan.tracking_enabled` to true in the `[app:main]` section of your CKAN configuration file (production.ini found at `/etc/ckan/default/production.ini`)
@@ -222,8 +221,39 @@ Run the command below to generate a csv file with tracking data:
 > **NOTE**: Replace "2020-01-01" with an offset date from which the tracking data will generate.
 
 
-Enable dataset rating
----------------------
+## Tracking data access with Google Analytics
+
+Send tracking data to google analytics using the [ckanext-googleanalytics](https://github.com/ckan/ckanext-googleanalytics) extension by following the steps below.
+
+- Activate CKAN's virtual environment
+
+      $ . /usr/lib/ckan/default/bin/activate
+
+- Install [ckanext-googleanalytics](https://github.com/ckan/ckanext-googleanalytics)
+
+      $ pip install -e  git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics
+
+- Add the `googleanalytics` plugin in the `ckan.plugins` configuration key, separating each extension by space.   
+
+      ckan.plugins = [...] googleanalytics
+
+- Edit your ckan .ini file to provide these necessary parameters:
+
+      googleanalytics.id = UA-XXXXXX-1
+      googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
+      googleanalytics.username = googleaccount@gmail.com
+      googleanalytics.password = googlepassword
+      googleanalytics.show_downloads = true
+
+> **Note**: Your password will probably be readable by other people; so you may want to set up a 
+  new Gmail account with [2fa](https://www.google.com/landing/2step/) enabled specifically for accessing your Gmail profile.
+
+- Restart CKAN to enable google analytics
+  
+      $ systemctl restart supervisord
+
+
+## Enable dataset rating
 
 Enable dataset rating using [ckanext-rating](https://github.com/6aika/ckanext-rating) by following the steps below.
 
@@ -235,7 +265,7 @@ Enable dataset rating using [ckanext-rating](https://github.com/6aika/ckanext-ra
 
       $ pip install -e git+https://github.com/6aika/ckanext-rating.git#egg=ckanext-rating
 
-- Add the `rating` plugin by editing the `ckan.plugins` property in the CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`):
+- Add the `rating` plugin by editing the `ckan.plugins` property in the CKAN config file (e.g. `production.ini` found at `/etc/ckan/default/production.ini`):
 
       ckan.plugins = [...] rating
 
