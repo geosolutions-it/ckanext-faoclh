@@ -104,6 +104,19 @@ Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/
   $ systemctl restart supervisord
   ```
 
+## Initialize database tables	
+
+To initialize database tables for the fao-clh extension, follow the steps below.	
+
+Activate the virtual environment	
+
+    $ . /usr/lib/ckan/default/bin/activate	
+
+
+Create database tables by running the command below	
+
+    $ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini	
+
 
 ## Configuring CKAN for CSV export
 
