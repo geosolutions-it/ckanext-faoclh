@@ -263,7 +263,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_voc_label_func': fao_voc_label_func,
             'fao_get_search_facet': fao_get_search_facet,
             'contains_active_facets': contains_active_facets,
-            'get_tag_image_url': TagImageUrl.get
+            'get_tag_image_url': TagImageUrl.get,
             u'gsreport_get_org_title': gsh.get_localized_org_title,
             u'gsreport_get_pkg_title': gsh.get_localized_pkg_title,
             u'get_unpublished_dataset': gsh.get_unpublished_dataset,
