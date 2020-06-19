@@ -259,7 +259,7 @@ Enable dataset filtering by custom resource field "year of release"
 ================================================================
 To enable filtering of datasets by custom resource field "year of release" follow the steps described below:
 
-- Update solr configuration file (located at /usr/lib/ckan/src/ckan/ckan/config/solr/schema.xml) to index the custom resource filed "year of release" by adding the tag below:
+- Update solr configuration file (located at /usr/lib/ckan/src/ckan/ckan/config/solr/schema.xml) to index the custom resource field "year of release" by adding the tag below:
 ```
 <dynamicField name="res_extras_*" type="text" indexed="true" stored="true" multiValued="true"/>
 ```
