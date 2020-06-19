@@ -114,3 +114,6 @@ msgstr "Year of Release"
 
 msgid "fao_resource_release_year"
 msgstr "Year of Release"
+
+msgid "res_extras_custom_resource_text"
+msgstr "Year of Release"
