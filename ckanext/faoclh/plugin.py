@@ -55,27 +55,18 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         return search_results
 
     def before_index(self, dataset_dict):
-        log.debug("BEFORE_INDEX")
-        import json
-        log.debug("INDEXING {}".format(
-            # json.loads(dataset_dict.get('data_dict', {})).get('resources')
-            dataset_dict
-        ))
+        # log.debug("BEFORE_INDEX")
+        # log.debug("INDEXING {}".format(dataset_dict))
 
         for faokey in VOCAB_FIELDS:
             key = 'vocab_' + faokey
             v = dataset_dict.get(key, None)
-            log.debug("INDEXING {} -> ({}) {}".format(key, type(v), v))
+            # log.debug("INDEXING {} -> ({}) {}".format(key, type(v), v))
 
             if v and isinstance(v, list):
                 dataset_dict[faokey] = v[0]
-                log.debug("DUMPING {}".format(v[0]))
+                # log.debug("DUMPING {}".format(v[0]))
 
-        for x in json.loads(dataset_dict.get('data_dict', {})).get('resources'):
-            print('hahahh')
-        # year_of_release = request.params.get('custom_resource_text')
-        # if year_of_release:
-        #     dataset_dict[FIELD_RESOURCE_YEAR] = year_of_release
         return dataset_dict
 
     def before_view(self, pkg_dict):
