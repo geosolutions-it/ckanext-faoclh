@@ -26,6 +26,15 @@
             {% trans %}Geographical Focus{% endtrans %}</li>
         </a>
       </ul>
+      {% if tag_id %}
+      <div style="padding: 5%; border-top: 1px solid #ddd;">
+          <section>
+              <div>
+                    <img src="{{ image_url or h.url_for_static('/base/images/fao/thumbnail-placeholder.png') }}" width="100%" alt="testing_en">
+              </div>
+              <h3 class="heading" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{tag_name}}</h3> </section>
+      </div>
+      {% endif %}
     </div>
     <div class="content">
       {% block vocab_content %}
