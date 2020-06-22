@@ -94,6 +94,13 @@ class GetPackageData(Package):
         }
         return field_mapper[model_field](resource)
 
+    @classmethod
+    def get_resource_year_of_release(cls, years_of_release):
+        try:
+            return u', '.join(years_of_release)
+        except TypeError:
+            return u''
+
 
 def generate_dataset_csv(output_dir, output_file, context):
     """
@@ -132,7 +139,10 @@ def generate_dataset_csv(output_dir, output_file, context):
                 package_show(context, {u'id': dataset.id}).get(u'fao_resource_type')),
             GetPackageData.get_resource(Resource.name, dataset.id),
             GetPackageData.get_resource(Resource.format, dataset.id),
-            dataset.metadata_created.year
+            GetPackageData.get_resource_year_of_release([
+                item.get(u'custom_resource_text') for item in
+                package_show(context, {u'id': dataset.id}).get(u'resources', {}) if item
+            ])
         ) for dataset in datasets])
 
     log.info(u'Successfully created dataset export file [path = {}]'.format(output_dir))
