@@ -31,7 +31,6 @@ FIELD_RESOURCE_TYPE = 'fao_resource_type'
 FIELD_ACTIVITY_TYPE = 'fao_activity_type'
 FIELD_FOCUS         = 'fao_geographic_focus'
 
-FIELD_RELEASE_YEAR  = 'fao_release_year'
 FIELD_RESOURCE_YEAR = 'fao_resource_release_year'
 
 VOCAB_FIELDS = [FIELD_RESOURCE_TYPE, FIELD_ACTIVITY_TYPE, FIELD_FOCUS]
@@ -115,8 +114,8 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
     # IFacets
     def _fao_facets(self, src_facets_dict, package_type):
         facet_titles_order = [
-            'groups', 'fao_activity_type', 'fao_resource_type', 'tags', 'fao_geographic_focus', 'organization',
-            'res_format',
+            'groups', FIELD_ACTIVITY_TYPE, FIELD_RESOURCE_TYPE, 'tags', FIELD_FOCUS, 'organization',
+            'res_format', 'res_extras_custom_resource_text'
         ]
 
         def get_facet_value(field):
@@ -188,17 +187,6 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                     toolkit.get_converter('convert_to_tags')(field)],
             })
 
-        schema.update({
-            FIELD_RELEASE_YEAR: [
-                toolkit.get_validator('ignore_missing'),
-                toolkit.get_converter('convert_to_extras')],
-        })
-
-        # Add our custom_RESOURCE_text metadata field to the schema
-        schema['resources'].update({
-            FIELD_RESOURCE_YEAR: [toolkit.get_validator('ignore_missing')]
-        })
-
         return schema
 
     def create_package_schema(self):
@@ -227,12 +215,6 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                     toolkit.get_converter('convert_from_tags')(field),
                     toolkit.get_validator('ignore_missing')],
             })
-
-        schema.update({
-            FIELD_RELEASE_YEAR: [
-                toolkit.get_converter('convert_from_extras'),
-                toolkit.get_validator('ignore_missing')],
-        })
 
         schema['resources'].update({
             FIELD_RESOURCE_YEAR: [

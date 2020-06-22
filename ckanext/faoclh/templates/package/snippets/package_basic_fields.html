@@ -20,16 +20,5 @@
   </div>
   {% endfor %}
 
-  <div class="form-group control-medium">
-    <div class="controls">
-      {{ form.input('fao_release_year',
-            label=_('Year of Release'),
-            id='field-fao_release_year',
-            placeholder=_('Year of Release'),
-            value=data.fao_release_year,
-            error=errors.fao_release_year,
-            classes=['control-medium']) }}
-    </div>
-  </div>
 
 {% endblock %}
