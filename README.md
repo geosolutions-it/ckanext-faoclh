@@ -104,6 +104,17 @@ Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/
   $ systemctl restart supervisord
   ```
 
+## Enable filtering by "year of release"
+
+To enable filtering of datasets by custom resource field "year of release" follow the steps described below:
+
+- Add the line below in `production.ini` (found at /etc/ckan/default/production.ini) to enable indexing of the custom resource field "year of release"
+ 
+      ckan.extra_resource_fields = custom_resource_text
+
+- Restart CKAN
+
+
 ## Initialize database tables	
 
 To initialize database tables for the fao-clh extension, follow the steps below.	
@@ -377,16 +388,3 @@ E.g.
     ./load_dataset.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c
 
 This step requires that groups and organizations have already been created.
-
-
-Enable dataset filtering by custom resource field "year of release"
-================================================================
-To enable filtering of datasets by custom resource field "year of release" follow the steps described below:
-
-- Add the line below in `production.ini` (found at /etc/ckan/default/production.ini) to enable indexing of the custom resource field "year of release"
-```
-ckan.extra_resource_fields = custom_resource_text
-```
-
-- Restart CKAN
-
