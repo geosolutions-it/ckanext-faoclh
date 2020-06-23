@@ -6949,6 +6949,9 @@ a.tag:hover {
 .module-content {
   padding: 30px;
 }
+.module-content .image a img {
+  background-color: #126baa;
+}
 .module-content .add-to-group .btn-primary {
   margin-bottom: 30px;
 }
@@ -7215,6 +7218,10 @@ a.tag:hover {
   margin: 0 0 15px 15px;
   background-color: white;
   border-radius: 3px;
+}
+.media-item .img-responsive {
+  background-color: #126baa;
+  width: 100%;
 }
 .media-item span.count {
   color: #999;
@@ -10973,7 +10980,6 @@ h5 {
 }
 .fao-item-summary .fao-item-thumbnail {
   height: 100px;
-  background-color: #dddddd;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -11288,6 +11294,9 @@ h5 {
 .vocab-container {
   display: flex;
   margin-top: 1%;
+}
+.vocab-container img{
+  background-color: #0f68a7;
 }
 .vocab-container table {
   width: 100%;
