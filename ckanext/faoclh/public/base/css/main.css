@@ -10980,6 +10980,7 @@ h5 {
 }
 .fao-item-summary .fao-item-thumbnail {
   height: 100px;
+  background-color: #dddddd;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
