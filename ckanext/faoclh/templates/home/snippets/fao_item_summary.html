@@ -1,6 +1,6 @@
 {% set count = dataset_count or -1 %}
 <div class="fao-item-summary">
-    <a href="{{ dataset_url }}" class="fao-item-header">
+    <a href="{{ dataset_url }}&_fao_expanded_facets={{ item_name }}" class="fao-item-header">
         {% if (thumbnail)%}
         <div class="fao-item-thumbnail" style="background-image: url('{{ thumbnail }}')"></div>
         {% else %}
