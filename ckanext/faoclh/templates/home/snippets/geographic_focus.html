@@ -9,12 +9,11 @@
     </div>
     <div class="fao-item-container-body box">
         {% for item in items %}
-            {% set url = h.url_for(controller='package', action='search', fao_geographic_focus=item.name) %}
+            {% set url = h.url_for(controller='package', action='search', fao_geographic_focus=item.name, _fao_expanded_facets='fao_geographic_focus') %}
             {% snippet 'home/snippets/fao_item_summary.html',
                 title=h.fao_voc_label('fao_geographic_focus', item.name) or item.display_name,
                 dataset_url=url,
                 dataset_count= item.count,
-                item_name='fao_geographic_focus',
                 thumbnail=item.thumbnail or h.get_tag_image_url('fao_geographic_focus', item.name) %}
         {% endfor %}
     </div>
