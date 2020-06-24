@@ -342,7 +342,7 @@ def contains_active_facets(vocab_name):
 
 
 def fao_generate_link_id(name, facet):
-    return '{}-{}'.format(name.replace(" ", "-"), facet)
+    return u'{}-{}'.format(name, facet).replace(u' ', u'-')
 
 
 def fao_expanded_facet(vocab_name):
