@@ -240,9 +240,10 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_voc_label': fao_voc_label,
             'fao_voc_label_func': fao_voc_label_func,
             'fao_get_search_facet': fao_get_search_facet,
-            'fao_expanded_facet': fao_expanded_facet,
+            'contains_active_facets': contains_active_facets,
             'get_tag_image_url': TagImageUrl.get,
-            'fao_get_org_image_url': fao_get_org_image_url
+            'fao_get_org_image_url': fao_get_org_image_url,
+            'fao_expanded_facet': fao_expanded_facet
         }
 
 
@@ -333,6 +334,10 @@ def fao_get_search_facet(limit=6):
             result[field] = []
 
     return result
+
+
+def contains_active_facets(vocab_name):
+    return request.params.has_key(vocab_name)
 
 
 def fao_expanded_facet(vocab_name):

@@ -47,7 +47,7 @@ within_tertiary
         {% set wrapper_class = 'nav-facet nav-facet-tertiary' %}
       {% endif %}
       {% block facet_list_item %}
-        <section class="{{ wrapper_class or 'module module-narrow module-shallow' }} {% if h.fao_expanded_facet(name) %}faoclh-collapsible-nav {% endif %}" id="{{ name }}_facet" onclick="toggle_facet_expansion_url_params('{{ name }}')">
+        <section class="{{ wrapper_class or 'module module-narrow module-shallow' }} {% if h.fao_expanded_facet(name) %}faoclh-collapsible-nav {% endif %} {% if h.contains_active_facets(name) %}faoclh-active-facet {% endif %}" id="{{ name }}_facet" onclick="toggle_facet_expansion_url_params('{{ name }}')">
           {% block facet_list_heading %}
             <h2 class="module-heading" onclick="document.getElementById('{{ name }}_facet').classList.toggle('faoclh-collapsible-nav')">
               <i class="glyphicon glyphicon-chevron-down"></i>

@@ -11362,6 +11362,15 @@ h5 {
   display: block !important;
 }
 
+.faoclh-collapsible-nav .module-heading {
+  border-bottom: 1px solid #aaaaaa;
+}
+
+.faoclh-active-facet .module-heading {
+  font-weight: bold;
+  border-bottom: 1px solid #aaaaaa;
+}
+
 .faoclh-collapsible-nav .module-footer {
   display: block !important;
 }

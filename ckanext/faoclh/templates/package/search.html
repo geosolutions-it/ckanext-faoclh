@@ -63,6 +63,7 @@ async function toggle_facet_expansion_url_params(facet) {
 			await update_facet_href(all_facet_links, params.get(fao_facet_search_key));
 		}
 	} catch (e) {
+	    // only catch TypeError that can possible arise when url does not contain the `_fao_expanded_facets` search key
 		if (e instanceof TypeError) {
 			params.set(fao_facet_search_key, facet);
 			window.history.replaceState(null, null, `?${params.toString()}`);
