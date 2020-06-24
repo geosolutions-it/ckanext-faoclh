@@ -35,9 +35,9 @@
 </div>
 <script>
 const location_id = localStorage.getItem('fao_facet_scroll_location');
-const elerment_in_view = document.getElementById(location_id);
-if (elerment_in_view){
-    const elementRect = elerment_in_view.getBoundingClientRect();
+const element_in_view = document.getElementById(location_id);
+if (element_in_view){
+    const elementRect = element_in_view.getBoundingClientRect();
     const absoluteElementTop = elementRect.top + window.pageYOffset;
     const middle = absoluteElementTop - (window.innerHeight / 2);
     window.scrollTo(0, middle);
