@@ -4,7 +4,7 @@
         {% if (thumbnail)%}
         <div class="fao-item-thumbnail" style="background-image: url('{{ thumbnail }}')"></div>
         {% else %}
-        <div class="fao-item-thumbnail" style="background-image: url('{{ h.url_for_static('/base/images/ckan-logo.png') }}'); background-size: 85% 50%; background-color: #0f68a7;"></div>
+        <div class="fao-item-thumbnail" style="background-image: url('{{ h.url_for_static('/base/images/fao/thumbnail-placeholder.png') }}'); background-size: 85% 50%; background-color: #0f68a7;"></div>
         {% endif %}
         <div class="fao-item-title">
             <h3 title="{{ title }}">{{ h.truncate(title, length=45, whole_word=True) }}</h3>
