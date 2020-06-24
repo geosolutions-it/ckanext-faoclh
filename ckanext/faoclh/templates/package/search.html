@@ -34,6 +34,11 @@
   <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
 </div>
 <script>
+const location_id = localStorage.getItem('fao_facet_scroll_location');
+const current_view = document.getElementById(location_id);
+if (current_view){
+    current_view.scrollIntoView();
+}
 const fao_facet_search_key = '_fao_expanded_facets';
 
 function update_facet_href(elements = [], open_facet_href) {

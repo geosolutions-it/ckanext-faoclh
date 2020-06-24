@@ -68,7 +68,7 @@ within_tertiary
                     {% set label_truncated = h.truncate(label, 22) if not label_function else label %}
                     {% set count = count_label(item['count']) if count_label else ('%d' % item['count']) %}
                       <li class="{{ nav_item_class or 'nav-item' }}{% if item.active %} active{% endif %}">
-                        <a href="{{ href }}" title="{{ label if label != label_truncated else '' }}" class="fao-facet-link">
+                        <a href="{{ href }}" title="{{ label if label != label_truncated else '' }}" id="{{ h.fao_generate_link_id(item.name, name) }}" onclick="localStorage.setItem('fao_facet_scroll_location', '{{ h.fao_generate_link_id(item.name, name) }}')" class="fao-facet-link">
                           <span class="item-label">{{ label_truncated }}</span>
                           <span class="hidden separator"> - </span>
                           <span class="item-count badge">{{ count }}</span>
@@ -81,10 +81,10 @@ within_tertiary
               <p class="module-footer">
                 {% if h.get_param_int('_%s_limit' % name) %}
                   {% if h.has_more_facets(name) %}
-                    <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" class="read-more fao-facet-link">{{ _('Show More {facet_type}').format(facet_type=title) }}</a>
+                    <a href="{{ h.remove_url_param('_%s_limit' % name, replace=0, extras=extras, alternative_url=alternative_url) }}" onclick="localStorage.setItem('fao_facet_scroll_location', '{{ name }}_facet')" class="read-more fao-facet-link">{{ _('Show More {facet_type}').format(facet_type=title) }}</a>
                   {% endif %}
                 {% else %}
-                  <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" class="read-more fao-facet-link">{{ _('Show Only Popular {facet_type}').format(facet_type=title) }}</a>
+                  <a href="{{ h.remove_url_param('_%s_limit' % name, extras=extras, alternative_url=alternative_url) }}" onclick="localStorage.setItem('fao_facet_scroll_location', '{{ name }}_facet')"  class="read-more fao-facet-link">{{ _('Show Only Popular {facet_type}').format(facet_type=title) }}</a>
                 {% endif %}
               </p>
             {% else %}
