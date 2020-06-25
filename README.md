@@ -20,6 +20,8 @@ $ cd /usr/lib/ckan/src/
 $ git clone https://github.com/geosolutions-it/ckanext-faoclh
 $ cd ckanext-faoclh/
 $ pip install -e .
+
+## The following command is needed for the upload of custom images for vocabulary items
 $ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
 ```
 
