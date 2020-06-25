@@ -103,7 +103,7 @@ To add multilingual configurations in CKAN's configuration file `production.ini`
 - Enable the tag localization adding the line:
 
   ```
-  multilang.enable_tag_localization = True
+  multilang.enable_tag_localization = False
   ```
 
 ### [multilang] Initialize the database
