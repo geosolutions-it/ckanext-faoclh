@@ -88,9 +88,18 @@ To add multilingual configurations in CKAN's configuration file `production.ini`
    For example, to add English, and French, use the sample configuration below:
    
    ```
-   ckan.locales_offered = en fr
+   ckan.locales_offered = en es fr
    ```
-
+   
+   Below the complete configuration for languages
+   
+    ```
+   ckan.locale_default = en
+   ckan.locale_order = en es fr
+   ckan.locales_offered = en es fr
+   ckan.locales_filtered_out = en_GB 
+   ```
+	 
 - Enable the tag localization adding the line:
 
   ```
