@@ -17,7 +17,7 @@ Activate virtualenv then install the extension, as user ckan:
 
 ```
 $ cd /usr/lib/ckan/src/
-$ git clone https://github.com/geosolutions-it/ckanext-faoclh
+$ git clone https://github.com/geosolutions-it/ckanext-faoclh ## or this one in case of deployment in the FAO server: git clone https://tdipisa@bitbucket.org/cioapps/ckanext-faoclh.git
 $ cd ckanext-faoclh/
 $ pip install -e .
 
