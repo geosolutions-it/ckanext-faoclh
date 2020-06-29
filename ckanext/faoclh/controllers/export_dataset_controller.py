@@ -88,7 +88,6 @@ class GetPackageData(Package):
             or_(~Tag.vocabulary_id.in_(custom_vocabs), Tag.vocabulary_id == None)
         ).all()
 
-        logic.get_action(u'package_show')
         return u', '.join([tag[0] for tag in tags])
 
     @classmethod
