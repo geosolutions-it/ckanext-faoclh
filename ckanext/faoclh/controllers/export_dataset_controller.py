@@ -12,6 +12,8 @@ from ckan.controllers.admin import AdminController
 from ckan.model import Package, PackageTag, Resource, Tag, Vocabulary, meta
 from paste.fileapp import DataApp, FileApp
 from ckan.common import config
+from ckanext.faoclh.plugin import VOCAB_FIELDS
+from sqlalchemy import or_
 
 log = logging.getLogger(__name__)
 
@@ -79,8 +81,14 @@ class GetPackageData(Package):
     def get_all_tags(cls, package_id):
         package_tags = meta.Session.query(PackageTag.tag_id).filter(
             PackageTag.package_id == package_id)
+        custom_vocabs = meta.Session.query(Vocabulary.id).filter(
+            Vocabulary.name.in_(VOCAB_FIELDS))
         tags = meta.Session.query(Tag.name).filter(
-            Tag.id.in_([tag[0] for tag in package_tags])).all()
+            Tag.id.in_(package_tags),
+            or_(~Tag.vocabulary_id.in_(custom_vocabs), Tag.vocabulary_id == None)
+        ).all()
+
+        logic.get_action(u'package_show')
         return u', '.join([tag[0] for tag in tags])
 
     @classmethod
