@@ -96,7 +96,6 @@ msgstr[1] "{number} topics found"
 msgid "No groups found"
 msgstr "No topics found"
 
-#: ckan/templates/snippets/search_result_text.html:27
 msgid "{number} organization found for \"{query}\""
 msgid_plural "{number} organizations topic for \"{query}\""
 msgstr[0] "{number} organization found for \"{query}\""
