@@ -28,7 +28,7 @@ msgid "Groups"
 msgstr "Topics"
 
 msgid "My Groups"
-msgstr "topics"
+msgstr "My Topics"
 
 msgid "Group has been deleted."
 msgstr "Topic has been deleted."
