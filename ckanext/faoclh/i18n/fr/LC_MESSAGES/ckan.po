@@ -1,0 +1,4 @@
+## Customizations to CKAN translations
+
+msgid "My Groups"
+msgstr "Mes sujets"

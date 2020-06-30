@@ -13,6 +13,9 @@ msgstr "Topic not found"
 msgid "Groups"
 msgstr "Topics"
 
+msgid "My Groups"
+msgstr "My Topics"
+
 msgid "Group has been deleted."
 msgstr "Topic has been deleted."
 
