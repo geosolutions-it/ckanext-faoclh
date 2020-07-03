@@ -497,3 +497,125 @@ E.g.
 ```
 	
 This step requires that groups and organizations have already been created.
+
+## Enabling Common Resource Preview Tools
+
+The CKAN resource page can contain one or more visualizations of the resource data or file contents (a table, a bar chart, a map, etc). These are commonly referred to as resource views. Different view types are implemented via custom plugins, which can be activated on a particular CKAN site. To enable a resource views, add them by editing the `ckan.plugins` property in the CKAN config file (production.ini found at `/etc/ckan/default/production.ini`) as shown below and restart CKAN:
+```
+ckan.plugins = [...] image_view recline_view pdf_view [...]
+```
+The main features of resource views are:
+- One resource can have multiple views of the same data (for example a grid and some graphs for tabular data).
+- Dataset editors can choose which views to show, reorder them and configure them individually.
+- Individual views can be embedded on external sites.
+
+Whether a particular resource can be rendered by the different view plugins is decided by the view plugins themselves. This is generally done checking the resource format or whether its data is on the [DataStore extension](https://docs.ckan.org/en/2.8/maintaining/datastore.html) or not.
+
+From the management interface you can create and edit views manually, to automatically create resource types whenever a new resource is created/updated, add them by editing the `ckan.views.default_views` property in the CKAN config file (production.ini found at `/etc/ckan/default/production.ini`) as shown below and restart CKAN:
+```
+ckan.views.default_views = [...] recline_view pdf_view geojson_view [...]
+```
+Below is a description of how to set up some common resource preview formats. Some do not require further setup and can be directly added to the `ckan.plugins` setting without necessarily installing custom plugins.
+
+### Text view
+Displays files in XML, JSON or plain text based formats with the syntax highlighted. The formats detected can be configured using the [ckan.preview.xml_formats](https://docs.ckan.org/en/2.8/maintaining/configuration.html#ckan-preview-xml-formats), [ckan.preview.json_formats](https://docs.ckan.org/en/2.8/maintaining/configuration.html#ckan-preview-json-formats) and [ckan.preview.text_formats](https://docs.ckan.org/en/2.8/maintaining/configuration.html#ckan-preview-text-formats) configuration options respectively.
+
+If you want to display files that are hosted in a different server from your CKAN instance (e.g that haven’t been uploaded to CKAN) you will need to enable the [Resource Proxy](#resource-proxy) plugin.
+
+Enable the text resource views by adding `text_view` plugin to CKAN's `ckan.plugins` configuaration key in `/etc/ckan/default/production.ini` as shown below and restart CKAN:
+```
+ckan.plugins = [...] text_view [...]
+```
+### Image view
+If the resource format is a common image format like PNG, JPEG or GIF, it adds an `<img>` tag pointing to the resource URL. You can provide an alternative URL on the edit view form. The available formats can be configured using the [ckan.preview.image_formats](https://docs.ckan.org/en/2.8/maintaining/configuration.html#ckan-preview-image-formats) configuration option.
+
+Enable the image resource views by adding `image_view` plugin to CKAN's `ckan.plugins` configuaration key in `/etc/ckan/default/production.ini` as shown below and restart CKAN:
+```
+ckan.plugins = [...] image_view [...]
+```
+
+### Web page view
+Adds an `<iframe>` tag to embed the resource URL. You can provide an alternative URL on the edit view form.
+
+Enable the web page resource views by adding `webpage_view` plugin to CKAN's `ckan.plugins` configuaration key in `/etc/ckan/default/production.ini` as shown below then restart:
+```
+ckan.plugins = [...] webpage_view [...]
+```
+
+### PDF view
+Renders PDF resources using [PDF.js](https://github.com/mozilla/pdf.js#online-demo). Enable PDF resource view by following the steps described below:
+- Activate CKAN's virtual environment
+```
+ . /usr/lib/ckan/default/bin/activate
+```
+- Install [ckanext-pdfview](https://github.com/ckan/ckanext-pdfview)
+```
+$ pip install ckanext-pdfview
+```
+- Add `pdf_view` to the `ckan.plugins` setting in your CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) as shown below and restart CKAN:
+```
+ ckan.plugins = [...] pdf_view [...]
+```
+
+If you want to render PDF files which are not located in the same server as CKAN you also need to enable the [resource_proxy](#resource-proxy) plugin.
+
+### Data Explorer
+Adds a rich widget, based on the [Recline](https://github.com/okfn/recline/) Javascript library. It allows querying, filtering, graphing and mapping data. The Data Explorer is optimized for displaying structured data hosted on the [DataStore](https://docs.ckan.org/en/2.8/maintaining/datastore.html) extension.
+
+The Data Explorer can also display certain formats of tabular data (CSV and Excel files) without its contents being uploaded to the DataStore. This is done via the [DataProxy](https://github.com/okfn/dataproxy), an external service that will parse the contents of the file and return a response that the view widget understands. However, as the resource must be downloaded by the [DataProxy](https://github.com/okfn/dataproxy) service and parsed before it is viewed, this option is slower and less reliable than viewing data that is in the [DataStore](https://docs.ckan.org/en/2.8/maintaining/datastore.html). It also does not properly support different encodings, proper field type detection, etc so users are strongly encouraged to host data on the [DataStore](https://docs.ckan.org/en/2.8/maintaining/datastore.html) instead.
+
+Enable the data explorer resource views by adding `recline_view` to the `ckan.plugins` setting in your CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) as shown below and restart CKAN:
+```
+ ckan.plugins = [...] recline_view [...]
+```
+
+### DataStore Grid
+Displays a filterable, sortable, table view of structured data. This plugin requires data to be in the [DataStore](https://docs.ckan.org/en/2.8/maintaining/datastore.html).
+
+Enable the datastore grid resource views by adding `recline_grid_view` to the `ckan.plugins` setting in your CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) as shown below and restart CKAN:
+```
+ ckan.plugins = [...] recline_grid_view [...]
+```
+
+### DataStore Graph
+Allows to create graphs from data stored on the DataStore. You can choose the graph type (such as lines, bars, columns, etc) and restrict the displayed data, by filtering by a certain field value or defining an offset and the number of rows. This plugin requires data to be in the [DataStore](https://docs.ckan.org/en/2.8/maintaining/datastore.html).
+
+Enable the datastore graph resource views by adding `recline_graph_view` to the `ckan.plugins` setting in your CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) as shown below and restart CKAN:
+```
+ ckan.plugins = [...] recline_graph_view [...]
+```
+
+### DataStore Map
+Shows data stored on the [DataStore](https://docs.ckan.org/en/2.8/maintaining/datastore.html) in an interactive map. It supports plotting markers from a pair of latitude / longitude fields or from a field containing a [GeoJSON](https://geojson.org/) representation of the geometries. The configuration also allows to cluster markers if there is a high density of them and to zoom automatically to the rendered features. This plugin requires data to be in the [DataStore](https://docs.ckan.org/en/2.8/maintaining/datastore.html).
+
+There is partial support to change the map tiles to a different service, such as Mapbox. Look below for an example to add to your configuration file:
+```
+# Mapbox example:
+ckanext.spatial.common_map.type = mapbox
+ckanext.spatial.common_map.mapbox.map_id = <id>
+ckanext.spatial.common_map.mapbox.access_token = <token>
+ckanext.spatial.common_map.attribution=© <a target=_blank href='https://www.mapbox.com/map-feedback/'>Mapbox</a> © <a target=_blank href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a>
+ckanext.spatial.common_map.subdomains = <subdomains>
+
+# Custom example:
+ckanext.spatial.common_map.type = custom
+ckanext.spatial.common_map.custom.url = <url>
+ckanext.spatial.common_map.custom.tms = <tms>
+ckanext.spatial.common_map.attribution = <copyright link>
+ckanext.spatial.common_map.subdomains = <subdomains>
+```
+
+Enable the datastore map resource views by adding `recline_map_view` to the `ckan.plugins` setting in your CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) as shown below and restart CKAN:
+```
+ ckan.plugins = [...] recline_map_view [...]
+```
+
+### Resource Proxy
+As resource views are rendered on the browser, if the file they are accessing is located in a different domain than the one CKAN is hosted, the browser will block access to it because of the same-origin policy. For instance, files hosted on `www.example.com` won’t be able to be accessed from the browser if CKAN is hosted on `data.catalog.com`.
+
+To allow view plugins access to external files you need to activate the `resource_proxy` plugin on your configuration file:
+
+Enable the resource proxy by adding `resource_proxy` to the `ckan.plugins` setting in your CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) as shown below:
+```
+ ckan.plugins = [...] resource_proxy [...]
+```
