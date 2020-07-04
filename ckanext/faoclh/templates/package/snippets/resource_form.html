@@ -18,7 +18,7 @@
 <script>
 window.addEventListener("load", function(){
      $("#field-custom_resource_text").on("keydown", function(event){
-         if (event.key === '.' || event.key === '+' || event.key === '-'){
+         if (event.key === '.' || event.key === '+' || event.key === '-' || event.key.toLowerCase() === 'e'){
              return false;
          }
         const elem = document.getElementById('field-custom_resource_text');
