@@ -22,7 +22,7 @@ window.addEventListener("load", function(){
              return false;
          }
         const elem = document.getElementById('field-custom_resource_text');
-         if (elem.value.length != {{ h.fao_get_current_year() | length }}){
+         if (elem.value.length && elem.value.length != {{ h.fao_get_current_year() | length }}){
              elem.setCustomValidity("Enter a valid year in the format YYYY.");
          }
          else {
