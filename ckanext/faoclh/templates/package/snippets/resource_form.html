@@ -10,10 +10,26 @@
             <div class="controls ">
                 <input id="field-custom_resource_text" type="number" min="1900" max="{{ h.fao_get_current_year() }}"
                        name="custom_resource_text" value="{{ data.custom_resource_text }}" placeholder="{{ _('Year of Release') }}"
-                       class="form-control" step="1" onkeypress="return event.charCode != 46 && event.charCode != 43 && event.charCode != 45 && this.value.length < {{ h.fao_get_current_year()|length }} || event.charCode == 13" />
+                       class="form-control" step="1" />
             </div>
           </div>
       </div>
   </div>
+<script>
+window.addEventListener("load", function(){
+     $("#field-custom_resource_text").on("keydown", function(event){
+         if (event.key === '.' || event.key === '+' || event.key === '-'){
+             return false;
+         }
+        const elem = document.getElementById('field-custom_resource_text');
+         if (elem.value.length != {{ h.fao_get_current_year() | length }}){
+             elem.setCustomValidity("Enter a valid year in the format YYYY.");
+         }
+         else {
+             elem.setCustomValidity("");
+         }
+     });
+});
+</script>
 
 {% endblock %}
