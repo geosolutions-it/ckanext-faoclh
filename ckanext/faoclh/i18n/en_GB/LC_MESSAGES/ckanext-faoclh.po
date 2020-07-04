@@ -1,4 +1,5 @@
-# # Customizations to CKAN translations
+## Customizations to CKAN translations
+
 msgid ""
 msgstr ""
 "Project-Id-Version: ckanext-faoclh 1.0\n"
@@ -26,9 +27,6 @@ msgstr "Topic not found"
 
 msgid "Groups"
 msgstr "Topics"
-
-msgid "My Groups"
-msgstr "My Topics"
 
 msgid "Group has been deleted."
 msgstr "Topic has been deleted."
@@ -100,4 +98,5 @@ msgid "{number} organization found for \"{query}\""
 msgid_plural "{number} organizations topic for \"{query}\""
 msgstr[0] "{number} organization found for \"{query}\""
 msgstr[1] "{number} organisations found for \"{query}\""
+
 
