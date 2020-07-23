@@ -32,3 +32,6 @@ msgstr "Año de lanzamiento"
 
 msgid "res_extras_custom_resource_text"
 msgstr "Año de lanzamiento"
+
+msgid "My Groups"
+msgstr "Mis temas"
