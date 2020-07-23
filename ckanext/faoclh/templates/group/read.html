@@ -1,4 +1,8 @@
 {% ckan_extends %}
+{% block styles %}
+  {{ super() }}
+  {% resource 'faoclh/js/fao_facet_list_ui_control.js' %}
+{% endblock %}
 
 {% block secondary_content %}
     {% snippet "group/snippets/info.html", group=c.group_dict, show_nums=true %}
@@ -14,5 +18,4 @@
         </div>
         <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
     </div>
-    {{ h.snippet('snippets/fao_facet_list_ui_control_script.html') }}
 {% endblock %}

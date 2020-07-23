@@ -1,4 +1,3 @@
-<script>
 const location_id = localStorage.getItem('fao_facet_scroll_location');
 const element_in_view = document.getElementById(location_id);
 if (element_in_view){
@@ -46,4 +45,3 @@ async function toggle_facet_expansion_url_params(facet) {
 		}
 	}
 }
-</script>
