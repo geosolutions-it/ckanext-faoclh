@@ -35,7 +35,7 @@
               {% for key, value in h.format_resource_items(res.items()) %}
 		{% if key in ('custom resource text') %}
 
-                  <tr class="toggle-more"><th scope="row">{{ 'Year of Release' }}</th><td>{{ value }}</td></tr>
+                  <tr class="toggle-more"><th scope="row">{{ 'Year of Release' }}</th><td>{{res.custom_resource_text}}</td></tr>
 		{% endif %}
 		{% if key not in ('custom resource text', 'format', 'has views', 'id', 'package id', 'revision id', 'state') %} <!-- NON VISUALIZZA GLI ITEMS in lista-->
 		  <tr class="toggle-more"><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
