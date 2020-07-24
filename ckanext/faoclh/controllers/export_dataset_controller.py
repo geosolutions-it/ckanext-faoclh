@@ -55,7 +55,8 @@ class ExportDatasetController(AdminController):
         session_id = kwargs[u'pylons'].session.id
         toolkit.response.headers[u'Content-Type'] = u'application/json'
         output_filename = os.path.join(self.output_dir, u'{}.csv'.format(session_id))
-        file_exists = Job.fetch(session[u'background_task_id'], connection=connect_to_redis()).get_status() == u'finished'
+        file_exists = Job.fetch(session[u'background_task_id'], connection=connect_to_redis())\
+                          .get_status() == u'finished'
 
         if self.request.method == u'POST':
             if not file_exists:
