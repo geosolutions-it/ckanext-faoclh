@@ -105,7 +105,7 @@ class GetPackageData(Package):
             Resource.name: lambda package_resource: ', '.join(
                 [res[0] for res in package_resource if res[0]]).encode(u'utf-8'),
             Resource.format: lambda package_resource: ', '.join(
-                [res[0] for res in package_resource]).encode(u'utf-8')
+                [res[0] for res in package_resource if res[0]]).encode(u'utf-8')
         }
         return field_mapper[model_field](resource)
 
