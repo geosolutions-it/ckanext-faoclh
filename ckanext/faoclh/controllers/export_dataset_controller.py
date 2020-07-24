@@ -7,6 +7,7 @@ from datetime import datetime
 from ckan.common import session
 import ckan.lib.base as base
 import ckan.lib.jobs as jobs
+from ckan.lib.redis import connect_to_redis
 import ckan.logic as logic
 import ckan.plugins.toolkit as toolkit
 from ckan.controllers.admin import AdminController
@@ -15,10 +16,8 @@ from paste.fileapp import DataApp, FileApp
 from ckan.common import config
 from ckanext.faoclh.plugin import VOCAB_FIELDS
 from sqlalchemy import or_
-from redis import Redis
 from rq.job import Job
 
-redis = Redis()
 
 log = logging.getLogger(__name__)
 
@@ -56,7 +55,7 @@ class ExportDatasetController(AdminController):
         session_id = kwargs[u'pylons'].session.id
         toolkit.response.headers[u'Content-Type'] = u'application/json'
         output_filename = os.path.join(self.output_dir, u'{}.csv'.format(session_id))
-        file_exists = Job.fetch(session[u'background_task_id'], connection=redis).get_status() == u'finished'
+        file_exists = Job.fetch(session[u'background_task_id'], connection=connect_to_redis()).get_status() == u'finished'
 
         if self.request.method == u'POST':
             if not file_exists:
