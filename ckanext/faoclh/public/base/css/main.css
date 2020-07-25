@@ -8763,7 +8763,6 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
   background: none;
   font-size: 14px;
 }
-
 .toolbar .breadcrumb:before,
 .toolbar .breadcrumb:after {
   display: table;
