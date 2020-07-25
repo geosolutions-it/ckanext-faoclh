@@ -8763,26 +8763,7 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
   background: none;
   font-size: 14px;
 }
-.glyphicon-star-empty {
-    color: #bdc4c7 !important;
-}
-.rating-star {
-    color: #bdc3c7 !important;
-}
-.star-rating-stars {
-  font-size: 20px;
-}
-.rating-star {
-  font-size: 20px !important;
-  padding: 0 10px;
-}
-.icon {
-  width: 20px;
-  left: -10px;
-}
-a.rating-star-hover {
-  color: #e67e22 !important;
-}
+
 .toolbar .breadcrumb:before,
 .toolbar .breadcrumb:after {
   display: table;
