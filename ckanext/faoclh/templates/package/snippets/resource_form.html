@@ -1,15 +1,28 @@
 {% ckan_extends %}
 
-{% block basic_fields_url %}
+{% block basic_fields_description %}
   {{ super() }}
 
   <div class="form-group control-medium">
       <div class="controls">
-          {{ form.input('custom_resource_text', label=_('Year of Release'), id='field-custom_resource_text',
-          placeholder=_('Year of Release'), value=data.custom_resource_text, error=errors.custom_resource_text,
-          classes=['control-medium']) }}
+          <div class="form-group control-medium">
+            <label class="control-label" for="field-custom_resource_text">{{ _('Year of Release') }}</label>
+            <div class="controls ">
+                <input id="field-custom_resource_text" type="number" min="1900" max="{{ h.fao_get_current_year() }}"
+                       name="custom_resource_text" value="{{ data.custom_resource_text }}" placeholder="{{ _('Year of Release') }}"
+                       class="form-control" step="1" />
+            </div>
+          </div>
       </div>
   </div>
+<script>
+window.addEventListener("load", function(){
+     $("#field-custom_resource_text").on("keydown", function(event){
+         if (event.key === '.' || event.key === '+' || event.key === '-' || event.key.toLowerCase() === 'e'){
+             return false;
+         }
+     });
+});
+</script>
 
 {% endblock %}
-

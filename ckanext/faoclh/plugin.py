@@ -3,6 +3,7 @@
 '''plugin.py
 
 '''
+from datetime import datetime
 import logging
 import json
 import os
@@ -244,7 +245,8 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'get_tag_image_url': TagImageUrl.get,
             'fao_get_org_image_url': fao_get_org_image_url,
             'fao_expanded_facet': fao_expanded_facet,
-            'fao_generate_link_id': fao_generate_link_id
+            'fao_generate_link_id': fao_generate_link_id,
+            'fao_get_current_year': lambda: str(datetime.now().year),
         }
 
 

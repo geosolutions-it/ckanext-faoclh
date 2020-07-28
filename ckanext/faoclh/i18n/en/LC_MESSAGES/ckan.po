@@ -1,4 +1,8 @@
-## Customizations to CKAN translations
+## This file contains customized translations for strings defined in CKAN.
+
+## It is not directly compiled and used, and its content should be copied by hand into ckanext-faoclh.po.
+## This is used as a reminder about which strings are defined outside this extension, and prevents strings to be lost
+## if an "extract_messages" command is issued
 
 
 msgid "Group (Axis 1)"
@@ -12,6 +16,12 @@ msgstr "Topic not found"
 
 msgid "Groups"
 msgstr "Topics"
+
+msgid "My Groups"
+msgstr "My Topics"
+
+msgid "Add Group"
+msgstr "Add Topic"
 
 msgid "Group has been deleted."
 msgstr "Topic has been deleted."

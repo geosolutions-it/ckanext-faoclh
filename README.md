@@ -11,12 +11,29 @@ Available plugins:
 CKAN 2.8.4+ (tested with CKAN 2.8.4)
 
 
-# Configuration
+# Installation and Update 
 
-Install the extension:
+Activate virtualenv then install the extension, as user ckan:
+
 ```
-pip install -e .
+$ cd /usr/lib/ckan/src/
+$ git clone https://github.com/geosolutions-it/ckanext-faoclh ## or this one in case of deployment in the FAO server: git clone https://tdipisa@bitbucket.org/cioapps/ckanext-faoclh.git
+$ cd ckanext-faoclh/
+$ pip install -e .
+
+## The following command is needed for the upload of custom images for vocabulary items
+$ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
 ```
+
+To update an already installed faoclh extension, as user ckan:
+
+```
+$ cd /usr/lib/ckan/src/ckanext-faoclh/
+$ git pull
+$ pip install -e . ## only if required, it depends on the entity of the update 
+```
+	
+Activate virtualenv for other eventual installation steps of other involved extensions in the faoclh deploy.
 
 ## Enable multilingual support
 
@@ -24,27 +41,32 @@ Enable multilingual support for datasets, organizations/groups, tags, and resour
 
 ### [multilang] Clone and install the extension
 
-- Navigate to CKAN's extension source directory
+- Navigate to CKAN's extension source directory:
+
   ```
   $ cd /usr/lib/ckan/src/
   ```
 
-- Clone ckanext-multilang 
+- Clone ckanext-multilang:
+
   ```
   $ git clone https://github.com/geosolutions-it/ckanext-multilang
   ```
 
-- Navigate to the ckanext-multilang root directory
+- Navigate to the ckanext-multilang root directory:
+
   ```
   $ cd ckanext-multilang
   ```
 
-- Activate CKAN's virtual environment
+- Activate CKAN's virtual environment:
+
   ```
   $ . /usr/lib/ckan/default/bin/activate
   ```
 
-- Install ckanext-multilang into CKAN's virtual environment
+- Install ckanext-multilang into CKAN's virtual environment:
+
   ```
   $ pip install -e .
   ```
@@ -55,6 +77,7 @@ To add multilingual configurations in CKAN's configuration file `production.ini`
 
 - Add ckanext-multilang extensions using the `ckan.plugins` configuration key separating each extension by space.  
   Read more about adding extension [here](https://docs.ckan.org/en/2.8/extensions/tutorial.html#creating-a-new-extension).
+  
   ```
   ckan.plugins = [...] multilang [...]
   ```
@@ -63,43 +86,58 @@ To add multilingual configurations in CKAN's configuration file `production.ini`
    Read more about CKAN's internationalization settings [here](https://docs.ckan.org/en/2.8/extensions/translating-extensions.html).
  
    For example, to add English, and French, use the sample configuration below:
+   
    ```
-   ckan.locales_offered = en fr
+   ckan.locales_offered = en es fr
    ```
-
+   
+   Below the complete configuration for languages
+   
+    ```
+   ckan.locale_default = en
+   ckan.locale_order = en es fr
+   ckan.locales_offered = en es fr
+   ckan.locales_filtered_out = en_GB 
+   ```
+	 
 - Enable the tag localization adding the line:
 
   ```
-  multilang.enable_tag_localization = True
+  multilang.enable_tag_localization = False
   ```
 
 ### [multilang] Initialize the database
 
 Make sure the virtual environment is active before running the command below. See previous steps on how to activate the virtual environment.
 
-    $ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/default/production.ini
-
+```
+$ paster --plugin=ckanext-multilang multilangdb initdb --config=/etc/ckan/default/production.ini 
+```
 
 ### [multilang] Update the Solr schema
 
 Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/schema.xml`) with the following xml tags:
 
 - Inside the `fields` tags, add the tag below:
+
   ```
   <dynamicField name="package_multilang_localized_*" type="text" indexed="true" stored="true" multiValued="false"/>
   ```
 
 - Add the `copyField` tag shown below:
+
   ```
   <copyField source="package_multilang_localized_*" dest="text"/>
   ```
 
-- Restart Solr
+- Restart Solr:
+
   ```
   $ sudo service solr restart
   ```
 
-- Restart CKAN
+- Restart CKAN:
+
   ```
   $ systemctl restart supervisord
   ```
@@ -110,25 +148,34 @@ To enable filtering of datasets by custom resource field "year of release" follo
 
 - Add the line below in `production.ini` (found at /etc/ckan/default/production.ini) to enable indexing of the custom resource field "year of release"
  
-      ckan.extra_resource_fields = custom_resource_text
-
+    ```
+    ckan.extra_resource_fields = custom_resource_text
+    ```
+	
 - Restart CKAN
 
+- Reindex:
+
+```
+$ paster --plugin=ckan search-index rebuild  --config=/etc/ckan/default/production.ini
+```
 
 ## Initialize database tables	
 
 To initialize database tables for the fao-clh extension, follow the steps below.	
 
-Activate the virtual environment	
+Activate the virtual environment:	
 
-    $ . /usr/lib/ckan/default/bin/activate	
+```
+$ . /usr/lib/ckan/default/bin/activate	
+```
 
+Create database tables by running the command below:
 
-Create database tables by running the command below	
-
-    $ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini	
-
-
+```
+$ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini	
+```
+	
 ## Configuring CKAN for CSV export
 
 CKAN allows you to create jobs that run in the ‘background’, i.e. asynchronously and without blocking the main application.
@@ -141,6 +188,7 @@ Basically, any piece of work that takes too long to perform while the main appli
 
 To enable CKAN's background jobs in [ckanext-faoclh](https://github.com/geosolutions-it/ckanext-faoclh), create a file name `ckan-worker.ini` in `/etc/supervisord.d/` then copy in the code below.
 
+```
     # =======================================================
     # Supervisor configuration for CKAN background job worker
     # =======================================================
@@ -172,63 +220,72 @@ To enable CKAN's background jobs in [ckanext-faoclh](https://github.com/geosolut
     # Need to wait for currently executing tasks to finish at shutdown.
     # Increase this if you have very long running tasks.
     stopwaitsecs = 600
+```
 
 Create a directory to hold all the generated CSV datasets and grant user 'ckan' permissions to it. You may need root privileges to do that.  
 Let's say we want to use `/var/lib/ckan/export`:
 
-    $ mkdir /var/lib/ckan/export
-    $ chown ckan: /var/lib/ckan/export
-
-
+```
+$ mkdir /var/lib/ckan/export
+$ chown ckan: /var/lib/ckan/export
+```
+    
 Add the created directory to CKAN configuration file (`/etc/ckan/default/production.ini`) using the `faoclh.export_dataset_dir` settings key as shown below
 
-    faoclh.export_dataset_dir = /var/lib/ckan/export
-
-
+```
+faoclh.export_dataset_dir = /var/lib/ckan/export 
+```
+	
 Once the file is  created, restart CKAN using the command below:
 
-    $ systemctl restart supervisord
-
-
+```
+$ systemctl restart supervisord
+```
+    
 To run asynchronous worker in dev environment using the command below
 
-    $ paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
-
+```
+$ paster --plugin=ckan jobs worker --config=/etc/ckan/default/production.ini
+```
+	
 ## Enabling CKAN Tracking
 
 To enable page view tracking, follow the steps below:
+
 - Set `ckan.tracking_enabled` to true in the `[app:main]` section of your CKAN configuration file (production.ini found at `/etc/ckan/default/production.ini`)
 
-Save the file and restart your web server. CKAN will now record raw page view tracking data in your CKAN database as pages are viewed.
-
-
-for example:
 ```
 [app:main]
 ckan.tracking_enabled = true
 ```
+
+- Save the file and restart CKAN: CKAN will now record raw page view tracking data in your CKAN database as pages are viewed.
+	
 - Setup a cron job to update the tracking summary data.
 
 For operations based on the tracking data CKAN uses a summarised version of the data, not the raw tracking data that is recorded “live” as page views happen. The `paster tracking update` and `paster search-index rebuild` commands need to be run periodicially to update this tracking summary data.
 
+You can setup a cron job to run these commands. On most UNIX systems you can setup a cron job by running `crontab -e` in a shell to edit your crontab file, and adding a line to the file to specify the new job. For more information run `man crontab` in a shell. 
+Below is a crontab line to update the tracking data and rebuild the search index. As root, in /etc/crontab add line:
+	
+```
+0 * * * * ckan /usr/lib/ckan/default/bin/paster --plugin=ckan tracking update -c /etc/ckan/default/production.ini && /usr/lib/ckan/default/bin/paster --plugin=ckan search-index rebuild -r -c /etc/ckan/default/production.ini
+```
 
-You can setup a cron job to run these commands. On most UNIX systems you can setup a cron job by running `crontab -e` in a shell to edit your crontab file, and adding a line to the file to specify the new job. For more information run `man crontab` in a shell. For example, here is a crontab line to update the tracking data and rebuild the search index hourly:
+From command line:
 
 ```
-@hourly /usr/lib/ckan/default/bin/paster --plugin=ckan tracking update -c /etc/ckan/default/production.ini && /usr/lib/ckan/default/bin/paster --plugin=ckan search-index rebuild -r -c /etc/ckan/default/production.ini
+$ service crond reload
 ```
-
-
-The `@hourly` can be replaced with `@daily`, `@weekly` or `@monthly`.
-
-
+	
 ### Retrieving Tracking Data
 
 Run the command below to generate a csv file with tracking data:
 
-    paster --plugin=ckan tracking export "/path/to/csv/file/tracking.csv" "2020-01-01" --config=/etc/ckan/default/production.ini
-
-
+```
+$ paster --plugin=ckan tracking export "/path/to/csv/file/tracking.csv" "2020-01-01" --config=/etc/ckan/default/production.ini 
+```
+	
 > **NOTE**: Replace "2020-01-01" with an offset date from which the tracking data will generate.
 
 
@@ -238,78 +295,115 @@ Send tracking data to google analytics using the [ckanext-googleanalytics](https
 
 - Activate CKAN's virtual environment
 
-      $ . /usr/lib/ckan/default/bin/activate
-
+    ```
+    $ . /usr/lib/ckan/default/bin/activate
+    ```
+	
 - Install [ckanext-googleanalytics](https://github.com/ckan/ckanext-googleanalytics)
 
-      $ pip install -e  git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics
+    ```
+    $ pip install -e  git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics
+    ```
 
 - Add the `googleanalytics` plugin in the `ckan.plugins` configuration key, separating each extension by space.   
 
-      ckan.plugins = [...] googleanalytics
+    ```
+    ckan.plugins = [...] googleanalytics
+    ```
 
 - Edit your ckan .ini file to provide these necessary parameters:
 
-      googleanalytics.id = UA-XXXXXX-1
-      googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
-      googleanalytics.username = googleaccount@gmail.com
-      googleanalytics.password = googlepassword
-      googleanalytics.show_downloads = true
-
+    ```
+    googleanalytics.id = UA-XXXXXX-1
+    googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
+    googleanalytics.username = googleaccount@gmail.com
+    googleanalytics.password = googlepassword
+    googleanalytics.show_downloads = true
+    ```
+	
 > **Note**: Your password will probably be readable by other people; so you may want to set up a 
   new Gmail account with [2fa](https://www.google.com/landing/2step/) enabled specifically for accessing your Gmail profile.
 
 - Restart CKAN to enable google analytics
   
-      $ systemctl restart supervisord
-
+    ```
+    $ systemctl restart supervisord
+    ```
 
 ## Enable dataset rating
 
-Enable dataset rating using [ckanext-rating](https://github.com/6aika/ckanext-rating) by following the steps below.
+Enable dataset rating using [ckanext-rating](https://github.com/geosolutions-it/ckanext-rating.git) by following the steps below.
 
-- Activate CKAN's virtual environment
+- Activate CKAN's virtual environment:
 
-      $ . /usr/lib/ckan/default/bin/activate
+    ```
+    $ . /usr/lib/ckan/default/bin/activate
+    ```
+- Install [ckanext-rating](https://github.com/geosolutions-it/ckanext-rating.git):
 
-- Install [ckanext-rating](https://github.com/6aika/ckanext-rating)
-
-      $ pip install -e git+https://github.com/6aika/ckanext-rating.git#egg=ckanext-rating
-
-- Add the `rating` plugin by editing the `ckan.plugins` property in the CKAN config file (e.g. `production.ini` found at `/etc/ckan/default/production.ini`):
-
-      ckan.plugins = [...] rating
-
+```
+	$ cd /usr/lib/ckan/src/
+	$ git clone https://github.com/geosolutions-it/ckanext-rating.git
+	$ cd ckanext-rating/
+	$ pip install -e .
+```
+	
 - Initialize database tables used by ckanext-rating
 
-      $ paster --plugin=ckanext-rating rating init --config=/etc/ckan/default/production.ini
+    ```
+    $ paster --plugin=ckanext-rating rating init --config=/etc/ckan/default/production.ini
+    ```
+	
+- Add the `rating` plugin by editing the `ckan.plugins` property in the CKAN config file (e.g. `production.ini` found at `/etc/ckan/default/production.ini`):
+
+    ```
+    ckan.plugins = [...] rating
+    ```
 
 > **TIP**: Enabled/disabled ratings for unauthenticated users using `rating.enabled_for_unauthenticated_users` configuaration key as shown below
-
-      rating.enabled_for_unauthenticated_users = true or false
-
+      
+```
+rating.enabled_for_unauthenticated_users = true or false
+```
+      
+- Restart CKAN
 
 Optionally, list dataset types for which the rating will be shown (defaults to ['dataset']) using the `ckanext.rating.enabled_dataset_types` settings key.
 
 ## Enable comments
 
-Enable user commenting functionality on datasets using [ckanext-ytp-comments](https://github.com/vrk-kpa/ckanext-ytp-comments) by following the steps below:
+Enable user commenting functionality on datasets using [ckanext-ytp-comments](https://github.com/geosolutions-it/ckanext-ytp-comments.git) by following the steps below:
 
 - Activate CKAN's virtual environment
 
-      $ . /usr/lib/ckan/default/bin/activate
+    ```
+    $ . /usr/lib/ckan/default/bin/activate
+    ```
+	
+- Install [ckanext-ytp-comments](https://github.com/geosolutions-it/ckanext-ytp-comments.git)
 
-- Install [ckanext-ytp-comments](https://github.com/vrk-kpa/ckanext-ytp-comments)
-
-      $ pip install -e  git+https://github.com/yhteentoimivuuspalvelut/ckanext-ytp-comments#egg=ckanext-ytp-comments
-
+```
+	$ cd /usr/lib/ckan/src/
+        $ git clone https://github.com/geosolutions-it/ckanext-ytp-comments.git
+	$ cd ckanext-ytp-comments/
+	$ git checkout faoclh
+	$ pip install -e .
+        $ pip install -r requirements.txt
+```
+	
 - Add the `ytp_comments` plugin by editing the `ckan.plugins` property in the CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`):
 
-      ckan.plugins = [...] ytp_comments
-
+    ```
+    ckan.plugins = [...] ytp_comments
+    ```
+	
 - Initialize database tables used by ckanext-ytp-comments
 
-      $ paster --plugin=ckanext-ytp-comments initdb --config=/etc/ckan/default/production.ini
+    ```
+    $ paster --plugin=ckanext-ytp-comments initdb --config=/etc/ckan/default/production.ini
+    ```
+
+- Restart CKAN
 
 
 ## Loading initial data
@@ -325,16 +419,22 @@ Enter in the `bin/` directory.
 
 Run
 
-    ./load_groups.sh SERVER_URL API_KEY
-    
+```
+./load_groups.sh SERVER_URL API_KEY
+```
+	
 E.g.
 
-    ./load_groups.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c
-   
+```
+./load_groups.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c
+```
+	
 In order to remove the groups:
-
-    ./purge_groups.sh SERVER_URL API_KEY
-    
+	
+```
+./purge_groups.sh SERVER_URL API_KEY
+```
+	
 Please note that groups image names changed over time, so if you already have your groups and the images are not properly loaded, please consider editing the groups info and setting the filenames according to the [actual files](https://github.com/geosolutions-it/ckanext-faoclh/tree/master/ckanext/faoclh/public/fao/images/group).
 
 
@@ -344,12 +444,14 @@ Enter in the `bin/` directory.
 
 Run
 
-    ./load_orgs.sh SERVER_URL API_KEY
-    
+```
+./load_orgs.sh SERVER_URL API_KEY
+```
 E.g.
 
-    ./load_orgs.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c   
-
+```
+./load_orgs.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c   
+```
 
 ### Load vocabularies
 
@@ -368,12 +470,15 @@ command will add and remove the related tags as needed.
 
 If you need to completely remove a vocabulary, you can run:
 
-    paster --plugin=ckanext-faoclh vocab delete -n VOCAB_NAME --config=/etc/ckan/default/production.ini
-
+```
+$ paster --plugin=ckanext-faoclh vocab delete -n VOCAB_NAME --config=/etc/ckan/default/production.ini
+```
+	
 for instance
 
-    paster --plugin=ckanext-faoclh vocab delete -n fao_resource_type --config=/etc/ckan/default/production.ini
-
+```
+$ paster --plugin=ckanext-faoclh vocab delete -n fao_resource_type --config=/etc/ckan/default/production.ini
+```
 
 ### Load datasets
 
@@ -381,10 +486,14 @@ Enter in the `bin/` directory.
 
 Run
 
-    ./load_datasets.sh SERVER_URL API_KEY
-    
+```
+./load_datasets.sh SERVER_URL API_KEY
+```
+	
 E.g.
 
-    ./load_dataset.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c
-
+```
+./load_dataset.sh http://10.10.100.136 b973eae2-33c2-4e06-a61f-4b1ed71d277c
+```
+	
 This step requires that groups and organizations have already been created.

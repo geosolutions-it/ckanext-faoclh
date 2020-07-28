@@ -1,0 +1,37 @@
+## Customizations to CKAN translations
+
+msgid ""
+msgstr ""
+"Project-Id-Version: ckan 2.8.0b0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-06-29 16:10+0200\n"
+"PO-Revision-Date: 2020-06-29 12:00+0000\n"
+"Last-Translator: Abulo John Joshua <joshua.abulo@geo-solutions.it>, 2020\n"
+"Language-Team: French (https://www.transifex.com/okfn/teams/11162/fr/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.3\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "fao_resource_type"
+msgstr "Type de ressource"
+
+msgid "fao_activity_type"
+msgstr "Genre d'activité"
+
+msgid "fao_geographic_focus"
+msgstr "Focus géographique"
+
+msgid "fao_release_year"
+msgstr "Année de sortie"
+
+msgid "fao_resource_release_year"
+msgstr "Année de sortie"
+
+msgid "res_extras_custom_resource_text"
+msgstr "Année de sortie"
+
+msgid "My Groups"
+msgstr "Mes sujets"
