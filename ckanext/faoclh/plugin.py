@@ -244,6 +244,8 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'contains_active_facets': contains_active_facets,
             'get_tag_image_url': TagImageUrl.get,
             'fao_get_org_image_url': fao_get_org_image_url,
+            'fao_expanded_facet': fao_expanded_facet,
+            'fao_generate_link_id': fao_generate_link_id,
             'fao_get_current_year': lambda: str(datetime.now().year),
         }
 
@@ -339,6 +341,14 @@ def fao_get_search_facet(limit=6):
 
 def contains_active_facets(vocab_name):
     return request.params.has_key(vocab_name)
+
+
+def fao_generate_link_id(name, facet):
+    return u'{}-{}'.format(name, facet).replace(u' ', u'-')
+
+
+def fao_expanded_facet(vocab_name):
+    return vocab_name in request.params.get(u'_fao_expanded_facets', u'')
 
 
 def fao_get_org_image_url(org_id):

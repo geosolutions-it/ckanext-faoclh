@@ -11358,8 +11358,23 @@ h5 {
   border-right-color: transparent;
 }
 
+.faoclh-collapsible-nav .item-label {
+  padding-left: 10%;
+}
+
 .faoclh-collapsible-nav nav{
   display: block !important;
+}
+
+.faoclh-collapsible-nav .module-heading {
+  border-bottom: 1px solid #aaaaaa;
+  box-shadow: 0 4px 7px -2px #aaaaaa !important;
+  margin-bottom: 3%;
+}
+
+.faoclh-active-facet .module-heading {
+  font-weight: bold;
+  box-shadow: 0 4px 7px -2px #aaaaaa !important;
 }
 
 .faoclh-collapsible-nav .module-footer {
