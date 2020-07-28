@@ -34,6 +34,9 @@ msgstr "My Topics"
 msgid "Add Group"
 msgstr "Add Topic"
 
+msgid "Add to group"
+msgstr "Add topic to dataset"
+
 msgid "Group has been deleted."
 msgstr "Topic has been deleted."
 
