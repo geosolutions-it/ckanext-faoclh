@@ -405,6 +405,126 @@ Enable user commenting functionality on datasets using [ckanext-ytp-comments](ht
 
 - Restart CKAN
 
+## Resource Preview plugins
+
+### Datastore plugin
+
+Some preview plugins require the data to be stored in the `datastore` plugin. 
+
+Create postgres user and DB:
+ 
+    sudo -u postgres createuser -S -D -R -P -l datastore_default    
+    sudo -u postgres createdb -O ckan_default datastore_default -E utf-8
+    
+Edit CKAN `ini` file:
+- uncomment the following lines and edit the password accordingly:    
+
+      ckan.datastore.write_url = postgresql://CKAN_USER:CKAN_USER_PW@localhost/datastore_default
+      ckan.datastore.read_url = postgresql://datastore_default:DATASTORE_PW@localhost/datastore_default
+      
+- enable the datastore plugin
+
+      ckan.plugins = [...] datastore [...]      
+
+Set the permissions on the database:
+    
+    paster --plugin=ckan datastore set-permissions -c /etc/ckan/default/development.ini | sudo -u postgres psql --set ON_ERROR_STOP=1
+
+### Datapusher
+
+The datapusher plugin parses data files and loads the parsed data into the datastore  
+
+The datapusher is implemented as an external WSGI service, plus a plugin inside CKAN to interact with it.
+
+#### Datapusher WSGI application
+
+- Create a virtualenv for datapusher
+
+      virtualenv /usr/lib/ckan/datapusher
+
+- Create a source directory and switch to it
+
+      mkdir /usr/lib/ckan/datapusher/src
+      cd /usr/lib/ckan/datapusher/src
+
+- Clone the source (latest tagged version at the moment [2020-07-29] is 0.0.17)
+    
+      sudo git clone -b 0.0.17 https://github.com/ckan/datapusher.git
+    
+  In version 0.0.17 the apache2/wsgi configuration has changed a bit, so we have the relevant configuration file in 
+  this extension (ckanext-faoclh), in the directory `deploy/datapusher`.     
+
+- Install the DataPusher and its requirements
+
+      cd datapusher
+      . /usr/lib/ckan/datapusher.bin7activate
+      pip install -r requirements.txt
+      python setup.py develop
+
+- Copy WSGI configuration files:
+
+      mkdir /etc/ckan/datapusher
+      cp -v /usr/lib/ckan/src/ckanext-faoclh/deploy/datapusher/datapusher* /etc/ckan/datapusher
+
+- As root, make sure the WSGI module is installed:
+
+      apt install libapache2-mod-wsgi
+
+- As root, create config file for apache2 and enable it:
+
+      sudo cp /usr/lib/ckan/src/ckanext-faoclh/deploy/datapusher/050-datapusher.conf /etc/apache2/sites-available/050-datapusher.conf
+      sudo a2ensite 050-datapusher
+
+      sudo service apache2 restart
+     
+
+#### Datapusher plugin
+
+Enable the datapusher plugin
+
+    ckan.plugins = [...] datastore [...] datapusher [...]      
+
+Add the datapusher service URL in the CKAN `ini` file:
+
+    ckan.datapusher.url = http://0.0.0.0:8800/
+
+### Preview plugins
+
+In the ckan configuration `ini` file, make sure there are these plugins in the `ckan.plugins` line: 
+- `text_view`: Displays files in XML, JSON or plain text
+- `image_view`: If the resource format is a common image format like PNG, JPEG, or GIF, it adds `<img>` tags 
+                pointing to the resource URL
+- `webpage_view`: Adds `<iframe>` tags to embed the resource URL.                 
+- `recline_view`: Adds a rich widget, based on the [Recline](https://github.com/okfn/recline/) Javascript library.       
+   This plugin requires the `datastore` plugin to be installed (and configured)
+- `resource_proxy`: Allows view plugins access to external files not localted in the CKAN server.
+
+### PDF view
+
+PDF preview needs an external library.
+
+- Install the library:
+
+      . /usr/lib/ckan/default/bin/activate
+      pip install ckanext-pdfview
+
+- Edit CKAN `ini` file and add the `pdf_view` plugin:
+
+      ckan.plugins = [...] pdf_view [...]
+
+### Create views for datasets
+
+Make sure that in the CKAN `ini` file the `default_views` property contains all the views we want to create previews for:
+
+    ckan.views.default_views = image_view text_view recline_view pdf_view
+
+If you add plugin views in an already populated CKAN instance, you have to add the missing views to the datasets 
+resources:  
+
+   - After activating the CKAN virtualenv, run:   
+
+         paster  --plugin=ckan views create -c /etc/ckan/default/production.ini 
+
 
 ## Loading initial data
 
