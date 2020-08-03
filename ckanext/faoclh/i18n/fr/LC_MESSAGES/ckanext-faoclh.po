@@ -18,10 +18,19 @@ msgstr ""
 msgid "fao_resource_type"
 msgstr "Type de ressource"
 
+msgid "Type of Resources"
+msgstr "Type de ressource"
+
 msgid "fao_activity_type"
 msgstr "Genre d'activité"
 
+msgid "Kind of Activities"
+msgstr "Genre d'activité"
+
 msgid "fao_geographic_focus"
+msgstr "Focus géographique"
+
+msgid "Geographic Focus"
 msgstr "Focus géographique"
 
 msgid "fao_release_year"
