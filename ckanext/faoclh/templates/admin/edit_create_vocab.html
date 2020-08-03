@@ -37,13 +37,13 @@
                     <label class="control-label" for="field-image-url">Image URL</label>
                     <div class="image-url-form">
                         <a href="javascript:;" onclick="remove_image_url()" class="btn btn-danger" style="margin-right: 0; top: 28px; float: right; right: 7px; padding: 0 12px; border-radius: 100px;" title="Remove">Remove</a>
-                        <input id="field-image-url" type="url" name="image_url" value="{{ image_url }}" placeholder="http://example.com/my-image.jpg" class="form-control" readonly=""> </div>
+                        <input id="field-image-url" name="image_url" value="{{ image_url }}" placeholder="http://example.com/my-image.jpg" class="form-control" readonly=""> </div>
                     <div class="image-buttons" id="image-upload-buttons">
                         <input style="display: none;" onchange="fill_upload_form(this.files[0].name, 'text')" id="field-image-upload" type="file" accept="image/*" name="image_upload" value="" placeholder="" class="form-control" title="Upload a file on your computer" style="width: 93.7031px;">
                         <a style="margin-right: 1%;" href="javascript:;" class="btn btn-default" onclick="document.getElementById('field-image-upload').click()">
                             <i class="fa fa-cloud-upload"></i>Upload
                         </a>
-                        <a href="javascript:;" onclick="fill_upload_form(null, 'url')" class="btn btn-default" title="Link to a URL on the internet (you can also link to an API)" style="">
+                        <a href="javascript:;" onclick="fill_upload_form(null, 'text')" class="btn btn-default" title="Link to a URL on the internet (you can also link to an API)" style="">
                             <i class="fa fa-globe"></i>Link
                         </a>
                     </div>
