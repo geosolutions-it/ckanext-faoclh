@@ -3,7 +3,8 @@
 {% block image %}
  <div class="image">
    <a href="{{ url }}">
-     <img src="{{ organization.image_display_url or organization.image_url or h.fao_get_org_image_url(organization.id) or h.url_for_static('/fao/images/org/fao-logo.svg') }}" width="200" alt="{{ organization.name }}" />
+     <img src="{{ h.fao_get_org_image_url(organization.id) or h.url_for_static('/fao/images/org/fao-logo.svg') }}"
+          width="200" alt="{{ organization.name }}" />
    </a>
  </div>
 {% endblock %}

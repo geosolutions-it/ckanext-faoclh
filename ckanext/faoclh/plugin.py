@@ -354,4 +354,9 @@ def fao_expanded_facet(vocab_name):
 def fao_get_org_image_url(org_id):
     image_url = meta.Session.query(Group.image_url).filter(Group.id == org_id).first()
     if image_url[0]:
-        return u'/uploads/group/{}'.format(image_url[0])
+        if image_url[0].startswith('http'):  # Absolute URL
+            return image_url[0]
+        elif image_url[0].startswith('/'):  # Relative URL
+            return image_url[0]
+        else:  # Resource name
+            return u'/uploads/group/{}'.format(image_url[0])
