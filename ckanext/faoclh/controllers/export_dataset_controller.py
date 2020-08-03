@@ -4,8 +4,10 @@ import logging
 import os
 from datetime import datetime
 
+from ckan.common import session
 import ckan.lib.base as base
 import ckan.lib.jobs as jobs
+from ckan.lib.redis import connect_to_redis
 import ckan.logic as logic
 import ckan.plugins.toolkit as toolkit
 from ckan.controllers.admin import AdminController
@@ -14,6 +16,8 @@ from paste.fileapp import DataApp, FileApp
 from ckan.common import config
 from ckanext.faoclh.plugin import VOCAB_FIELDS
 from sqlalchemy import or_
+from rq.job import Job
+
 
 log = logging.getLogger(__name__)
 
@@ -33,15 +37,17 @@ class ExportDatasetController(AdminController):
     def export_dataset(self, *args, **kwargs):
         if self.request.method == u'POST':
             output_file = os.path.join(self.output_dir, u'{}.csv'.format(kwargs[u'pylons'].session.id))
-
             if os.path.exists(output_file):
                 os.remove(output_file)
 
-            result = jobs.enqueue(generate_dataset_csv, [
+            task = jobs.enqueue(generate_dataset_csv, [
                                   self.output_dir, output_file, self.context])
 
             toolkit.response.headers[u'Content-Type'] = u'application/json'
             toolkit.response.status = u'201 CREATED'
+            session[u'background_task_id'] = task.id
+            session.save()
+
             return json.dumps({u'generating_export': True})
         return base.render(u'admin/export_dataset.html')
 
@@ -49,7 +55,8 @@ class ExportDatasetController(AdminController):
         session_id = kwargs[u'pylons'].session.id
         toolkit.response.headers[u'Content-Type'] = u'application/json'
         output_filename = os.path.join(self.output_dir, u'{}.csv'.format(session_id))
-        file_exists = os.path.exists(output_filename)
+        file_exists = Job.fetch(session[u'background_task_id'], connection=connect_to_redis())\
+                          .get_status() == u'finished'
 
         if self.request.method == u'POST':
             if not file_exists:
@@ -95,9 +102,10 @@ class GetPackageData(Package):
         resource = meta.Session.query(model_field).filter(
             Resource.package_id == package_id)
         field_mapper = {
-            Resource.name: lambda package_resource: u', '.join([res[0] for res in package_resource]).encode(u'utf-8'),
-            Resource.format: lambda package_resource: u', '.join(
-                [res[0] for res in package_resource]).encode(u'utf-8')
+            Resource.name: lambda package_resource: ', '.join(
+                [res[0] for res in package_resource if res[0]]).encode(u'utf-8'),
+            Resource.format: lambda package_resource: ', '.join(
+                [res[0] for res in package_resource if res[0]]).encode(u'utf-8')
         }
         return field_mapper[model_field](resource)
 
