@@ -4,7 +4,7 @@
 <header class="account-masthead">
     <hgroup class="{{ g.header_class }} pull-left">
         {% if g.site_logo %}
-        <a class="logo" href="{{ h.url_for('home.index') }}">
+        <a class="logo" href="{{ h.url_for_static_or_external('http://www.fao.org/') }}">
             <img src="{{ h.url_for_static_or_external(g.site_logo) }}" alt="{{ g.site_title }}" title="{{ g.site_title }}" />
         </a>
         {% endif %}
