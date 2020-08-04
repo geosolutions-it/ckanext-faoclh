@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block secondary_content %}
-    {% snippet "group/snippets/info.html", group=c.group_dict, show_nums=true %}
+    {% snippet "group/snippets/info.html", group=c.group_dict, show_nums=false %}
     <div class="filters">
         <div>
             {% for facet in c.facet_titles %}
