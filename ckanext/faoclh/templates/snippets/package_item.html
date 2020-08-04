@@ -1,0 +1,7 @@
+{% ckan_extends %}
+
+{# This file is just for undoing the changes from the ratings plugin #}
+
+{% block heading_title %}
+    {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
+{% endblock %}
