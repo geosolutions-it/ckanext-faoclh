@@ -1,4 +1,7 @@
+{% ckan_extends %}
+
 {% set current_url = h.full_current_url() %}
+
 {% block social_nav %}
     <ul class="nav nav-simple">
         <li class="nav-item"><a href="https://twitter.com/share?url={{ current_url }}" target="_blank"><i class="fa fa-twitter-square"></i> Twitter</a></li>
