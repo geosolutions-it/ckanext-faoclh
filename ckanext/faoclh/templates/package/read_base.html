@@ -1,3 +1,11 @@
 {% ckan_extends %}
 
 {% block package_license %}{% endblock %}
+
+{% block content_primary_nav %}
+  {{ h.build_nav_icon('dataset_read', _('Dataset'), id=pkg.name) }}
+  {{ h.build_nav_icon('dataset_groups', _('Groups'), id=pkg.name) }}
+{% if c.userobj %}
+  {{ h.build_nav_icon('dataset_activity', _('Activity Stream'), id=pkg.name) }}
+{% endif %}
+{% endblock %}
