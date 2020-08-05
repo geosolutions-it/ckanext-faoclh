@@ -14,3 +14,8 @@
         <a class="close no-text hide-filters"><i class="fa fa-times-circle"></i><span class="text">close</span></a>
     </div>
 {% endblock %}
+
+{% block breadcrumb_content %}
+  <li>{% link_for _('Organizations'), controller='organization', action='index', named_route=group_type + '_index' %}</li>
+  <li class="active">{% link_for c.group_dict.display_name|truncate(50), controller='organization', action='read', id=c.group_dict.name, named_route=group_type + '_read' %}</li>
+{% endblock %}
