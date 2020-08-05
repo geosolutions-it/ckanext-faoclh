@@ -9,3 +9,10 @@
   {{ h.build_nav_icon('dataset_activity', _('Activity Stream'), id=pkg.name) }}
 {% endif %}
 {% endblock %}
+
+  {% block package_organization %}
+    {% if pkg.organization %}
+      {% set org = h.get_organization(pkg.organization.name) %}
+      {% snippet "snippets/fao_organization_logo.html", organization=org, has_context_title=true %}
+    {% endif %}
+  {% endblock %}

@@ -1,0 +1,33 @@
+{#
+Embeds a organization within the sidebar of a page.
+
+organization    - The organization dict.
+has_context_title - Boolean for whether to display a module-heading for when
+                    this snippet appears within a non-organization template
+                    (e.g. dataset page sidebar)
+
+Example:
+
+    {% snippet 'snippets/fao_organization_logo, organization=c.group_dict %}
+
+#}
+
+{% set url = h.url_for(organization.type + '_read', id=organization.name, ) %}
+
+  {% block info %}
+  <div class="module module-narrow module-shallow context-info">
+    {% if has_context_title %}
+      <h2 class="module-heading"><i class="fa fa-building-o"></i> {{ _('Organization') }}</h2>
+    {% endif %}
+    <section class="module-content">
+      {% block inner %}
+       <div class="image">
+         <a href="{{ url }}">
+           <img src="{{ h.fao_get_org_image_url(organization.id) or h.url_for_static('/fao/images/org/fao-logo.svg') }}"
+                width="200" alt="{{ organization.name }}" />
+         </a>
+       </div>
+      {% endblock %}
+    </section>
+  </div>
+  {% endblock %}
