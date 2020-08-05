@@ -126,3 +126,8 @@ msgstr "Year of Release"
 
 msgid "res_extras_custom_resource_text"
 msgstr "Year of Release"
+
+
+#: ckanext/rating/templates/rating/snippets/rating_description.html:11
+msgid "no rating given"
+msgstr "Click the star to provide your rating"
