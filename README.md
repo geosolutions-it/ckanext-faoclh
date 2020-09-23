@@ -617,3 +617,16 @@ E.g.
 ```
 	
 This step requires that groups and organizations have already been created.
+
+### Further setup
+
+CKAN by default does not clean up the session cache files. Cache files are stored in a subdir of the `/tmp` direcotory; 
+If your server is not rebooted every few days, the session files may fill up the inode space, and the system may become unstable.
+
+Edit file `/etc/crontab` and add the line
+
+    0  *    * * *   ckan    find /tmp/faoclh/sessions/ -mmin +1440 -type f -print -exec rm {} \;
+
+Then have `cron` reload its configuration file:
+
+    service cron reload
