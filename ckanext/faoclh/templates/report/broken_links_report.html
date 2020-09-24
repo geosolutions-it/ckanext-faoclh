@@ -52,7 +52,7 @@
                 <tr>
                     {% set dataset_title =  h.gsreport_get_pkg_title(row['dataset_id'], h.lang()) %}
                     <td><a href="{{ row.dataset_url }}">{{ dataset_title or row.dataset_title }}</a></td>
-                    <td>{{ row.resource_name|truncate(50) }}</td>
+                    <td>{{ row.resource_name or '' |truncate(50) }}</td>
                     <td>{{ row.resource_format }}</td>
                     <td><a href="{{ row.res_url or row.resource_url }}">{{ row.res_url or row.resource_url}}</a></td>
                     <td>{{ _(row.error) }}</td>

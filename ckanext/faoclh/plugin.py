@@ -50,6 +50,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
     plugins.implements(plugins.ITranslation)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IRoutes)
+    plugins.implements(plugins.IAuthFunctions)
 
     # IPackageController
     def before_search(self, search_params):
@@ -263,6 +264,36 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         log.info('registering reports')
         return all_reports()
 
+    # ------------- IAuthFunctions --------------- #
+    def get_auth_functions(self):
+        out = {}
+        for k in ('report_list', 'report_show',
+                  'report_data_get', 'report_key_get',
+                  'report_refresh',):
+            out[k] = check_if_super
+
+        # monkeypatch report plugin to avoid auth functions conflict
+        # in authz
+        from ckanext.report.plugin import ReportPlugin
+        def fake_get_auth_functions(s):
+            return {}
+
+        ReportPlugin.get_auth_functions = fake_get_auth_functions
+
+        return out
+
+def check_if_super(context, data_dict=None):
+    out = {'success': False,
+           'msg': ''}
+    user = context.get('auth_user_obj')
+    if not user:
+        out['msg'] = 'User must be logged in'
+        return out
+    if not (user.state == 'active' and user.sysadmin):
+        out['msg'] = 'Only superuser can use reports'
+        return out
+    out['success'] = True
+    return out
 
 def fao_voc(voc_name):
     try:
