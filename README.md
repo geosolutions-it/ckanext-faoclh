@@ -505,7 +505,6 @@ resources:
    - After activating the CKAN virtualenv, run:   
 
          paster  --plugin=ckan views create -c /etc/ckan/default/production.ini 
-
          
 ## Enabling Reporting
 
@@ -527,11 +526,10 @@ Enable reporting of broken Links, tagless dataset, dataset without resources, un
 
       pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org OWSLib==0.10.3
 
-- Add `ckanext-reports` plugin to CKAN config file (`production.ini` found at `/etc/ckan/default/production.ini`) 
-  using the `ckan.plugins` configuration key, separating each extension by space and save the file 
-  (**Note**: Order of entries matters. This `faoclh` should be placed before `report` plugin as shown below):
+- Add `ckanext-reports` plugin to the line `ckan.plugins` in the CKAN config file (`production.ini`);
+  (**Note**: Order of entries matters. The `faoclh` pluing should be placed before `report` plugin as shown below):
 
-    ckan.plugins = [...] faoclh report [...] 
+      ckan.plugins = [...] faoclh report [...] 
 
 - Initialize `ckanext-reports` database:
 
@@ -541,30 +539,37 @@ Enable reporting of broken Links, tagless dataset, dataset without resources, un
 
       paster --plugin=ckan search-index rebuild_fast -c /etc/ckan/default/production.ini
 
-- Generate reports
+### Generating reports
 
-The reports can be generated in two ways:
+Using the command line, you can issue this command to generate all reports:
 
- * In CLI (this can be used to set up cron job):
-  
-   * generate all reports:
+    paster --plugin=ckanext-report report generate -c /etc/ckan/default/production.ini
 
-         paster --plugin=ckanext-report report generate --config=/etc/ckan/default/production.ini
+If you need a single report, use this line::
 
-   * generate one report
+    paster --plugin=ckanext-report report generate $report-name -c /etc/ckan/default/production.ini
 
-         paster --plugin=ckanext-report report generate $report-name --config=/etc/ckan/default/production.ini
+> **NOTE**: The command can take a while to produce results. Especially broken-links report may take a significant amount of time because it will check each resource for availability.
 
-> **NOTE**: This can take a while to produce results. Especially broken-links report may take a significant amount of time because it will check each resource for availability.
+### Setting up a cron job to generate reports
 
-At this point, you can navigate to `/report` route in the CKAN user interface and view the generated reports
+In order to have reports regularly generated, you may want to run the previous command via cron.
 
-- Set up a crone job to generate reports
-Set up a crone job to generate reports You can set up a cron job to run these commands. On most UNIX systems you can set up a cron job by running `crontab -e` in a shell to edit your crontab file, and adding a line to the file to specify the new job. For more information run `man crontab` in a shell. For example, here is a crontab line to generate the reports daily:
-```
-@daily /usr/lib/ckan/default/bin/paster --plugin=ckanext-report report generate --config=/etc/ckan/default/production.ini
-```
-The `@daily` can be replaced with `@hourly`, `@weekly` or `@monthly`.
+Edit file `/etc/crontab` and add the line
+
+    0  *    * * *   ckan    /usr/lib/ckan/default/bin/paster --plugin=ckanext-report report generate -c /etc/ckan/default/production.ini
+
+You may alter the job periodicity at will; the current value will generate reports at midnight every day.
+
+Then have `cron` reload its configuration file:
+
+    service cron reload
+
+
+### Accessing reports
+
+You can navigate to `/report` route in the CKAN user interface to view the generated reports.
+
 
 
 ## Loading initial data
