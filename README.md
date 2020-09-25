@@ -272,44 +272,44 @@ Run the command below to generate a csv file with tracking data:
 
 ## Tracking data access with Google Analytics
 
-Send tracking data to google analytics using the [ckanext-googleanalytics](https://github.com/ckan/ckanext-googleanalytics) extension by following the steps below.
+Send tracking data to google analytics using the [ckanext-googleanalytics](https://github.com/ckan/ckanext-googleanalytics) 
+extension by following the steps below.
 
 - Activate CKAN's virtual environment
 
-    ```
-    $ . /usr/lib/ckan/default/bin/activate
-    ```
+      . /usr/lib/ckan/default/bin/activate
 	
 - Install [ckanext-googleanalytics](https://github.com/ckan/ckanext-googleanalytics)
 
-    ```
-    $ pip install -e  git+https://github.com/ckan/ckanext-googleanalytics.git#egg=ckanext-googleanalytics
-    ```
+      git clone https://github.com/ckan/ckanext-googleanalytics.git
+      cd ckanext-googleanalytics
+      pip install -e  .
+      pip install -r  requirements.txt
+      pip install future
 
 - Add the `googleanalytics` plugin in the `ckan.plugins` configuration key, separating each extension by space.   
 
-    ```
-    ckan.plugins = [...] googleanalytics
-    ```
+      ckan.plugins = [...] googleanalytics
 
+- Create GA tables:
+ 
+      paster --plugin=ckanext-googleanalytics initdb -c /etc/ckan/default/production.ini
+      
 - Edit your ckan .ini file to provide these necessary parameters:
 
-    ```
-    googleanalytics.id = UA-XXXXXX-1
-    googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
-    googleanalytics.username = googleaccount@gmail.com
-    googleanalytics.password = googlepassword
-    googleanalytics.show_downloads = true
-    ```
+      googleanalytics.id = UA-XXXXXX-1
+      googleanalytics.account = Account name (i.e. data.gov.uk, see top level item at https://www.google.com/analytics)
+      googleanalytics.username = googleaccount@gmail.com
+      googleanalytics.password = googlepassword
+      googleanalytics.show_downloads = true
 	
 > **Note**: Your password will probably be readable by other people; so you may want to set up a 
   new Gmail account with [2fa](https://www.google.com/landing/2step/) enabled specifically for accessing your Gmail profile.
 
 - Restart CKAN to enable google analytics
   
-    ```
-    $ systemctl restart supervisord
-    ```
+      systemctl restart supervisord
+
 
 ## Enable dataset rating
 
