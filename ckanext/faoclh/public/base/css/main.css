@@ -16,7 +16,7 @@ article,
 aside,
 details,
 figcaption,
-figure,
+figure,resource-item
 footer,
 header,
 hgroup,
@@ -8365,6 +8365,12 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
   color: #000;
   font-size: 14px;
   font-weight: bold;
+}
+.resource-item .description {
+  width: 86%;
+}
+.resource-item .fao-heading {
+  width: 84%;
 }
 .resource-item .format-label {
   position: absolute;
