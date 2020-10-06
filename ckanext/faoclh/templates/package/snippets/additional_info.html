@@ -1,143 +1,111 @@
 <section class="additional-info">
-
-  <h3>{{ _('FAO Specific Info') }}</h3>
-  <table class="table table-striped table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th scope="col">{{ _('Field') }}</th>
-        <th scope="col">{{ _('Value') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-
-      {% block extras scoped %}
-        {% if pkg_dict.fao_resource_type %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Type of Resources") }}</th>
-            <td class="dataset-details">
-              <a href="{% url_for controller='package', action='search', fao_resource_type=pkg_dict.fao_resource_type[0], _fao_expanded_facets='fao_resource_type' %}">
-                {{ h.fao_voc_label('fao_resource_type', pkg_dict.fao_resource_type) }}
-              </a>
-            </td>
-          </tr>
-        {% endif %}
-        {% if pkg_dict.fao_activity_type %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Kind of Activities") }}</th>
-            <td class="dataset-details">
-              <a href="{% url_for controller='package', action='search', fao_activity_type=pkg_dict.fao_activity_type[0], _fao_expanded_facets='fao_activity_type' %}">
-                {{ h.fao_voc_label('fao_activity_type', pkg_dict.fao_activity_type) }}
-              </a>
-            </td>
-          </tr>
-        {% endif %}
-        {% if pkg_dict.fao_geographic_focus %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Geographic Focus") }}</th>
-            <td class="dataset-details">
-              <a href="{% url_for controller='package', action='search', fao_geographic_focus=pkg_dict.fao_geographic_focus[0], _fao_expanded_facets='fao_geographic_focus' %}">
-                {{ h.fao_voc_label('fao_geographic_focus', pkg_dict.fao_geographic_focus) }}
-              </a>
-            </td>
-          </tr>
-        {% endif %}
-
-        {% if pkg_dict.fao_release_year %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Year of Release") }}</th>
-            <td class="dataset-details">{{ pkg_dict.fao_release_year }}</td>
-          </tr>
-        {% endif %}
-
-        {% if pkg_dict.custom_resource_text %}
-          <tr>
-            <th scope="row" class="resource-label">{{ _("Year of Release") }}</th>
-            <td class="resource-details">{{ pkg_dict.custom_resource_text }}</td>
-          </tr>
-        {% endif %}
-
-      {% endblock %}
-    </tbody>
-  </table>
-
-
   <h3>{{ _('Additional Info') }}</h3>
   <table class="table table-striped table-bordered table-condensed">
-    <thead>
-      <tr>
-        <th scope="col">{{ _('Field') }}</th>
-        <th scope="col">{{ _('Value') }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% block package_additional_info %}
+     <tbody>
+        {% block package_additional_info %}
+        {% if pkg_dict.fao_resource_type %}
+        <tr>
+           <th scope="row" class="dataset-label">{{ _("Type of Resources") }}</th>
+           <td class="dataset-details">
+              <a href="{% url_for controller='package', action='search', fao_resource_type=pkg_dict.fao_resource_type[0], _fao_expanded_facets='fao_resource_type' %}">
+              {{ h.fao_voc_label('fao_resource_type', pkg_dict.fao_resource_type) }}
+              </a>
+           </td>
+        </tr>
+        {% endif %}
+        {% if pkg_dict.fao_activity_type %}
+        <tr>
+           <th scope="row" class="dataset-label">{{ _("Kind of Activities") }}</th>
+           <td class="dataset-details">
+              <a href="{% url_for controller='package', action='search', fao_activity_type=pkg_dict.fao_activity_type[0], _fao_expanded_facets='fao_activity_type' %}">
+              {{ h.fao_voc_label('fao_activity_type', pkg_dict.fao_activity_type) }}
+              </a>
+           </td>
+        </tr>
+        {% endif %}
+        {% if pkg_dict.fao_geographic_focus %}
+        <tr>
+           <th scope="row" class="dataset-label">{{ _("Geographic Focus") }}</th>
+           <td class="dataset-details">
+              <a href="{% url_for controller='package', action='search', fao_geographic_focus=pkg_dict.fao_geographic_focus[0], _fao_expanded_facets='fao_geographic_focus' %}">
+              {{ h.fao_voc_label('fao_geographic_focus', pkg_dict.fao_geographic_focus) }}
+              </a>
+           </td>
+        </tr>
+        {% endif %}
+        {% if pkg_dict.fao_release_year %}
+        <tr>
+           <th scope="row" class="dataset-label">{{ _("Year of Release") }}</th>
+           <td class="dataset-details">{{ pkg_dict.fao_release_year }}</td>
+        </tr>
+        {% endif %}
+        {% if pkg_dict.custom_resource_text %}
+        <tr>
+           <th scope="row" class="resource-label">{{ _("Year of Release") }}</th>
+           <td class="resource-details">{{ pkg_dict.custom_resource_text }}</td>
+        </tr>
+        {% endif %}
         {% if pkg_dict.url %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _('Source') }}</th>
-            {% if h.is_url(pkg_dict.url) %}
-              <td class="dataset-details" property="foaf:homepage">{{ h.link_to(pkg_dict.url, pkg_dict.url, rel='foaf:homepage', target='_blank') }}</td>
-            {% else %}
-              <td class="dataset-details" property="foaf:homepage">{{ pkg_dict.url }}</td>
-            {% endif %}
-          </tr>
+        <tr>
+           <th scope="row" class="dataset-label">{{ _('Source') }}</th>
+           {% if h.is_url(pkg_dict.url) %}
+           <td class="dataset-details" property="foaf:homepage">{{ h.link_to(pkg_dict.url, pkg_dict.url, rel='foaf:homepage', target='_blank') }}</td>
+           {% else %}
+           <td class="dataset-details" property="foaf:homepage">{{ pkg_dict.url }}</td>
+           {% endif %}
+        </tr>
         {% endif %}
-
         {% if pkg_dict.author_email %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Author") }}</th>
-            <td class="dataset-details" property="dc:creator">{{ h.mail_to(email_address=pkg_dict.author_email, name=pkg_dict.author) }}</td>
-          </tr>
+        <tr>
+           <th scope="row" class="dataset-label">{{ _("Author") }}</th>
+           <td class="dataset-details" property="dc:creator">{{ h.mail_to(email_address=pkg_dict.author_email, name=pkg_dict.author) }}</td>
+        </tr>
         {% elif pkg_dict.author %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Author") }}</th>
-            <td class="dataset-details" property="dc:creator">{{ pkg_dict.author }}</td>
-          </tr>
+        <tr>
+           <th scope="row" class="dataset-label">{{ _("Author") }}</th>
+           <td class="dataset-details" property="dc:creator">{{ pkg_dict.author }}</td>
+        </tr>
         {% endif %}
-
         {% if pkg_dict.maintainer_email %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _('Maintainer') }}</th>
-            <td class="dataset-details" property="dc:contributor">{{ h.mail_to(email_address=pkg_dict.maintainer_email, name=pkg_dict.maintainer) }}</td>
-          </tr>
+        <tr>
+           <th scope="row" class="dataset-label">{{ _('Maintainer') }}</th>
+           <td class="dataset-details" property="dc:contributor">{{ h.mail_to(email_address=pkg_dict.maintainer_email, name=pkg_dict.maintainer) }}</td>
+        </tr>
         {% elif pkg_dict.maintainer %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _('Maintainer') }}</th>
-            <td class="dataset-details" property="dc:contributor">{{ pkg_dict.maintainer }}</td>
-          </tr>
+        <tr>
+           <th scope="row" class="dataset-label">{{ _('Maintainer') }}</th>
+           <td class="dataset-details" property="dc:contributor">{{ pkg_dict.maintainer }}</td>
+        </tr>
         {% endif %}
-
         {% if pkg_dict.version %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Version") }}</th>
-            <td class="dataset-details">{{ pkg_dict.version }}</td>
-          </tr>
+        <tr>
+           <th scope="row" class="dataset-label">{{ _("Version") }}</th>
+           <td class="dataset-details">{{ pkg_dict.version }}</td>
+        </tr>
         {% endif %}
-
         <!-- {% if h.check_access('package_update',{'id':pkg_dict.id}) %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("State") }}</th>
-            <td class="dataset-details">{{ _(pkg_dict.state) }}</td>
-          </tr>
-        {% endif %} -->
+           <tr>
+             <th scope="row" class="dataset-label">{{ _("State") }}</th>
+             <td class="dataset-details">{{ _(pkg_dict.state) }}</td>
+           </tr>
+           {% endif %} -->
         {% if pkg_dict.metadata_modified %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Collection Update") }}</th>
-            <td class="dataset-details">
-                {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=pkg_dict.metadata_modified %}
-            </td>
-          </tr>
+        <tr>
+           <th scope="row" class="dataset-label">{{ _("Collection Update") }}</th>
+           <td class="dataset-details">
+              {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=pkg_dict.metadata_modified %}
+           </td>
+        </tr>
         {% endif %}
         {% if pkg_dict.metadata_created %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Created") }}</th>
-
-            <td class="dataset-details">
-                {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=pkg_dict.metadata_created %}
-            </td>
-          </tr>
+        <tr>
+           <th scope="row" class="dataset-label">{{ _("Created") }}</th>
+           <td class="dataset-details">
+              {% snippet 'snippets/local_friendly_datetime.html', datetime_obj=pkg_dict.metadata_created %}
+           </td>
+        </tr>
         {% endif %}
-
-      {% endblock %}
-    </tbody>
+        {% endblock %}
+     </tbody>
   </table>
 </section>
