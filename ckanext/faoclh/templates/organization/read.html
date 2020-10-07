@@ -1,5 +1,10 @@
 {% ckan_extends %}
 
+{% block scripts %}
+  {{ super() }}
+  {% resource 'faoclh/js/fao_facet_list_ui_control.js' %}
+{% endblock %}
+
 {% block organization_facets %}
     <div class="filters">
         <div>
