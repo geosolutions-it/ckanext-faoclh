@@ -108,10 +108,9 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
         if c.fields:
             for (key, val) in c.fields:
-                if key in VOCAB_FIELDS:
-                    label = fao_voc_label(key, val)
-                    if label:
-                        translated_fields[(key,val)] = label
+                label = fao_voc_label(key, val)
+                if label:
+                    translated_fields[(key,val)] = label
 
         if translated_fields:
             c.translated_fields = translated_fields
