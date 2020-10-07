@@ -44,3 +44,6 @@ msgstr "Année de sortie"
 
 msgid "My Groups"
 msgstr "Mes sujets"
+
+msgid "Collection Update"
+msgstr "Mise à jour de la collection"

@@ -47,3 +47,6 @@ msgstr "Año de lanzamiento"
 
 msgid "My Groups"
 msgstr "Mis temas"
+
+msgid "Collection Update"
+msgstr "Actualización de la colección"
