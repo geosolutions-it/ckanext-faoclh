@@ -4,7 +4,7 @@
         <div class="module-content">
           <h2>{{ _('Additional Information') }}</h2>
           <table class="table table-striped table-bordered table-condensed" data-module="table-toggle-more">
-            <thead>
+            <thead style="display: none">
               <tr>
                 <th scope="col">{{ _('Field') }}</th>
                 <th scope="col">{{ _('Value') }}</th>
@@ -37,10 +37,12 @@
 
                   <tr class="toggle-more"><th scope="row">{{ 'Year of Release' }}</th><td>{{res.custom_resource_text}}</td></tr>
 		{% endif %}
-		{% if key not in ('custom resource text', 'format', 'has views', 'id', 'package id', 'revision id', 'state') %} <!-- NON VISUALIZZA GLI ITEMS in lista-->
+		{% if key not in ('custom resource text', 'format', 'has views', 'id', 'package id', 'revision id', 'state', 'last modified') %} <!-- NON VISUALIZZA GLI ITEMS in lista-->
 		  <tr class="toggle-more"><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
 		{% endif %}
-
+              {% if key == 'last modified'%}
+                <tr class="toggle-more"><th scope="row">Collection Update</th><td>{{ value }}</td></tr>
+              {% endif %}
               {% endfor %}
             </tbody>
           </table>
