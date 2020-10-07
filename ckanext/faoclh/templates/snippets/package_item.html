@@ -5,3 +5,13 @@
 {% block heading_title %}
     {{ h.link_to(h.truncate(title, truncate_title), h.url_for(controller='package', action='read', id=package.name)) }}
 {% endblock %}
+
+{% block resources_inner %}
+{% for resource in h.dict_list_reduce(package.resources, 'format') %}
+<li>
+  <a href="{{ h.url_for(controller='package', action='read', id=package.name) }}" class="label label-default" data-format="{{ resource.lower() }}">
+      {{ h.fao_voc_label('res_format', resource)}}
+  </a>
+</li>
+{% endfor %}
+{% endblock %}

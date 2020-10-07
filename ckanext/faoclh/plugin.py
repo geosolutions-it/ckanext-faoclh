@@ -108,10 +108,9 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
         if c.fields:
             for (key, val) in c.fields:
-                if key in VOCAB_FIELDS:
-                    label = fao_voc_label(key, val)
-                    if label:
-                        translated_fields[(key,val)] = label
+                label = fao_voc_label(key, val)
+                if label:
+                    translated_fields[(key,val)] = label
 
         if translated_fields:
             c.translated_fields = translated_fields
@@ -319,26 +318,35 @@ def fao_voc(voc_name):
 
 
 def fao_voc_label(voc_name, tag_name):
-    if not tag_name:
-        log.warn(u'Empty tag for vocab "{}"'.format(voc_name))
-        return None
-    if isinstance(tag_name, list):
-        tag_name = tag_name[0]
+    if voc_name in ['fao_resource_type', 'fao_activity_type', 'fao_geographic_focus']:
+        if not tag_name:
+            log.warn(u'Empty tag for vocab "{}"'.format(voc_name))
+            return None
+        if isinstance(tag_name, list):
+            tag_name = tag_name[0]
 
-    tag_id = meta.Session.query(Tag.id).filter(Tag.name == tag_name).first()
+        tag_id = meta.Session.query(Tag.id).filter(Tag.name == tag_name).first()
 
-    if tag_id:
-        multilang_tag = meta.Session.query(TagMultilang.text).filter(
-            TagMultilang.tag_name == voc_name, TagMultilang.tag_id == tag_id,
-            TagMultilang.lang == helpers.getLanguage()
-        ).first()
-    else:
-        multilang_tag = meta.Session.query(TagMultilang.text).filter(
-            TagMultilang.tag_name == u'{}:{}'.format(voc_name, tag_name),
-            TagMultilang.lang == helpers.getLanguage()
-        ).first()
+        if tag_id:
+            multilang_tag = meta.Session.query(TagMultilang.text).filter(
+                TagMultilang.tag_name == voc_name, TagMultilang.tag_id == tag_id,
+                TagMultilang.lang == helpers.getLanguage()
+            ).first()
+        else:
+            multilang_tag = meta.Session.query(TagMultilang.text).filter(
+                TagMultilang.tag_name == u'{}:{}'.format(voc_name, tag_name),
+                TagMultilang.lang == helpers.getLanguage()
+            ).first()
 
-    return multilang_tag[0] if multilang_tag else tag_name
+        return multilang_tag[0] if multilang_tag else tag_name
+
+    label_mapper = {
+        ('res_format', 'html'): 'Website'
+    }
+    label = label_mapper.get((voc_name.lower(), tag_name.lower()))
+    if label:
+        return label
+    return tag_name
 
 
 def fao_voc_label_func(voc_name):
