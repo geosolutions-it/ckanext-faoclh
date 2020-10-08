@@ -17,7 +17,7 @@
     <div class="fao-item-container-body box">
         {% for topic in topics %}
             {% set type = topic.type or 'group' %}
-            {% set url = h.url_for(type ~ '_read', action='read', id=topic.name) %}
+            {% set url = h.url_for(controller='package', action='search', groups=topic.name,  _fao_expanded_facets='groups') %}
             {% snippet 'home/snippets/fao_item_summary.html',
                 title=topic.title,
                 dataset_url=url,
