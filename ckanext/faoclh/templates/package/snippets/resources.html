@@ -1,16 +1,3 @@
-{#
-Displays a sidebard module with navigation containing the provided resources.
-If no resources are provided then the module will not be displayed.
-
-pkg       - The package dict that owns the resources.
-active    - The id of the currently displayed resource.
-action    - The controller action to use (default: 'resource_read').
-
-Example:
-
-  {% snippet "package/snippets/resources.html", pkg=pkg, active=res.id %}
-
-#}
 {% set resources = pkg.resources or [] %}
 {% block resources_list %}
   <ul class="list-unstyled nav nav-simple">
