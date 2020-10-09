@@ -11,22 +11,12 @@
     <tbody>
 
       {% block extras scoped %}
-        {% if pkg_dict.fao_resource_type %}
-          <tr>
-            <th scope="row" class="dataset-label">{{ _("Type of Resources") }}</th>
-            <td class="dataset-details">
-              <a href="{% url_for controller='package', action='search', fao_resource_type=pkg_dict.fao_resource_type[0], _fao_expanded_facets='fao_resource_type' %}">
-                {{ h.fao_voc_label('fao_resource_type', pkg_dict.fao_resource_type) }}
-              </a>
-            </td>
-          </tr>
-        {% endif %}
         {% if pkg_dict.fao_activity_type %}
           <tr>
             <th scope="row" class="dataset-label">{{ _("Kind of Activities") }}</th>
             <td class="dataset-details">
               <a href="{% url_for controller='package', action='search', fao_activity_type=pkg_dict.fao_activity_type[0], _fao_expanded_facets='fao_activity_type' %}">
-                {{ h.fao_voc_label('fao_activity_type', pkg_dict.fao_activity_type) }}
+                {{ h.fao_get_label_for_vocab_tag('fao_activity_type', pkg_dict.fao_activity_type) }}
               </a>
             </td>
           </tr>
@@ -36,7 +26,7 @@
             <th scope="row" class="dataset-label">{{ _("Geographic Focus") }}</th>
             <td class="dataset-details">
               <a href="{% url_for controller='package', action='search', fao_geographic_focus=pkg_dict.fao_geographic_focus[0], _fao_expanded_facets='fao_geographic_focus' %}">
-                {{ h.fao_voc_label('fao_geographic_focus', pkg_dict.fao_geographic_focus) }}
+                {{ h.fao_get_label_for_vocab_tag('fao_geographic_focus', pkg_dict.fao_geographic_focus) }}
               </a>
             </td>
           </tr>

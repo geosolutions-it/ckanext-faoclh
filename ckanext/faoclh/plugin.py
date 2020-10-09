@@ -30,13 +30,18 @@ from ckanext.report.interfaces import IReport
 
 log = logging.getLogger(__name__)
 
-FIELD_RESOURCE_TYPE = 'fao_resource_type'
 FIELD_ACTIVITY_TYPE = 'fao_activity_type'
 FIELD_FOCUS         = 'fao_geographic_focus'
 
 FIELD_RESOURCE_YEAR = 'fao_resource_release_year'
+FIELD_RESOURCE_TYPE = 'fao_resource_type'
 
-VOCAB_FIELDS = [FIELD_RESOURCE_TYPE, FIELD_ACTIVITY_TYPE, FIELD_FOCUS]
+# VOCAB_FIELDS = [FIELD_RESOURCE_TYPE, FIELD_ACTIVITY_TYPE, FIELD_FOCUS]
+FAO_DATASET_FIELDS = [FIELD_ACTIVITY_TYPE, FIELD_FOCUS]
+FAO_RESOURCE_FIELDS = [FIELD_RESOURCE_TYPE, FIELD_RESOURCE_YEAR]
+
+FAO_TAG_FIELDS = [FIELD_ACTIVITY_TYPE, FIELD_FOCUS]
+VOCAB_TAG_FIELDS = {'vocab_'+f:f for f in FAO_TAG_FIELDS}
 
 class FAOCLHGUIPlugin(plugins.SingletonPlugin,
                       toolkit.DefaultDatasetForm,
@@ -54,23 +59,76 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
     # IPackageController
     def before_search(self, search_params):
-        return search_params
+        # We're using tagged fields both in datasets; CKAN is prefixing the SOLR fields with vocab_
+        # In the *_search methods we'll convert the vocab_ names back and forth
+
+        # log.debug("BEFORE SEARCH")
+        returned_search = {}
+        for k,v in search_params.items():
+            new_v = v
+            # log.debug("BEFORE SEARCH PARAM {} -->({}) {}".format(k, type(v), v))
+
+            if k == 'fq':
+                for field in FAO_TAG_FIELDS:
+                    new_v = new_v.replace(field, 'vocab_' + field)
+                # if v != new_v:
+                #     log.debug("Replacing fq --> " + new_v)
+
+            if k == 'facet.field':
+                new_v = []
+                for facet in v:
+                    if facet in FAO_TAG_FIELDS:
+                        new_v.append('vocab_'+facet)
+                        # log.debug("Replacing facet for " + facet)
+                    else:
+                        new_v.append(facet)
+
+            returned_search[k] = new_v
+
+        return returned_search
 
     def after_search(self, search_results, search_params):
-        return search_results
+        returned_results = {}
+        # log.debug("AFTER SEARCH")
+        for k,v in search_results.items():
+            new_v = v
+            log.debug("AFTER SEARCH RES {} -->({}) {}".format(k, type(v), v))
+
+            if k in ['facets', 'search_facets']:
+                new_v = {}
+                for facet,results in v.items():
+                    base = VOCAB_TAG_FIELDS.get(facet, None)
+                    if base:
+                        new_v[base] = results
+                        # log.debug("Replacing facet result for {} -> {}".format(facet, base))
+                    else:
+                        new_v[facet] = results
+                # log.debug("AFTER SEARCH RES NEW {} --> {}".format(k, new_v))
+
+            returned_results[k] = new_v
+
+        return returned_results
 
     def before_index(self, dataset_dict):
         # log.debug("BEFORE_INDEX")
-        # log.debug("INDEXING {}".format(dataset_dict))
-
-        for faokey in VOCAB_FIELDS:
-            key = 'vocab_' + faokey
-            v = dataset_dict.get(key, None)
-            # log.debug("INDEXING {} -> ({}) {}".format(key, type(v), v))
-
-            if v and isinstance(v, list):
-                dataset_dict[faokey] = v[0]
-                # log.debug("DUMPING {}".format(v[0]))
+        # log.debug("INDEXING {}".format(json.dumps(dataset_dict)))
+        # log.debug("INDEXING ==================================================")
+        for k,v in dataset_dict.items():
+            if k=='data_dict':
+                # log.debug("INDEXING {} -->({}) {}".format(k, type(v), v))
+                dd = json.loads(v)
+                resources = dd['resources']
+                fao_resource_type_list = []
+                for res in resources:
+                    frt = res.get(FIELD_RESOURCE_TYPE, None)
+                    if frt:
+                        fao_resource_type_list.append(frt)
+                if fao_resource_type_list:
+                    # log.debug("INDEXING !!! {} --> {}".format(FIELD_RESOURCE_TYPE, fao_resource_type_list))
+                    dataset_dict[FIELD_RESOURCE_TYPE] = fao_resource_type_list
+            # else:
+                # log.debug("INDEXING {} --> {}".format(k, json.dumps(v)))
+            # log.debug("INDEXING --------------------------------------------------")
 
         return dataset_dict
 
@@ -108,19 +166,28 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
         if c.fields:
             for (key, val) in c.fields:
-                if key in VOCAB_FIELDS:
-                    label = fao_voc_label(key, val)
+                if key in FAO_DATASET_FIELDS:
+                    label = fao_get_label_for_vocab_tag(key, val)
                     if label:
                         translated_fields[(key,val)] = label
 
         if translated_fields:
             c.translated_fields = translated_fields
 
+        # TODO ETJ check ckan doc, should return a data_dict
+        return data_dict
+
     # IFacets
     def _fao_facets(self, src_facets_dict, package_type):
         facet_titles_order = [
-            'groups', FIELD_ACTIVITY_TYPE, FIELD_RESOURCE_TYPE, 'tags', FIELD_FOCUS, 'organization',
-            'res_format', 'res_extras_custom_resource_text'
+            'groups',
+            FIELD_ACTIVITY_TYPE,
+            FIELD_RESOURCE_TYPE,
+            'tags',
+            FIELD_FOCUS,
+            'organization',
+            'res_format',
+            'res_extras_custom_resource_text'
         ]
 
         def get_facet_value(field):
@@ -185,11 +252,17 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
     def _modify_package_schema(self, schema):
         # Our custom field
 
-        for field in VOCAB_FIELDS:
+        for field in FAO_DATASET_FIELDS:
             schema.update({
                 field: [
                     toolkit.get_validator('ignore_missing'),
                     toolkit.get_converter('convert_to_tags')(field)],
+            })
+
+        for field in FAO_RESOURCE_FIELDS:
+            schema['resources'].update({
+                field: [
+                    toolkit.get_validator('ignore_missing')]
             })
 
         return schema
@@ -214,17 +287,18 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         schema['tags']['__extras'].append(toolkit.get_converter('free_tags_only'))
 
         # Our custom field
-        for field in VOCAB_FIELDS:
+        for field in FAO_DATASET_FIELDS:
             schema.update({
                 field: [
                     toolkit.get_converter('convert_from_tags')(field),
                     toolkit.get_validator('ignore_missing')],
             })
 
-        schema['resources'].update({
-            FIELD_RESOURCE_YEAR: [
-                toolkit.get_validator('ignore_missing')]
-        })
+        for field in FAO_RESOURCE_FIELDS:
+            schema['resources'].update({
+                field: [
+                    toolkit.get_validator('ignore_missing')]
+            })
 
         return schema
 
@@ -242,9 +316,9 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
     def get_helpers(self):
         import ckanext.faoclh.helpers.report_helpers as gsh
         return {
-            'fao_voc': fao_voc,
-            'fao_voc_label': fao_voc_label,
-            'fao_voc_label_func': fao_voc_label_func,
+            'fao_get_tags_for_vocab': fao_get_tags_for_vocab,
+            'fao_get_label_for_vocab_tag': fao_get_label_for_vocab_tag,
+            'fao_get_label_for_vocab_func': fao_get_label_for_vocab_func,
             'fao_get_search_facet': fao_get_search_facet,
             'contains_active_facets': contains_active_facets,
             'get_tag_image_url': TagImageUrl.get,
@@ -282,6 +356,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
 
         return out
 
+
 def check_if_super(context, data_dict=None):
     out = {'success': False,
            'msg': ''}
@@ -295,7 +370,8 @@ def check_if_super(context, data_dict=None):
     out['success'] = True
     return out
 
-def fao_voc(voc_name):
+
+def fao_get_tags_for_vocab(voc_name):
     try:
         data = {u'id': voc_name}
         tags = toolkit.get_action(u'vocabulary_show')({}, data).get(u'tags', [])
@@ -318,13 +394,17 @@ def fao_voc(voc_name):
             } for tag_id, value in tag_dict.iteritems()]
 
 
-def fao_voc_label(voc_name, tag_name):
-    if not tag_name:
+def fao_get_label_for_vocab_tag(voc_name, tag_or_list):
+    if not tag_or_list:
         log.warn(u'Empty tag for vocab "{}"'.format(voc_name))
         return None
-    if isinstance(tag_name, list):
-        tag_name = tag_name[0]
+    if isinstance(tag_or_list, list):
+        return ", ".join([fao_get_label_for_vocab_tag_single(voc_name, tag) for tag in tag_or_list])
+    else:
+        return fao_get_label_for_vocab_tag_single(voc_name, tag_or_list)
 
+
+def fao_get_label_for_vocab_tag_single(voc_name, tag_name):
     tag_id = meta.Session.query(Tag.id).filter(Tag.name == tag_name).first()
 
     if tag_id:
@@ -341,10 +421,13 @@ def fao_voc_label(voc_name, tag_name):
     return multilang_tag[0] if multilang_tag else tag_name
 
 
-def fao_voc_label_func(voc_name):
-    return lambda item: fao_voc_label(voc_name, item.get('name'))
+def fao_get_label_for_vocab_func(voc_name):
+    return lambda item: fao_get_label_for_vocab_tag(voc_name, item.get('name'))
+
 
 def fao_get_search_facet(limit=6):
+
+    homepage_fields = [FIELD_ACTIVITY_TYPE, FIELD_FOCUS, FIELD_RESOURCE_TYPE]
 
     context = {
         'model': model,
@@ -357,7 +440,7 @@ def fao_get_search_facet(limit=6):
     data_dict = {
         'q': '*:*',
         'fq': '',
-        'facet.field': VOCAB_FIELDS,
+        'facet.field': homepage_fields,
         'rows': limit,
         'start': 0,
         'sort': 'count desc',
@@ -373,7 +456,7 @@ def fao_get_search_facet(limit=6):
 
     result = {}
 
-    for field in VOCAB_FIELDS:
+    for field in homepage_fields:
         try:
             items = fao_search_facets[field]['items']
             items.sort(key=lambda item: item['count'], reverse=True)

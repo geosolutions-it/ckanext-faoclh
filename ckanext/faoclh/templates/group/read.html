@@ -11,7 +11,7 @@
         <div>
             {% for facet in c.facet_titles %}
                 {% if facet  in ['fao_resource_type', 'fao_activity_type', 'fao_geographic_focus']  %}
-                    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.fao_voc_label_func(facet), extras={'id':c.group_dict.id}) }}
+                    {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, label_function=h.fao_get_label_for_vocab_func(facet), extras={'id':c.group_dict.id}) }}
                 {% else %}
                     {{ h.snippet('snippets/facet_list.html', title=c.facet_titles[facet], name=facet, extras={'id':c.group_dict.id}) }}
                 {% endif %}

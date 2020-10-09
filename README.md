@@ -35,6 +35,14 @@ The following command is needed for the upload of custom images for vocabulary i
 
     $ paster --plugin=ckanext-faoclh initdb --config=/etc/ckan/default/production.ini
 
+## Update the Solr schema 
+
+Update the schema.xml file (located at `/usr/lib/ckan/src/ckan/ckan/config/solr/schema.xml`) with the following xml tags:
+
+- Inside the `fields` tags, add the tag below:
+
+      <field name="fao_resource_type" type="string" indexed="true" stored="true" multiValued="true"/>
+    
 ## Enable multilingual support
 
 Enable multilingual support for datasets, organizations/groups, tags, and resources using the [ckanext-multilang](https://github.com/geosolutions-it/ckanext-multilang) extension by following the setup steps described below:

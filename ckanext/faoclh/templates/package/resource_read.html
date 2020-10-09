@@ -1,6 +1,38 @@
 {% ckan_extends %}
 
         {% block resource_additional_information_inner %}
+
+        <div class="module-content">
+          <h2>{{ _('FAO Specific Info') }}</h2>
+          <table class="table table-striped table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th scope="col">{{ _('Field') }}</th>
+                <th scope="col">{{ _('Value') }}</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                <th scope="row" class="dataset-label">{{ _("fao_resource_type") }}</th>
+                <td class="dataset-details">
+                {% if res.fao_resource_type %}
+                  <a href="{% url_for controller='package', action='search', fao_resource_type=res.fao_resource_type, _fao_expanded_facets='fao_resource_type' %}">
+                    {{ h.fao_get_label_for_vocab_tag('fao_resource_type', res.fao_resource_type) }}
+                  </a>
+                {% endif %}
+                </td>
+              </tr>
+
+              <tr>
+                  <th scope="row">{{ 'Year of Release' }}</th>
+                  <td>{{res.custom_resource_text or '-'}}</td></tr>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
         <div class="module-content">
           <h2>{{ _('Additional Information') }}</h2>
           <table class="table table-striped table-bordered table-condensed" data-module="table-toggle-more">
@@ -33,13 +65,13 @@
                 <td>{% snippet "snippets/license.html", pkg_dict=pkg, text_only=True %}</td>
               </tr>-->
               {% for key, value in h.format_resource_items(res.items()) %}
-		{% if key in ('custom resource text') %}
-
-                  <tr class="toggle-more"><th scope="row">{{ 'Year of Release' }}</th><td>{{res.custom_resource_text}}</td></tr>
-		{% endif %}
-		{% if key not in ('custom resource text', 'format', 'has views', 'id', 'package id', 'revision id', 'state') %} <!-- NON VISUALIZZA GLI ITEMS in lista-->
-		  <tr class="toggle-more"><th scope="row">{{ key }}</th><td>{{ value }}</td></tr>
-		{% endif %}
+                {% if key not in ('fao resource type', 'custom resource text', 'format',
+                                  'has views', 'id', 'package id', 'revision id', 'state', 'position', 'url type') %} <!-- NON VISUALIZZA GLI ITEMS in lista-->
+                  <tr class="toggle-more">
+                    <th scope="row">{{ key }}</th>
+                    <td>{{ value }}</td>
+                  </tr>
+                {% endif %}
 
               {% endfor %}
             </tbody>

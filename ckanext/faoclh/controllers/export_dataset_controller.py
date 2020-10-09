@@ -14,10 +14,10 @@ from ckan.controllers.admin import AdminController
 from ckan.model import Package, PackageTag, Resource, Tag, Vocabulary, meta
 from paste.fileapp import DataApp, FileApp
 from ckan.common import config
-from ckanext.faoclh.plugin import VOCAB_FIELDS
 from sqlalchemy import or_
 from rq.job import Job
 
+from ckanext.faoclh.plugin import FAO_TAG_FIELDS
 
 log = logging.getLogger(__name__)
 
@@ -84,42 +84,10 @@ class GetPackageData(Package):
     def all_datasets(cls):
         return meta.Session.query(Package.id, Package.title, Package.metadata_created).all()
 
-    @classmethod
-    def get_all_tags(cls, package_id):
-        package_tags = meta.Session.query(PackageTag.tag_id).filter(
-            PackageTag.package_id == package_id)
-        custom_vocabs = meta.Session.query(Vocabulary.id).filter(
-            Vocabulary.name.in_(VOCAB_FIELDS))
-        tags = meta.Session.query(Tag.name).filter(
-            Tag.id.in_(package_tags),
-            or_(~Tag.vocabulary_id.in_(custom_vocabs), Tag.vocabulary_id == None)
-        ).all()
-
-        return u', '.join([tag[0] for tag in tags])
-
-    @classmethod
-    def get_resource(cls, model_field, package_id):
-        resource = meta.Session.query(model_field).filter(
-            Resource.package_id == package_id)
-        field_mapper = {
-            Resource.name: lambda package_resource: ', '.join(
-                [res[0] for res in package_resource if res[0]]).encode(u'utf-8'),
-            Resource.format: lambda package_resource: ', '.join(
-                [res[0] for res in package_resource if res[0]]).encode(u'utf-8')
-        }
-        return field_mapper[model_field](resource)
-
-    @classmethod
-    def get_resource_year_of_release(cls, years_of_release):
-        try:
-            return u', '.join(years_of_release)
-        except TypeError:
-            return u''
-
 
 def generate_dataset_csv(output_dir, output_file, context):
     """
-    Write tracking summary to a csv file.
+    Write dataset summary to a csv file.
     :return: None
     """
     if not os.path.exists(output_dir):
@@ -131,8 +99,8 @@ def generate_dataset_csv(output_dir, output_file, context):
         u'Dataset Topics',
         u'Dataset Tags',
         u'Kind of Activity',
-        u'Type of Resource',
         u'Resource Title',
+        u'Type of Resource',
         u'Resource Format',
         u'Year Of Release',
     ]
@@ -143,21 +111,19 @@ def generate_dataset_csv(output_dir, output_file, context):
     with open(output_file, u'w') as fh:
         f_out = csv.writer(fh)
         f_out.writerow(headings)
-        f_out.writerows([(
-            dataset.title,
-            (lambda topics: u', '.join([topic.get(u'name', u'') for topic in topics]))(
-                package_show(context, {u'id': dataset.id})[u'groups']),
-            GetPackageData.get_all_tags(package_id=dataset.id),
-            (lambda act_type: act_type[0] if act_type else u'')(
-                package_show(context, {u'id': dataset.id}).get(u'fao_activity_type')),
-            (lambda res_type: res_type[0] if res_type else u'')(
-                package_show(context, {u'id': dataset.id}).get(u'fao_resource_type')),
-            GetPackageData.get_resource(Resource.name, dataset.id),
-            GetPackageData.get_resource(Resource.format, dataset.id),
-            GetPackageData.get_resource_year_of_release([
-                item.get(u'custom_resource_text') for item in
-                package_show(context, {u'id': dataset.id}).get(u'resources', {}) if item
-            ])
-        ) for dataset in datasets])
+        for dataset in datasets:
+            pkg = package_show(context, {u'id': dataset.id})
+            resources = pkg.get(u'resources', {})
+            row = (
+                dataset.title,
+                ', '.join([topic.get(u'name', u'') for topic in pkg['groups']]),
+                ', '.join([tag['name'] for tag in pkg.get('tags', []) if tag['vocabulary_id'] is None]),
+                ', '.join(pkg.get(u'fao_activity_type', ['No activity type'])),  # 0 or 1
+                ', '.join([res.get('name', 'Unnamed resource') for res in resources]),
+                ', '.join([res.get('fao_resource_type', '-') for res in resources]),
+                ', '.join([res.get('format', '-') for res in resources]),
+                ', '.join([res.get('custom_resource_text',  '-') for res in resources])
+            )
+            f_out.writerow(row)
 
     log.info(u'Successfully created dataset export file [path = {}]'.format(output_dir))

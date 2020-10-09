@@ -3,15 +3,15 @@
 {% block package_basic_fields_custom %}
   {{ super() }}
 
-  {% for voc_name in ['fao_resource_type', 'fao_activity_type', 'fao_geographic_focus']  %}
+  {% for voc_name in ['fao_activity_type', 'fao_geographic_focus']  %}
   <div class="form-group control-medium">
     <label class="control-label" for="field-{{ voc_name }}">{{ _(voc_name) }}</label>
     <div class="controls">
       <select id="{{voc_name}}_code" name="{{voc_name}}" data-module="autocomplete">
-        {% for voc_entry in h.fao_voc(voc_name)  %}
-          {% set voc_id = voc_entry['name'] %}
-          {% set voc_label = voc_entry['label'] %}
-          <option value="{{ voc_id }}" {% if voc_id in data.get(voc_name, []) %}selected="selected"{% endif %}>{{ voc_label }}</option>
+        {% for tag_entry in h.fao_get_tags_for_vocab(voc_name)  %}
+          {% set tag_id = tag_entry['name'] %}
+          {% set tag_label = tag_entry['label'] %}
+          <option value="{{ tag_id }}" {% if tag_id in data.get(voc_name, []) %}selected="selected"{% endif %}>{{ tag_label }}</option>
         {% endfor %}
       </select>
     {% set error = errors[voc_name] %}
