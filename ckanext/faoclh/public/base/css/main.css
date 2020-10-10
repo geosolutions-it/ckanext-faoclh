@@ -11466,6 +11466,10 @@ h5 {
   padding: 0px 30px 0px 10px;
 }
 
+.fao-resource-types .resource_type_block h2 {
+  color: #0d6cac;
+}
+
 .fao-resource-types h3 {
   color: #000;
   font-size: 19px;

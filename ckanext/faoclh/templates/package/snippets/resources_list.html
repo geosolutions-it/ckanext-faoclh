@@ -20,7 +20,7 @@ Example:
 
           {% for type in h.fao_get_resource_types(pkg.id) %}
           <div class="resource_type_block module-content">
-              <h2 style="color: #0d6cac;">{{h.fao_get_label_for_vocab_tag('fao_resource_type', type or _('Other resource types'))}}</h2>
+              <h2>{{h.fao_get_label_for_vocab_tag('fao_resource_type', type or _('Other resource types'))}}</h2>
               {% for resource in resources %}
                 {% if type == resource.fao_resource_type or ( type == None and 'fao_resource_type' not in resource )%}
                     {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, can_edit=can_edit %}
