@@ -6947,7 +6947,7 @@ a.tag:hover {
   clear: both;
 }
 .module-content {
-  padding: 30px;
+  padding: 0px 30px 0px 30px;;
 }
 .module-content .image a img {
   background-color: #126baa;
