@@ -6947,7 +6947,7 @@ a.tag:hover {
   clear: both;
 }
 .module-content {
-  padding: 0px 30px 0px 10px;;
+  padding: 30px;
 }
 .module-content .image a img {
   background-color: #126baa;
@@ -8354,7 +8354,7 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
 }
 .resource-item {
   position: relative;
-  padding: 10px 10px 10px 45px;
+  padding: 10px 10px 10px 60px;
   margin-bottom: 0px;
   border-radius: 3px;
 }
@@ -8369,7 +8369,7 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
 .resource-item .format-label {
   position: absolute;
   top: 10px;
-  left: 0px;
+  left: 10px;
 }
 .resource-item .description {
   font-size: 12px;
@@ -11454,7 +11454,19 @@ h5 {
   display: none;
 }
 
-.resources h3 {
+.fao-resource-types .resource-item .format-label {
+  left: 0px;
+}
+
+.fao-resource-types .resource-item {
+  padding: 10px 10px 10px 45px;
+}
+
+.fao-resource-types .resource_type_block {
+  padding: 0px 30px 0px 10px;
+}
+
+.fao-resource-types h3 {
   color: #000;
   font-size: 19px;
   font-weight: bold;
