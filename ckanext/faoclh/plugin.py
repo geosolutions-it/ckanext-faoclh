@@ -92,7 +92,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
         # log.debug("AFTER SEARCH")
         for k,v in search_results.items():
             new_v = v
-            log.debug("AFTER SEARCH RES {} -->({}) {}".format(k, type(v), v))
+            # log.debug("AFTER SEARCH RES {} -->({}) {}".format(k, type(v), v))
 
             if k in ['facets', 'search_facets']:
                 new_v = {}
@@ -326,6 +326,7 @@ class FAOCLHGUIPlugin(plugins.SingletonPlugin,
             'fao_expanded_facet': fao_expanded_facet,
             'fao_generate_link_id': fao_generate_link_id,
             'fao_get_current_year': lambda: str(datetime.now().year),
+            'fao_get_resource_types': fao_get_resource_types,
             u'gsreport_get_org_title': gsh.get_localized_org_title,
             u'gsreport_get_pkg_title': gsh.get_localized_pkg_title,
             u'get_unpublished_dataset': gsh.get_unpublished_dataset,
@@ -488,3 +489,12 @@ def fao_get_org_image_url(org_id):
             return image_url[0]
         else:  # Resource name
             return u'/uploads/group/{}'.format(image_url[0])
+
+def fao_get_resource_types(pkg_id):
+    pkg = logic.get_action(u'package_show')({}, {u'id': pkg_id})
+
+    types = set()
+    for res in pkg.get('resources', []):
+        types.add(res.get(FIELD_RESOURCE_TYPE, None))
+
+    return types
