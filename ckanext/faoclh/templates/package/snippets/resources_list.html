@@ -1,4 +1,3 @@
-{% ckan_extends %}
 {#
 Renders a list of resources with icons and view links.
 
@@ -10,12 +9,18 @@ Example:
   {% snippet "package/snippets/resources_list.html", pkg=pkg, resources=pkg.resources %}
 
 #}
+
+<section id="dataset-resources" class="resources fao-resource-types">
+  <h3>{{ _('Resources') }}</h3>
+  {% block resource_list %}
+    {% if resources %}
+      <ul class="{% block resource_list_class %}resource-list{% endblock %}">
         {% block resource_list_inner %}
           {% set can_edit = h.check_access('package_update', {'id':pkg.id }) %}
 
           {% for type in h.fao_get_resource_types(pkg.id) %}
           <div class="resource_type_block module-content">
-              <h2>{{h.fao_get_label_for_vocab_tag('fao_resource_type',type or _('Other resource types'))}}</h2>
+              <h2>{{h.fao_get_label_for_vocab_tag('fao_resource_type', type or _('Other resource types'))}}</h2>
               {% for resource in resources %}
                 {% if type == resource.fao_resource_type or ( type == None and 'fao_resource_type' not in resource )%}
                     {% snippet 'package/snippets/resource_item.html', pkg=pkg, res=resource, can_edit=can_edit %}
@@ -24,4 +29,15 @@ Example:
           </div>
           {% endfor %}
        {% endblock %}
-
+      </ul>
+    {% else %}
+      {% if h.check_access('resource_create', {'package_id': pkg['id']}) %}
+          {% trans url=h.url_for(controller='package', action='new_resource', id=pkg.name) %}
+            <p class="empty">This dataset has no data, <a href="{{ url }}">why not add some?</a></p>
+          {% endtrans %}
+      {% else %}
+          <p class="empty">{{ _('This dataset has no data') }}</p>
+      {% endif %}
+    {% endif %}
+    {% endblock %}
+</section>

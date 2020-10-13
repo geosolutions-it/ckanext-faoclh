@@ -11453,3 +11453,25 @@ h5 {
 .vocab-image .image-buttons{
   display: none;
 }
+
+.fao-resource-types .resource-item .format-label {
+  left: 0px;
+}
+
+.fao-resource-types .resource-item {
+  padding: 10px 10px 10px 45px;
+}
+
+.fao-resource-types .resource_type_block {
+  padding: 0px 30px 0px 10px;
+}
+
+.fao-resource-types .resource_type_block h2 {
+  color: #0d6cac;
+}
+
+.fao-resource-types h3 {
+  color: #000;
+  font-size: 19px;
+  font-weight: bold;
+}
