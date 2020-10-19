@@ -3,6 +3,7 @@ import json
 import logging
 import os
 from datetime import datetime
+from unicodecsv.py2 import UnicodeWriter
 
 from ckan.common import session
 import ckan.lib.base as base
@@ -16,8 +17,6 @@ from paste.fileapp import DataApp, FileApp
 from ckan.common import config
 from sqlalchemy import or_
 from rq.job import Job
-
-from ckanext.faoclh.plugin import FAO_TAG_FIELDS
 
 log = logging.getLogger(__name__)
 
@@ -108,22 +107,25 @@ def generate_dataset_csv(output_dir, output_file, context):
     datasets = GetPackageData.all_datasets()
     package_show = logic.get_action(u'package_show')
 
-    with open(output_file, u'w') as fh:
-        f_out = csv.writer(fh)
+    with open(output_file, 'w') as fh:
+        f_out = UnicodeWriter(fh)
         f_out.writerow(headings)
         for dataset in datasets:
             pkg = package_show(context, {u'id': dataset.id})
             resources = pkg.get(u'resources', {})
             row = (
                 dataset.title,
-                ', '.join([topic.get(u'name', u'') for topic in pkg['groups']]),
-                ', '.join([tag['name'] for tag in pkg.get('tags', []) if tag['vocabulary_id'] is None]),
-                ', '.join(pkg.get(u'fao_activity_type', ['No activity type'])),  # 0 or 1
-                ', '.join([res.get('name', 'Unnamed resource') for res in resources]),
-                ', '.join([res.get('fao_resource_type', '-') for res in resources]),
-                ', '.join([res.get('format', '-') for res in resources]),
-                ', '.join([res.get('custom_resource_text',  '-') for res in resources])
+                u', '.join([topic.get('name', '') for topic in pkg['groups']]),
+                u', '.join([tag['name'] for tag in pkg.get('tags', []) if tag['vocabulary_id'] is None]),
+                u', '.join(pkg.get('fao_activity_type', ['No activity type'])),  # 0 or 1
+                u', '.join([res.get('name', 'Unnamed resource') for res in resources]),
+                u', '.join([res.get('fao_resource_type', '-') for res in resources]),
+                u', '.join([res.get('format', '-') for res in resources]),
+                u', '.join([res.get('custom_resource_text',  '-') for res in resources])
             )
-            f_out.writerow(row)
+            try:
+                f_out.writerow(row)
+            except Exception as e:
+                log.warn("Skipping export of CSV row: {}".format(row), exc_info=True)
 
     log.info(u'Successfully created dataset export file [path = {}]'.format(output_dir))
