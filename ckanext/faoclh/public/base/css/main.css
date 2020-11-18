@@ -8366,6 +8366,12 @@ fieldset[disabled] .control-custom.disabled .checkbox.btn.focus {
   font-size: 14px;
   font-weight: bold;
 }
+.resource-item .description {
+  width: 86%;
+}
+.resource-item .fao-heading {
+  width: 84%;
+}
 .resource-item .format-label {
   position: absolute;
   top: 10px;
